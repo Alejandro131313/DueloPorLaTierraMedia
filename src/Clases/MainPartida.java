@@ -41,6 +41,9 @@ public class MainPartida {
                                ", Costo: " + carta.getCoste() +
                                ", Efecto: " + carta.getEfecto());
         }
-        System.out.println("\nPrueba1:");
+
+        System.out.println("Prueba111111");
+        System.out.println("Quique");
     }
+    
 }
