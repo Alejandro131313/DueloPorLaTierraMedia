@@ -77,10 +77,10 @@ public class Tablero {
     	cartas.add(new Carta(17, "Mision2", "Azul", "0", "avance+1", "fase1", "/src/Images/Cartas/1.17.png"));
     	cartas.add(new Carta(18, "Mision3", "Azul", "1 valor", "avance+1", "fase1", "/src/Images/Cartas/1.18.png"));
     	cartas.add(new Carta(19, "Mision4", "Azul", "1 oro", "avance+1", "fase1", "/src/Images/Cartas/1.19.png"));
-    	cartas.add(new Carta(20, "Oro1", "Amarillo", "0", "oro+1", "fase1", "/src/Images/Cartas/1.20.png"));
-    	cartas.add(new Carta(21, "Oro2", "Amarillo", "0", "oro+1", "fase1", "/src/Images/Cartas/1.21.png"));
-    	cartas.add(new Carta(22, "Oro3", "Amarillo", "0", "oro+1", "fase1", "/src/Images/Cartas/1.22.png"));
-    	cartas.add(new Carta(23, "Oro4", "Amarillo", "0", "oro+1", "fase1", "/src/Images/Cartas/1.23.png"));
+    	cartas.add(new Carta(20, "Oro1", "Amarilla", "0", "oro+1", "fase1", "/src/Images/Cartas/1.20.png"));
+    	cartas.add(new Carta(21, "Oro2", "Amarilla", "0", "oro+1", "fase1", "/src/Images/Cartas/1.21.png"));
+    	cartas.add(new Carta(22, "Oro3", "Amarilla", "0", "oro+1", "fase1", "/src/Images/Cartas/1.22.png"));
+    	cartas.add(new Carta(23, "Oro4", "Amarilla", "0", "oro+1", "fase1", "/src/Images/Cartas/1.23.png"));
     	cartas.add(new Carta(24, "RecursoSabiduria3", "Gris", "0", "sabiduria+1", "fase2", "/src/Images/Cartas/2.1.png"));
     	cartas.add(new Carta(25, "RecursoCorona2", "Gris", "0", "corona+1", "fase2", "/src/Images/Cartas/2.2.png"));
     	cartas.add(new Carta(26, "RecursoAstucia3", "Gris", "1 oro", "astucia+2", "fase2", "/src/Images/Cartas/2.3.png"));
@@ -127,6 +127,9 @@ public class Tablero {
 		cartas.add(new Carta(67, "Sabotaje4", "Morada", "2 fuerza && 1 corona", "soldado-1 && oro-2 && movimiento1", "fase3", "/src/Images/Cartas/3.21.png"));
 		cartas.add(new Carta(68, "Sabotaje5", "Morada", "3 fuerza && 1 sabiduria", "soldado-1 && movimiento2", "fase3", "/src/Images/Cartas/3.22.png"));
 		cartas.add(new Carta(69, "Sabotaje6", "Morada", "1 fuerza && 1 valor && 1 sabiduria", "soldado-2 && oro-1", "fase3", "/src/Images/Cartas/3.23.png"));
+		
+		
+		
 		
         // Agregar una carta de cada tipo
         /*cartas.add(new Carta(1, "Batalla de los Campos del Pelennor", "Rojo", 3, "Espadas", "Aumenta fuerza en combate", "ruta/a/imagen1.png"));
