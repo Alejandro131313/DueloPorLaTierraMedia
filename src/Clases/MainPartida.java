@@ -37,8 +37,7 @@ public class MainPartida {
         for (Carta carta : partida.getTablero().getCartas()) {
             System.out.println("- ID: " + carta.getId() +
                                ", Nombre: " + carta.getNombre() +
-                               ", Color: " + carta.getColor() +
-                               ", Costo: " + carta.getCoste() +
+                               ", Color: " + carta.getColor() + 
                                ", Efecto: " + carta.getEfecto());
         }
 

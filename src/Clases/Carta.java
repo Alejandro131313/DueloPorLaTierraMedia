@@ -4,22 +4,26 @@ public class Carta {
     private int id;
     private String nombre;
     private String color;
-    private int coste;
     private String recursosQueRequiere;
     private String efecto;
+    private String fase;
     private String imagenRuta;
+	
 
-    public Carta(int id, String nombre, String color, int coste, String recursosQueRequiere, String efecto, String imagenRuta) {
+    public Carta(int id, String nombre, String color, String recursosQueRequiere, String efecto, String fase, String imagenRuta) {
         this.id = id;
         this.nombre = nombre;
         this.color = color;
-        this.coste = coste;
         this.recursosQueRequiere = recursosQueRequiere;
         this.efecto = efecto;
+        this.fase = fase;
         this.imagenRuta = imagenRuta;
     }
 
-    // Getters y Setters
+
+
+
+	// Getters y Setters
     public int getId() {
         return id;
     }
@@ -44,14 +48,6 @@ public class Carta {
         this.color = color;
     }
 
-    public int getCoste() {
-        return coste;
-    }
-
-    public void setCoste(int coste) {
-        this.coste = coste;
-    }
-
     public String getRecursosQueRequiere() {
         return recursosQueRequiere;
     }
@@ -66,6 +62,13 @@ public class Carta {
 
     public void setEfecto(String efecto) {
         this.efecto = efecto;
+    }
+    public String getFase() {
+        return fase;
+    }
+
+    public void setFase(String fase) {
+        this.fase = fase;
     }
 
     public String getImagenRuta() {
