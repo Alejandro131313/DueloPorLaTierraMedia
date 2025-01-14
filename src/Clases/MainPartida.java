@@ -41,5 +41,7 @@ public class MainPartida {
                                ", Costo: " + carta.getCoste() +
                                ", Efecto: " + carta.getEfecto());
         }
+        System.out.println("Prueba111111");
     }
+    
 }
