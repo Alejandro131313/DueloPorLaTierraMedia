@@ -9,6 +9,7 @@ public class Partida {
     private String diaDeLaPartida;
     private List<Jugador> jugadores;
     private Tablero tablero;
+    private int turnoActual;
 
     public Partida(int id, String horaDeLaPartida, String diaDeLaPartida, Tablero tablero) {
         this.id = id;
@@ -16,6 +17,7 @@ public class Partida {
         this.diaDeLaPartida = diaDeLaPartida;
         this.tablero = tablero;
         this.jugadores = new ArrayList<>();
+        this.turnoActual = 0; // Empieza con el primer jugador
     }
 
     // Getters y Setters
@@ -61,6 +63,13 @@ public class Partida {
 
     public void setTablero(Tablero tablero) {
         this.tablero = tablero;
+    }
+    public Jugador getJugadorActual() {
+        return jugadores.get(turnoActual);
+    }
+
+    public void avanzarTurno() {
+        turnoActual = (turnoActual + 1) % jugadores.size(); // Alterna entre los jugadores
     }
 }
 

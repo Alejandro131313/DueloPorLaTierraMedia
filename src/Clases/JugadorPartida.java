@@ -79,4 +79,20 @@ public class JugadorPartida {
     public void setUnidades(List<Unidad> unidades) {
         this.unidades = unidades;
     }
+    
+    
+    
+    
+    public void añadirCarta(Carta carta) {
+        if (carta != null) {
+            cartas.add(carta);
+            System.out.println(jugador.getNombre() + " ha robado la carta: " + carta.getNombre());
+        }
+    }
+
+    
+    
+    
+    
+    
 }

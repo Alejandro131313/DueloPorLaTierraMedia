@@ -1,6 +1,7 @@
 package Clases;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Tablero {
@@ -8,15 +9,22 @@ public class Tablero {
     private String disposicionCartas;
     private String capitulo;
     private List<Carta> cartas;
+    private List<Carta> cartasCapitulo1;
+    private List<Carta> cartasCapitulo2;
+    private List<Carta> cartasCapitulo3;
 
     public Tablero(int id, String disposicionCartas, String capitulo) {
         this.id = id;
         this.disposicionCartas = disposicionCartas;
         this.capitulo = capitulo;
         this.cartas = new ArrayList<>();
+        this.cartasCapitulo1 = new ArrayList<>();
+        this.cartasCapitulo2 = new ArrayList<>();
+        this.cartasCapitulo3 = new ArrayList<>();
         inicializarCartas();
+        dividirCartasPorCapitulo();
+        mezclarCartasCapitulos();
     }
-
     // Getters y Setters
     public int getId() {
         return id;
@@ -53,8 +61,29 @@ public class Tablero {
     public void eliminarCarta(Carta carta) {
         this.cartas.remove(carta);
     }
-
-    private void inicializarCartas() {
+  
+    public List<Carta> getCartasCapitulo1() {
+		return cartasCapitulo1;
+	}
+	public void setCartasCapitulo1(List<Carta> cartasCapitulo1) {
+		this.cartasCapitulo1 = cartasCapitulo1;
+	}
+	public List<Carta> getCartasCapitulo2() {
+		return cartasCapitulo2;
+	}
+	public void setCartasCapitulo2(List<Carta> cartasCapitulo2) {
+		this.cartasCapitulo2 = cartasCapitulo2;
+	}
+	public List<Carta> getCartasCapitulo3() {
+		return cartasCapitulo3;
+	}
+	public void setCartasCapitulo3(List<Carta> cartasCapitulo3) {
+		this.cartasCapitulo3 = cartasCapitulo3;
+	}
+	public void setCartas(List<Carta> cartas) {
+		this.cartas = cartas;
+	}
+	private void inicializarCartas() {
     	
 
 
@@ -81,6 +110,7 @@ public class Tablero {
     	cartas.add(new Carta(21, "Oro2", "Amarilla", "0", "oro+1", "fase1", "/src/Images/Cartas/1.21.png"));
     	cartas.add(new Carta(22, "Oro3", "Amarilla", "0", "oro+1", "fase1", "/src/Images/Cartas/1.22.png"));
     	cartas.add(new Carta(23, "Oro4", "Amarilla", "0", "oro+1", "fase1", "/src/Images/Cartas/1.23.png"));
+    	
     	cartas.add(new Carta(24, "RecursoSabiduria3", "Gris", "0", "sabiduria+1", "fase2", "/src/Images/Cartas/2.1.png"));
     	cartas.add(new Carta(25, "RecursoCorona2", "Gris", "0", "corona+1", "fase2", "/src/Images/Cartas/2.2.png"));
     	cartas.add(new Carta(26, "RecursoAstucia3", "Gris", "1 oro", "astucia+2", "fase2", "/src/Images/Cartas/2.3.png"));
@@ -104,6 +134,7 @@ public class Tablero {
     	cartas.add(new Carta(44, "Mision9", "Azul", "1 fuerza && 2 valor", "avance+2", "fase2", "/src/Images/Cartas/2.21.png"));
     	cartas.add(new Carta(45, "Oro5", "Amarilla", "0", "oro+3", "fase2", "/src/Images/Cartas/2.22.png"));
     	cartas.add(new Carta(46, "Oro6", "Amarilla", "0", "oro+4", "fase2", "/src/Images/Cartas/2.23.png"));
+    	
     	cartas.add(new Carta(47, "RazaMagos1", "Verde", "2 astucia && 2 corona", "magos+1", "fase3", "/src/Images/Cartas/3.1.png"));
     	cartas.add(new Carta(48, "RazaMagos2", "Verde", "2 fuerza && 1 corona && 1 sabiduria", "magos+1", "fase3", "/src/Images/Cartas/3.2.png"));
     	cartas.add(new Carta(49, "RazaEnts1", "Verde", "2 fuerza && 2 sabiduria", "ents+1", "fase3", "/src/Images/Cartas/3.3.png"));
@@ -128,13 +159,70 @@ public class Tablero {
 		cartas.add(new Carta(68, "Sabotaje5", "Morada", "3 fuerza && 1 sabiduria", "soldado-1 && movimiento2", "fase3", "/src/Images/Cartas/3.22.png"));
 		cartas.add(new Carta(69, "Sabotaje6", "Morada", "1 fuerza && 1 valor && 1 sabiduria", "soldado-2 && oro-1", "fase3", "/src/Images/Cartas/3.23.png"));
 		
-		
-		
-		
-        // Agregar una carta de cada tipo
-        /*cartas.add(new Carta(1, "Batalla de los Campos del Pelennor", "Rojo", 3, "Espadas", "Aumenta fuerza en combate", "ruta/a/imagen1.png"));
-        cartas.add(new Carta(2, "Ataque Sorpresa", "Azul", 2, "Magia", "Permite un movimiento extra", "ruta/a/imagen2.png"));
-        cartas.add(new Carta(3, "Misión: Avanzar al Monte del Destino", "Verde", 4, "Misiones", "Avanza en la historia", "ruta/a/imagen3.png"));
-        cartas.add(new Carta(4, "Recurso: Minas de Moria", "Amarillo", 1, "Recursos", "Genera oro adicional", "ruta/a/imagen4.png"));*/
     }
+ // Dividir las cartas en listas por capítulo
+    private void dividirCartasPorCapitulo() {
+        for (Carta carta : cartas) {
+            switch (carta.getFase()) {
+                case "fase1":
+                    cartasCapitulo1.add(carta);
+                    break;
+                case "fase2":
+                    cartasCapitulo2.add(carta);
+                    break;
+                case "fase3":
+                    cartasCapitulo3.add(carta);
+                    break;
+            }
+        }
+    }
+
+    // Mezclar las cartas de cada capítulo
+    private void mezclarCartasCapitulos() {
+        Collections.shuffle(cartasCapitulo1);
+        Collections.shuffle(cartasCapitulo2);
+        Collections.shuffle(cartasCapitulo3);
+    }
+    
+    public List<Carta> obtenerCartasDelCapituloActual() {
+        switch (capitulo) {
+            case "fase1":
+                return cartasCapitulo1;
+            case "fase2":
+                return cartasCapitulo2;
+            case "fase3":
+                return cartasCapitulo3;
+            default:
+                return new ArrayList<>();
+        }
+    }
+    public Carta robarCarta(String capitulo) {
+        List<Carta> cartasDelCapitulo;
+
+        switch (capitulo) {
+            case "fase1":
+                cartasDelCapitulo = cartasCapitulo1;
+                break;
+            case "fase2":
+                cartasDelCapitulo = cartasCapitulo2;
+                break;
+            case "fase3":
+                cartasDelCapitulo = cartasCapitulo3;
+                break;
+            default:
+                throw new IllegalArgumentException("Capítulo inválido: " + capitulo);
+        }
+
+        if (!cartasDelCapitulo.isEmpty()) {
+            return cartasDelCapitulo.remove(0); // Robar la primera carta de la lista
+        } else {
+            System.out.println("No hay más cartas en " + capitulo);
+            return null;
+        }
+    }
+
+    
+    
+    
+    
 }
