@@ -30,7 +30,7 @@ public class LugarClave {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    public String getRecursosQueRequiere() {
+    public String getRecursosQueRequiere() {	
         return recursosQueRequiere;
     }
 

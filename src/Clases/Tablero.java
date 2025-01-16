@@ -12,18 +12,22 @@ public class Tablero {
     private List<Carta> cartasCapitulo1;
     private List<Carta> cartasCapitulo2;
     private List<Carta> cartasCapitulo3;
+    private List<LugarClave> lugaresclave;
 
     public Tablero(int id, String disposicionCartas, String capitulo) {
         this.id = id;
         this.disposicionCartas = disposicionCartas;
         this.capitulo = capitulo;
         this.cartas = new ArrayList<>();
+        this.lugaresclave = new ArrayList<>();
         this.cartasCapitulo1 = new ArrayList<>();
         this.cartasCapitulo2 = new ArrayList<>();
         this.cartasCapitulo3 = new ArrayList<>();
         inicializarCartas();
+        inicializarLugaresClave();
         dividirCartasPorCapitulo();
         mezclarCartasCapitulos();
+        
     }
     // Getters y Setters
     public int getId() {
@@ -160,6 +164,9 @@ public class Tablero {
 		cartas.add(new Carta(69, "Sabotaje6", "Morada", "1 fuerza && 1 valor && 1 sabiduria", "soldado-2 && oro-1", "fase3", "/src/Images/Cartas/3.23.png"));
 		
     }
+	
+
+
  // Dividir las cartas en listas por capítulo
     private void dividirCartasPorCapitulo() {
         for (Carta carta : cartas) {
@@ -230,10 +237,25 @@ public class Tablero {
             System.out.println("No hay más cartas en " + capitulo);
             return null;
         }
+        
+       
+    }
+    
+	
+    public void inicializarLugaresClave() {
+    	lugaresclave.add(new LugarClave(1, "Territorio Arnor", "3fuerza + 2valor +1corona", "TorreArnor+soldado2+2movimiento","src/Images/LugarClave/TerritorioArnor.png"));
+    	lugaresclave.add(new LugarClave(2, "Territorio Enedwaith", "2astucia+3valor+1sabiduria", "TorreEnedwaith+avance+1","src/Images/LugarClave/TerritorioEnedwaith.png"));
+    	lugaresclave.add(new LugarClave(3, "Territorio Gondor", "3astucia+1fuerza+2sabiduria", "TorreGondor+avance+2o","src/Images/LugarClave/TerritorioGondor.png"));
+		lugaresclave.add(new LugarClave(4, "Territorio Lindon", "3fuerza+2corona+1sabiduria", "TorreLindon","src/Images/LugarClave/TerritorioLindon.png"));
+		lugaresclave.add(new LugarClave(5, "Territorio Mordor", "3valor+2corona+1sabiduria", "TorreMordor","src/Images/LugarClave/TerritorioMordor.png"));
+		lugaresclave.add(new LugarClave(6, "Territorio Rhovanion", "1astucia+2fuerza+1valor+1corona+1sabiduria", "TorreRhovanion+5oro+1movimiento","src/Images/LugarClave/TerritorioRhovanion.png"));
+		lugaresclave.add(new LugarClave(7, "Territorio Rohan", "3astucia+2corona+1sabiduria", "TorreRohan+soldado3","src/Images/LugarClave/TerritorioRohan.png"));
     }
 
     
+    //mezclar LugaresClave
     
+    //seleccionar 3 lugares clave
     
     
 }
