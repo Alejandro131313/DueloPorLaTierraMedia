@@ -182,6 +182,17 @@ public class Tablero {
         Collections.shuffle(cartasCapitulo1);
         Collections.shuffle(cartasCapitulo2);
         Collections.shuffle(cartasCapitulo3);
+        
+     // Eliminar las 3 últimas cartas de cada lista si tienen más de 3 cartas para evitar errores
+        if (cartasCapitulo1.size() > 3) {
+            cartasCapitulo1 = cartasCapitulo1.subList(0, cartasCapitulo1.size() - 3);
+        }
+        if (cartasCapitulo2.size() > 3) {
+            cartasCapitulo2 = cartasCapitulo2.subList(0, cartasCapitulo2.size() - 3);
+        }
+        if (cartasCapitulo3.size() > 3) {
+            cartasCapitulo3 = cartasCapitulo3.subList(0, cartasCapitulo3.size() - 3);
+        }
     }
     
     public List<Carta> obtenerCartasDelCapituloActual() {

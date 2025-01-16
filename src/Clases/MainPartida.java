@@ -39,8 +39,18 @@ public class MainPartida {
 
         // Mostrar cartas iniciales en el tablero
         System.out.println("\nCartas iniciales en el tablero:");
+        int index = 1;
         for (Carta carta : tablero.getCartas()) {
-            System.out.println("- " + carta.getNombre() + " (" + carta.getFase() + ")");
+            System.out.println(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
+            index++;
+        }
+
+        // Mostrar cartas disponibles en el capítulo actual antes de robar
+        System.out.println("\nCartas disponibles en el capítulo actual (" + tablero.getCapitulo() + ") antes de robar:");
+        index = 1;
+        for (Carta carta : tablero.obtenerCartasDelCapituloActual()) {
+            System.out.println(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
+            index++;
         }
 
         // Robar cartas en el capítulo actual
@@ -53,24 +63,39 @@ public class MainPartida {
 
         // Mostrar cartas restantes en el tablero
         System.out.println("\nCartas restantes en el tablero (capítulo 1):");
+        index = 1;
         for (Carta carta : tablero.obtenerCartasDelCapituloActual()) {
-            System.out.println("- " + carta.getNombre() + " (" + carta.getFase() + ")");
+            System.out.println(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
+            index++;
         }
 
         // Mostrar cartas robadas
         System.out.println("\nCartas robadas:");
         System.out.println(jugador1.getNombre() + " tiene: ");
+        index = 1;
         for (Carta carta : jugadorPartida1.getCartas()) {
-            System.out.println("- " + carta.getNombre() + " (" + carta.getFase() + ")");
+            System.out.println(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
+            index++;
         }
 
         System.out.println(jugador2.getNombre() + " tiene: ");
+        index = 1;
         for (Carta carta : jugadorPartida2.getCartas()) {
-            System.out.println("- " + carta.getNombre() + " (" + carta.getFase() + ")");
+            System.out.println(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
+            index++;
         }
 
         // Cambiar de capítulo y repetir el proceso
         tablero.setCapitulo("fase2");
+
+        // Mostrar cartas disponibles en el capítulo 2 antes de robar
+        System.out.println("\nCartas disponibles en el capítulo actual (" + tablero.getCapitulo() + ") antes de robar:");
+        index = 1;
+        for (Carta carta : tablero.obtenerCartasDelCapituloActual()) {
+            System.out.println(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
+            index++;
+        }
+
         System.out.println("\n--- Robar cartas en capítulo 2 ---");
         Carta cartaRobada3 = tablero.robarCarta(tablero.getCapitulo());
         jugadorPartida1.añadirCarta(cartaRobada3);
@@ -80,20 +105,26 @@ public class MainPartida {
 
         // Mostrar cartas restantes en el tablero
         System.out.println("\nCartas restantes en el tablero (capítulo 2):");
+        index = 1;
         for (Carta carta : tablero.obtenerCartasDelCapituloActual()) {
-            System.out.println("- " + carta.getNombre() + " (" + carta.getFase() + ")");
+            System.out.println(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
+            index++;
         }
 
         // Mostrar cartas robadas en el capítulo 2
         System.out.println("\nCartas robadas en capítulo 2:");
         System.out.println(jugador1.getNombre() + " tiene: ");
+        index = 1;
         for (Carta carta : jugadorPartida1.getCartas()) {
-            System.out.println("- " + carta.getNombre() + " (" + carta.getFase() + ")");
+            System.out.println(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
+            index++;
         }
 
         System.out.println(jugador2.getNombre() + " tiene: ");
+        index = 1;
         for (Carta carta : jugadorPartida2.getCartas()) {
-            System.out.println("- " + carta.getNombre() + " (" + carta.getFase() + ")");
+            System.out.println(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
+            index++;
         }
     }
 }
