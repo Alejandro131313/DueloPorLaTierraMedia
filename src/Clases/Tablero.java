@@ -13,6 +13,7 @@ public class Tablero {
     private List<Carta> cartasCapitulo2;
     private List<Carta> cartasCapitulo3;
     private List<LugarClave> lugaresclave;
+    //MisionAnillo Pensar como se va hacer y añadirlo al tablero
 
     public Tablero(int id, String disposicionCartas, String capitulo) {
         this.id = id;
@@ -233,6 +234,10 @@ public class Tablero {
 
         if (!cartasDelCapitulo.isEmpty()) {
             return cartasDelCapitulo.remove(0); // Robar la primera carta de la lista
+            
+            
+            
+            
         } else {
             System.out.println("No hay más cartas en " + capitulo);
             return null;
@@ -256,6 +261,8 @@ public class Tablero {
     //mezclar LugaresClave
     
     //seleccionar 3 lugares clave
+    
+    //Anadir razas
     
     
 }

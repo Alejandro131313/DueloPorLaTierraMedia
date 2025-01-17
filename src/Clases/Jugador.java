@@ -45,4 +45,12 @@ public class Jugador {
     public void setNumeroVictorias(int numeroVictorias) {
         this.numeroVictorias = numeroVictorias;
     }
+    
+    
+    //Metodo que escriba en un fichero    BufferWritter
+    
+    
+    
+    
+    
 }

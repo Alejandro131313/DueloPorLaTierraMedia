@@ -6,12 +6,19 @@ public class JugadorPartida {
     private Jugador jugador;
     private Partida partida;
     private int oro;
+    private int fuerza;
+    private int valor;
+    private int astucia;
+    private int sabiduria;
+    private int corona;
+    
     private String faccion;
 
     // Listas de entidades relacionadas con esta partida
     private List<Carta> cartas;
     private List<LugarClave> territorios;
-    private List<Unidad> unidades;
+    private List<Unidad> unidades;        //Array Torres 7 y 15 Soladados /Atributo posicionTerritorio SinColocar De Priemras
+   
 
     public JugadorPartida(Jugador jugador, Partida partida, int oro, String faccion, List<Carta> cartas, List<LugarClave> territorios, List<Unidad> unidades) {
         this.jugador = jugador;
@@ -22,6 +29,12 @@ public class JugadorPartida {
         this.territorios = territorios;
         this.unidades = unidades;
     }
+    
+    
+    
+    
+    
+    
 
     // Getters y Setters
     public Jugador getJugador() {
