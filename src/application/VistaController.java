@@ -2,6 +2,8 @@ package application;
 
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -34,11 +36,22 @@ public class VistaController {
         videoStage.setScene(scene);
         videoStage.show();
     }
-	 @FXML
-    private void onNuevaPartida() {
-        // Lógica para el botón "Nueva Partida"
-        mostrarAlerta("Nueva Partida", "Has seleccionado iniciar una nueva partida.");
+    @FXML
+    private void onNuevaPartida(javafx.event.ActionEvent event) {
+        try {
+            // Cargar la vista de selección de facción
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/SeleccionFaccion.fxml"));
+            Parent root = loader.load();
+
+            // Cambiar a la nueva escena
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Configurar Partida");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 
     @FXML
     private void onCargarPartida() {
