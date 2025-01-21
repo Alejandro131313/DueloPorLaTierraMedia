@@ -1,6 +1,7 @@
 package application;
 
 
+import Clases.Jugador;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -65,7 +66,17 @@ public class VistaController {
         // Lógica para el botón "Salir"
         System.exit(0);
     }
-    
+    @FXML
+    private void onmostrarJugador() {
+        // Crear un jugador
+        Jugador jugador = new Jugador(1, "Pepe", 25, 15);
+
+        // Mostrar los datos del jugador por pantalla
+
+
+        // Escribir los datos del jugador en un fichero
+        jugador.escribirEnFichero("jugadores.txt");
+    }
 
     private void mostrarAlerta(String titulo, String mensaje) {
         Alert alerta = new Alert(AlertType.INFORMATION);
@@ -74,5 +85,6 @@ public class VistaController {
         alerta.setContentText(mensaje);
         alerta.showAndWait();
     }
+ 
 }
 

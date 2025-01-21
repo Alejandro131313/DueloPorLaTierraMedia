@@ -1,5 +1,9 @@
 package Clases;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class Jugador {
     private int id;
     private String nombre;
@@ -50,7 +54,24 @@ public class Jugador {
     //Metodo que escriba en un fichero    BufferWritter
     
     
-    
+    public void escribirEnFichero(String nombreFichero) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(nombreFichero))) {
+            bw.write("ID: " + id);
+            bw.newLine();
+            bw.write("Nombre: " + nombre);
+            bw.newLine();
+            bw.write("Edad: " + edad);
+            bw.newLine();
+            bw.write("Número de victorias: " + numeroVictorias);
+            bw.newLine();
+            bw.write("----------------------------");
+            bw.newLine();
+        } catch (IOException e) {
+            System.out.println("Ocurrió un error al escribir en el fichero: " + e.getMessage());
+        }
+    }
+
+   
     
     
 }
