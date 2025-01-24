@@ -1,5 +1,0 @@
-ID: 1
-Nombre: Pepe
-Edad: 25
-Número de victorias: 15
-----------------------------

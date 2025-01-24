@@ -75,7 +75,7 @@ public class VistaController {
 
 
         // Escribir los datos del jugador en un fichero
-        jugador.escribirEnFichero("jugadores.txt");
+        jugador.escribirEnFicheroHTML("jugadores.html");
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {
