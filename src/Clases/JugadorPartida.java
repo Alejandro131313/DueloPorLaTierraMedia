@@ -6,12 +6,21 @@ import java.util.List;
 public class JugadorPartida {
     private Jugador jugador;
     private Partida partida;
+    //Contadores Atributos
     private int oro;
     private int fuerza;
     private int valor;
     private int astucia;
     private int sabiduria;
     private int corona;
+    //Contadores Razas
+    private int hobbits;
+    private int enanos;
+    private int humanos;
+    private int elfos;
+    private int magos;
+    private int ents;
+    
     
     private String faccion;
 
@@ -26,12 +35,33 @@ public class JugadorPartida {
         this.partida = partida;
         this.oro = oro;
         this.faccion = faccion;
-        this.cartas = cartas;
+        this.cartas = cartas != null ? cartas : new ArrayList<>();
         this.territorios = territorios != null ? territorios : new ArrayList<>();
-        this.unidades = unidades != null ? unidades : new ArrayList<>(); //
+        this.unidades = unidades != null ? unidades : new ArrayList<>();
+
+        // Inicialización de atributos numéricos
+        this.fuerza = 0;
+        this.valor = 0;
+        this.astucia = 0;
+        this.sabiduria = 0;
+        this.corona = 0;
+
+        // Inicialización de contadores de razas
+        this.hobbits = 0;
+        this.enanos = 0;
+        this.humanos = 0;
+        this.elfos = 0;
+        this.magos = 0;
+        this.ents = 0;
     }
 
-    // Métodos para inicializar unidades
+
+    public JugadorPartida(String comunidad, String string) {
+		// TODO Auto-generated constructor stub
+	}
+
+
+	// Métodos para inicializar unidades
     public void inicializarUnidades() {
         // Agregar 7 torres
         for (int i = 0; i < 7; i++) {
@@ -161,7 +191,55 @@ public class JugadorPartida {
     
     
     
-    public void añadirCarta(Carta carta) {
+    public int getHobbits() {
+		return hobbits;
+	}
+
+	public void setHobbits(int hobbits) {
+		this.hobbits = hobbits;
+	}
+
+	public int getEnanos() {
+		return enanos;
+	}
+
+	public void setEnanos(int enanos) {
+		this.enanos = enanos;
+	}
+
+	public int getHumanos() {
+		return humanos;
+	}
+
+	public void setHumanos(int humanos) {
+		this.humanos = humanos;
+	}
+
+	public int getElfos() {
+		return elfos;
+	}
+
+	public void setElfos(int elfos) {
+		this.elfos = elfos;
+	}
+
+	public int getMagos() {
+		return magos;
+	}
+
+	public void setMagos(int magos) {
+		this.magos = magos;
+	}
+
+	public int getEnts() {
+		return ents;
+	}
+
+	public void setEnts(int ents) {
+		this.ents = ents;
+	}
+
+	public void añadirCarta(Carta carta) {
         if (carta != null) {
             cartas.add(carta);
             System.out.println(jugador.getNombre() + " ha robado la carta: " + carta.getNombre());

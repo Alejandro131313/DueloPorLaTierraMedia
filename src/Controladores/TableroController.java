@@ -1,15 +1,16 @@
 package Controladores;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import Clases.Carta;
+import Clases.JugadorPartida;
 import Clases.LugarClave;
 import Clases.Razas;
 import Clases.Tablero;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -40,6 +41,20 @@ public class TableroController {
     @FXML
     private Label nombreJugadorMordor;
 
+    @FXML
+    private Label oroComunidad, fuerzaComunidad, valorComunidad, astuciaComunidad, sabiduriaComunidad, coronaComunidad;
+    @FXML
+    private Label hobbitsComunidad, enanosComunidad, humanosComunidad, elfosComunidad, magosComunidad, entsComunidad;
+
+    @FXML
+    private Label oroMordor, fuerzaMordor, valorMordor, astuciaMordor, sabiduriaMordor, coronaMordor;
+    @FXML
+    private Label hobbitsMordor, enanosMordor, humanosMordor, elfosMordor, magosMordor, entsMordor;
+
+    private JugadorPartida jugadorActual;
+    private JugadorPartida jugadorComunidad;
+    private JugadorPartida jugadorMordor;
+
     private final int[][] posiciones = {
             {0, 5}, {0, 7},
             {1, 4}, {1, 6}, {1, 8},
@@ -47,34 +62,67 @@ public class TableroController {
             {3, 2}, {3, 4}, {3, 6}, {3, 8}, {3, 10},
             {4, 1}, {4, 3}, {4, 5}, {4, 7}, {4, 9}, {4, 11}
     };
-
-    public void setNombresJugadores(String comunidad, String mordor) {
-        nombreJugadorComunidad.setText(comunidad);
-        nombreJugadorMordor.setText(mordor);
-    }
- 
     
-    public void initialize() {
-        // Inicializar el tablero con las cartas de la fase 1
-        tablero = new Tablero(1, "Disposición inicial", "fase1");
+    private final int[][] posicionesFase2 = {
+            {4, 1}, {4, 3}, {4, 5}, {4, 7}, {4, 9}, {4, 11},
+            {3, 2}, {3, 4}, {3, 6}, {3, 8}, {3, 10},
+            {2, 3}, {2, 5}, {2, 7}, {2, 9},
+            {1, 4}, {1, 6}, {1, 8},
+            {0, 5}, {0, 7}
+    };
+    
+    private final int[][] posicionesFase3 = {
+            {0, 5}, {0, 7},
+            {1, 4}, {1, 6}, {1, 8},
+            {2, 3}, {2, 5}, {2, 7}, {2, 9},
+            {3, 2}, {3, 4}, {3, 6}, {3, 8}, {3, 10},
+            {4, 1}, {4, 3}, {4, 5}, {4, 7}, {4, 9}, {4, 11}
+    };
+    
+    
+    
+    
+    public void inicializarTablero(JugadorPartida jugadorPartida1, JugadorPartida jugadorPartida2, Tablero tablero) {
+        this.jugadorActual = jugadorPartida1; // Configurar el jugador actual como jugador de la Comunidad al inicio
+        this.jugadorComunidad = jugadorPartida1;
+        this.jugadorMordor = jugadorPartida2;
+        this.tablero = tablero;
+
+        // Actualizar los nombres de los jugadores
+        nombreJugadorComunidad.setText(jugadorComunidad.getJugador().getNombre());
+        nombreJugadorMordor.setText(jugadorMordor.getJugador().getNombre());
+
+        // Configurar el tablero de juego (por ejemplo, las cartas y lugares clave)
+        configurarTablero();
+    }
+
+    private void configurarTablero() {
+        // Obtener las cartas de la fase actual
+        List<Carta> cartasFaseActual = tablero.obtenerCartasDelCapituloActual();
+        
+        // Asegurarse de que hay suficientes cartas para construir la pirámide
+        if (cartasFaseActual.size() < posiciones.length) {
+            throw new IllegalStateException("No hay suficientes cartas para construir la pirámide de esta fase.");
+        }
 
         // Colocar todas las cartas en la pirámide
         for (int i = 0; i < posiciones.length; i++) {
-            Carta carta = tablero.getCartasCapitulo1().get(i);
+            Carta carta = cartasFaseActual.get(i);
             Button cartaBtn = crearBotonCarta(carta, i < 14); // Todas excepto la última fila están bloqueadas
             int row = posiciones[i][0];
             int col = posiciones[i][1];
             tableroCentral.add(cartaBtn, col, row);
             mapaCartasBotones.put(carta, cartaBtn);
         }
+
+        // Configurar lugares clave y razas
         tablero.mezclarLugaresClave();
         List<LugarClave> seleccionados = tablero.seleccionarTresLugaresClave();
         mostrarLugaresClaveComoBotones(seleccionados);
         mostrarRazasComoBotones();
     }
-    
 
-    private Button crearBotonCarta(Carta carta, boolean bloqueada) { 
+    private Button crearBotonCarta(Carta carta, boolean bloqueada) {
         Button cartaBtn = new Button();
 
         // Configurar el estilo del botón
@@ -91,40 +139,95 @@ public class TableroController {
         // Configurar el estado inicial del botón
         cartaBtn.setDisable(bloqueada);
         cartaBtn.setOnAction(e -> {
-            cartasJugador1.getItems().add(carta.getNombre());
-            cartaBtn.setVisible(false); // Ocultar el botón después de seleccionarlo
-            actualizarCartasHabilitadas();
+            if (!tablero.comprobarRecursosFase1(carta, jugadorActual)) {
+                mostrarAlerta("No puedes robar esta carta", "No tienes suficientes recursos para robar esta carta.");
+                return;
+            }
+
+            if (puedeRobarse(carta)) {
+                if (jugadorActual.equals(jugadorComunidad)) {
+                    cartasJugador1.getItems().add(carta.getNombre());
+                } else {
+                    cartasJugador2.getItems().add(carta.getNombre());
+                }
+                cartaBtn.setVisible(false); // Ocultar el botón después de seleccionarlo
+                tablero.aplicarEfectoCartaFase1(carta, jugadorActual); // Aplica el efecto según la fase
+                actualizarContadores(jugadorActual, jugadorActual.equals(jugadorComunidad));
+                cambiarTurno();
+                actualizarCartasHabilitadas();
+            } else {
+                mostrarAlerta("No puedes robar esta carta", "Debes cumplir los requisitos o desbloquear las cartas inferiores.");
+            }
         });
 
         return cartaBtn;
     }
-    
+
+
+    private void actualizarContadores(JugadorPartida jugador, boolean esComunidad) {
+        if (esComunidad) {
+            oroComunidad.setText(String.valueOf(jugador.getOro()));
+            fuerzaComunidad.setText(String.valueOf(jugador.getFuerza()));
+            valorComunidad.setText(String.valueOf(jugador.getValor()));
+            astuciaComunidad.setText(String.valueOf(jugador.getAstucia()));
+            sabiduriaComunidad.setText(String.valueOf(jugador.getSabiduria()));
+            coronaComunidad.setText(String.valueOf(jugador.getCorona()));
+            hobbitsComunidad.setText(String.valueOf(jugador.getHobbits()));
+            enanosComunidad.setText(String.valueOf(jugador.getEnanos()));
+            humanosComunidad.setText(String.valueOf(jugador.getHumanos()));
+            elfosComunidad.setText(String.valueOf(jugador.getElfos()));
+            magosComunidad.setText(String.valueOf(jugador.getMagos()));
+            entsComunidad.setText(String.valueOf(jugador.getEnts()));
+        } else {
+            oroMordor.setText(String.valueOf(jugador.getOro()));
+            fuerzaMordor.setText(String.valueOf(jugador.getFuerza()));
+            valorMordor.setText(String.valueOf(jugador.getValor()));
+            astuciaMordor.setText(String.valueOf(jugador.getAstucia()));
+            sabiduriaMordor.setText(String.valueOf(jugador.getSabiduria()));
+            coronaMordor.setText(String.valueOf(jugador.getCorona()));
+            hobbitsMordor.setText(String.valueOf(jugador.getHobbits()));
+            enanosMordor.setText(String.valueOf(jugador.getEnanos()));
+            humanosMordor.setText(String.valueOf(jugador.getHumanos()));
+            elfosMordor.setText(String.valueOf(jugador.getElfos()));
+            magosMordor.setText(String.valueOf(jugador.getMagos()));
+            entsMordor.setText(String.valueOf(jugador.getEnts()));
+        }
+    }
+
+    private void cambiarTurno() {
+        if (jugadorActual.equals(jugadorComunidad)) {
+            jugadorActual = jugadorMordor;
+        } else {
+            jugadorActual = jugadorComunidad;
+        }
+    }
+
     private boolean puedeRobarse(Carta carta) {
-        // Obtener posición de la carta
-        int indexCarta = tablero.getCartasCapitulo1().indexOf(carta);
-        if (indexCarta == -1) return false; // Si no está en la pirámide, no se puede robar
+        int indexCarta = tablero.obtenerCartasDelCapituloActual().indexOf(carta);
+        if (indexCarta == -1) return false;
 
         int[] posCarta = posiciones[indexCarta];
 
-        // Si está en la última fila, siempre puede ser robada
-        if (posCarta[0] == 4) {
-            return true;
-        }
+        if (posCarta[0] == 4) return true;
 
-        // Verificar las dos cartas directamente debajo
-        int cartasDebajo = 0;
         for (int i = 0; i < posiciones.length; i++) {
             if (posiciones[i][0] == posCarta[0] + 1 &&
                 (posiciones[i][1] == posCarta[1] - 1 || posiciones[i][1] == posCarta[1] + 1)) {
-                Carta cartaDebajo = tablero.getCartasCapitulo1().get(i);
+                Carta cartaDebajo = tablero.obtenerCartasDelCapituloActual().get(i);
                 if (mapaCartasBotones.get(cartaDebajo).isVisible()) {
-                    return false; // Si alguna carta debajo no ha sido robada, no puede ser robada
+                    return false;
                 }
-                cartasDebajo++;
             }
         }
+        return true;
+    }
 
-        return cartasDebajo == 2; // Puede robarse si ambas cartas debajo están robadas
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alerta = new Alert(Alert.AlertType.WARNING);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
     }
 
     private void actualizarCartasHabilitadas() {
@@ -136,70 +239,35 @@ public class TableroController {
             }
         }
     }
+
     private void mostrarLugaresClaveComoBotones(List<LugarClave> lugares) {
-    	botonLugaresClave.getChildren().clear(); // Limpiar los botones previos
-
+        botonLugaresClave.getChildren().clear();
         for (LugarClave lugar : lugares) {
-            // Crear un botón para cada lugar clave
             Button botonLugar = new Button();
-            botonLugar.setText(""); 
-            botonLugar.setMinSize(120, 120); // Tamaño mínimo del botón
-            botonLugar.setPrefSize(140, 140); // Tamaño preferido del botón
-            botonLugar.setMaxSize(140, 140); // Tamaño máximo del botón
-            botonLugar.setStyle("-fx-padding: 10;");
-            
-            // Agregar imagen al botón
             javafx.scene.image.ImageView imagen = new javafx.scene.image.ImageView(new javafx.scene.image.Image(getClass().getResource(lugar.getImagenRuta()).toExternalForm()));
-            imagen.setFitWidth(140); // Ajustar ancho de la imagen
-            imagen.setFitHeight(140); // Ajustar alto de la imagen
+            imagen.setFitWidth(140);
+            imagen.setFitHeight(140);
             botonLugar.setGraphic(imagen);
-
-            // Configurar acción para el botón
-            botonLugar.setOnAction(event -> {
-                System.out.println("Lugar seleccionado: " + lugar.getNombre());
-                // Implementar lógica para manejar la selección del lugar clave
-            });
-
-            // Agregar el botón al HBox
+            botonLugar.setOnAction(event -> System.out.println("Lugar seleccionado: " + lugar.getNombre()));
             botonLugaresClave.getChildren().add(botonLugar);
         }
     }
-    
 
     private void mostrarRazasComoBotones() {
-        botonRazas.getChildren().clear(); // Limpiar los botones previos
-
+        botonRazas.getChildren().clear();
         for (Razas raza : tablero.getRazas()) {
-            // Crear un botón para cada raza
             Button botonRaza = new Button();
-            botonRaza.setStyle("-fx-padding: 10; -fx-font-size: 14px; -fx-font-weight: bold;");
-            
-            // Agregar imagen al botón
             javafx.scene.image.ImageView imagen = new javafx.scene.image.ImageView(new javafx.scene.image.Image(raza.getImagenRuta()));
             imagen.setFitWidth(60);
             imagen.setFitHeight(60);
             botonRaza.setGraphic(imagen);
-
-            // Configurar acción del botón
             botonRaza.setOnAction(event -> {
                 if (tablero.obtenerFichaDeRaza(raza.getNombre())) {
-                    System.out.println("Ficha obtenida: " + raza.getNombre());
-                    if (tablero.consultarFichasDeRaza(raza.getNombre()) == 0) {
-                        botonRaza.setDisable(true); // Deshabilitar botón si no quedan fichas
-                    }
-                } else {
-                    System.out.println("No quedan fichas de: " + raza.getNombre());
+                    if (tablero.consultarFichasDeRaza(raza.getNombre()) == 0) botonRaza.setDisable(true);
                 }
             });
-
-            // Deshabilitar botón si no quedan fichas
-            if (tablero.consultarFichasDeRaza(raza.getNombre()) == 0) {
-                botonRaza.setDisable(true);
-            }
-
-            botonRazas.getChildren().add(botonRaza); // Agregar el botón al HBox
+            if (tablero.consultarFichasDeRaza(raza.getNombre()) == 0) botonRaza.setDisable(true);
+            botonRazas.getChildren().add(botonRaza);
         }
     }
 }
-
-

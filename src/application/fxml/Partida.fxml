@@ -11,6 +11,36 @@
             <Label text="Jugador Comunidad" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
             <Label fx:id="nombreJugadorComunidad" text="Nombre Comunidad" style="-fx-font-size: 14px;" />
             <ListView fx:id="cartasJugador1" />
+            <Label text="Contadores Atributos" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+            <HBox spacing="10" alignment="CENTER">
+                <Label text="O: " />
+                <Label fx:id="oroComunidad" text="0" />
+                <Label text="F: " />
+                <Label fx:id="fuerzaComunidad" text="0" />
+                <Label text="V: " />
+                <Label fx:id="valorComunidad" text="0" />
+                <Label text="A: " />
+                <Label fx:id="astuciaComunidad" text="0" />
+                <Label text="S: " />
+                <Label fx:id="sabiduriaComunidad" text="0" />
+                <Label text="C: " />
+                <Label fx:id="coronaComunidad" text="0" />
+            </HBox>
+            <Label text="Contadores Razas" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+            <HBox spacing="10" alignment="CENTER">
+                <Label text="H: " />
+                <Label fx:id="hobbitsComunidad" text="0" />
+                <Label text="E: " />
+                <Label fx:id="enanosComunidad" text="0" />
+                <Label text="HU: " />
+                <Label fx:id="humanosComunidad" text="0" />
+                <Label text="EL: " />
+                <Label fx:id="elfosComunidad" text="0" />
+                <Label text="M: " />
+                <Label fx:id="magosComunidad" text="0" />
+                <Label text="EN: " />
+                <Label fx:id="entsComunidad" text="0" />
+            </HBox>
         </VBox>
     </left>
 
@@ -20,18 +50,45 @@
             <Label text="Jugador Mordor" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
             <Label fx:id="nombreJugadorMordor" text="Nombre Mordor" style="-fx-font-size: 14px;" />
             <ListView fx:id="cartasJugador2" />
+            <Label text="Contadores Atributos" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+            <HBox spacing="10" alignment="CENTER">
+                <Label text="O: " />
+                <Label fx:id="oroMordor" text="0" />
+                <Label text="F: " />
+                <Label fx:id="fuerzaMordor" text="0" />
+                <Label text="V: " />
+                <Label fx:id="valorMordor" text="0" />
+                <Label text="A: " />
+                <Label fx:id="astuciaMordor" text="0" />
+                <Label text="S: " />
+                <Label fx:id="sabiduriaMordor" text="0" />
+                <Label text="C: " />
+                <Label fx:id="coronaMordor" text="0" />
+            </HBox>
+            <Label text="Contadores Razas" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+            <HBox spacing="10" alignment="CENTER">
+                <Label text="H: " />
+                <Label fx:id="hobbitsMordor" text="0" />
+                <Label text="E: " />
+                <Label fx:id="enanosMordor" text="0" />
+                <Label text="HU: " />
+                <Label fx:id="humanosMordor" text="0" />
+                <Label text="EL: " />
+                <Label fx:id="elfosMordor" text="0" />
+                <Label text="M: " />
+                <Label fx:id="magosMordor" text="0" />
+                <Label text="EN: " />
+                <Label fx:id="entsMordor" text="0" />
+            </HBox>
         </VBox>
     </right>
 
     <!-- Tablero Central -->
     <center>
-      <VBox>
-            <!-- Contenedor para los lugares clave -->
-        <HBox fx:id="botonLugaresClave" alignment="CENTER" spacing="10" style="-fx-padding: 10;" />
-        <HBox fx:id="botonRazas" alignment="CENTER" spacing="10" style="-fx-padding: 10;" />
-        <GridPane fx:id="tableroCentral" alignment="CENTER" hgap="10" vgap="10" style="-fx-padding: 10;">
-            <!-- Las cartas de la pirámide serán añadidas desde el controlador -->
-        </GridPane>
-      </VBox>
+        <VBox>
+            <HBox fx:id="botonLugaresClave" alignment="CENTER" spacing="10" style="-fx-padding: 10;" />
+            <HBox fx:id="botonRazas" alignment="CENTER" spacing="10" style="-fx-padding: 10;" />
+            <GridPane fx:id="tableroCentral" alignment="CENTER" hgap="10" vgap="10" style="-fx-padding: 10;" />
+        </VBox>
     </center>
 </BorderPane>

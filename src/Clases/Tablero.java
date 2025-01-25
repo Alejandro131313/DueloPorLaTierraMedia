@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class Tablero {
     private int id;
@@ -18,6 +19,10 @@ public class Tablero {
     private List<LugarClave> lugaresClaveSeleccionados;
     private List<Razas> razas;
     //MisionAnillo Pensar como se va hacer y añadirlo al tablero
+    
+  
+    Random random = new Random();
+    int decision;
 
     public Tablero(int id, String disposicionCartas, String capitulo) {
         this.id = id;
@@ -127,7 +132,7 @@ public class Tablero {
     	cartas.add(new Carta(22, "Oro3", "Amarilla", "0", "oro+1", "fase1", ("/Images/Cartas/1.22.png")));
     	cartas.add(new Carta(23, "Oro4", "Amarilla", "0", "oro+1", "fase1", ("/Images/Cartas/1.23.png")));
     	
-    	/*cartas.add(new Carta(24, "RecursoSabiduria3", "Gris", "0", "sabiduria+1", "fase2", "Images/Cartas/2.1.png"));
+    	cartas.add(new Carta(24, "RecursoSabiduria3", "Gris", "0", "sabiduria+1", "fase2", "Images/Cartas/2.1.png"));
     	cartas.add(new Carta(25, "RecursoCorona2", "Gris", "0", "corona+1", "fase2", "Images/Cartas/2.2.png"));
     	cartas.add(new Carta(26, "RecursoAstucia3", "Gris", "1 oro", "astucia+2", "fase2", "Images/Cartas/2.3.png"));
     	cartas.add(new Carta(27, "RecursoCoronaSabiduria1", "Gris", "1 oro && 1 astucia", "corona+1 || sabiduria+1", "fase2", "Images/Cartas/2.4.png"));
@@ -173,7 +178,7 @@ public class Tablero {
 		cartas.add(new Carta(66, "Sabotaje3", "Morada", "1 astucia && 1 fuerza && 1 valor && 1 sabiduria", "oro-1 && movimiento2", "fase3", "Images/Cartas/3.20.png"));
 		cartas.add(new Carta(67, "Sabotaje4", "Morada", "2 fuerza && 1 corona", "soldado-1 && oro-2 && movimiento1", "fase3", "Images/Cartas/3.21.png"));
 		cartas.add(new Carta(68, "Sabotaje5", "Morada", "3 fuerza && 1 sabiduria", "soldado-1 && movimiento2", "fase3", "Images/Cartas/3.22.png"));
-		cartas.add(new Carta(69, "Sabotaje6", "Morada", "1 fuerza && 1 valor && 1 sabiduria", "soldado-2 && oro-1", "fase3", "Images/Cartas/3.23.png"));*/
+		cartas.add(new Carta(69, "Sabotaje6", "Morada", "1 fuerza && 1 valor && 1 sabiduria", "soldado-2 && oro-1", "fase3", "Images/Cartas/3.23.png"));
 		
     }
 	
@@ -328,6 +333,659 @@ public class Tablero {
         }
         return -1; // Raza no encontrada
     }
+    
+    
+    
+    public void aplicarEfectoCartaFase1(Carta carta, JugadorPartida jugador) {
+        if (carta == null || jugador == null) {
+            System.out.println("Carta o jugador no válidos");
+            return;
+        }
+
+        switch (carta.getEfecto()) {
+            // Recursos básicos
+            case "fuerza+1":
+                jugador.setFuerza(jugador.getFuerza() + 1);
+                System.out.println("Se añadió +1 a la fuerza de " + jugador.getJugador().getNombre());
+                break;
+
+            case "valor+1":
+                jugador.setValor(jugador.getValor() + 1);
+                System.out.println("Se añadió +1 al valor de " + jugador.getJugador().getNombre());
+                break;
+
+            case "astucia+1":
+                jugador.setAstucia(jugador.getAstucia() + 1);
+                System.out.println("Se añadió +1 a la astucia de " + jugador.getJugador().getNombre());
+                break;
+
+            case "corona+1":
+                jugador.setCorona(jugador.getCorona() + 1);
+                System.out.println("Se añadió +1 a la corona de " + jugador.getJugador().getNombre());
+                break;
+
+            case "sabiduria+1":
+                jugador.setSabiduria(jugador.getSabiduria() + 1);
+                System.out.println("Se añadió +1 a la sabiduría de " + jugador.getJugador().getNombre());
+                break;
+
+            // Razas
+            case "elfos+1":
+                jugador.setElfos(jugador.getElfos() + 1);
+                System.out.println("Se añadió +1 al contador de elfos de " + jugador.getJugador().getNombre());
+                break;
+
+            case "enanos+1":
+                jugador.setEnanos(jugador.getEnanos() + 1);
+                System.out.println("Se añadió +1 al contador de enanos de " + jugador.getJugador().getNombre());
+                break;
+
+            case "humanos+1":
+                jugador.setHumanos(jugador.getHumanos() + 1);
+                System.out.println("Se añadió +1 al contador de humanos de " + jugador.getJugador().getNombre());
+                break;
+
+            case "hobbits+1":
+                jugador.setHobbits(jugador.getHobbits() + 1);
+                System.out.println("Se añadió +1 al contador de hobbits de " + jugador.getJugador().getNombre());
+                break;
+
+            // Batallas
+            case "Rohan+1 || Gondor+1":
+                System.out.println("Selecciona entre Rohan+1 o Gondor+1 para aplicar el efecto.");
+                break;
+
+            case "Enedwatih+1 || Rhovanion+1":
+                System.out.println("Selecciona entre Enedwaith+1 o Rhovanion+1 para aplicar el efecto.");
+                break;
+
+            case "Lindon +1 || Arnor+1":
+                System.out.println("Selecciona entre Lindon+1 o Arnor+1 para aplicar el efecto.");
+                break;
+
+            // Misiones
+            case "avance+1":
+                System.out.println("Avance +1 en la misión.");
+                break;
+
+            // Oro
+            case "oro+1":
+                jugador.setOro(jugador.getOro() + 1);
+                System.out.println("Se añadió +1 de oro a " + jugador.getJugador().getNombre());
+                break;
+
+            default:
+                System.out.println("Efecto no reconocido: " + carta.getEfecto());
+                break;
+        }
+    }
+
+    
+    public void aplicarEfectoCartaFase2(Carta carta, JugadorPartida jugador) {
+        if (carta == null || jugador == null) {
+            System.out.println("Carta o jugador no válidos");
+            return;
+        }
+
+        switch (carta.getEfecto()) {
+            // Recursos avanzados
+            case "sabiduria+1":
+                jugador.setSabiduria(jugador.getSabiduria() + 1);
+                System.out.println("Se añadió +1 a la sabiduría de " + jugador.getJugador().getNombre());
+                break;
+
+            case "corona+1":
+                jugador.setCorona(jugador.getCorona() + 1);
+                System.out.println("Se añadió +1 a la corona de " + jugador.getJugador().getNombre());
+                break;
+
+            case "astucia+2":
+                jugador.setAstucia(jugador.getAstucia() + 2);
+                System.out.println("Se añadió +2 a la astucia de " + jugador.getJugador().getNombre());
+                break;
+
+            case "fuerza+2":
+                jugador.setFuerza(jugador.getFuerza() + 2);
+                System.out.println("Se añadió +2 a la fuerza de " + jugador.getJugador().getNombre());
+                break;
+
+            case "valor+2":
+                jugador.setValor(jugador.getValor() + 2);
+                System.out.println("Se añadió +2 al valor de " + jugador.getJugador().getNombre());
+                break;
+                
+                // Caso con dos opciones 50 50%
+            case "corona+1 || sabiduria+1":
+                decision = random.nextInt(2); // Genera 0 o 1
+                if (decision == 0) {
+                    jugador.setCorona(jugador.getCorona() + 1);
+                    System.out.println("Se añadió +1 a la corona de " + jugador.getJugador().getNombre());
+                } else {
+                    jugador.setSabiduria(jugador.getSabiduria() + 1);
+                    System.out.println("Se añadió +1 a la sabiduría de " + jugador.getJugador().getNombre());
+                }
+                break;
+
+            // Caso con tres opciones 33 33 33%
+            case "astucia+1 || fuerza+1 || valor+1":
+                decision = random.nextInt(3); // Genera 0, 1 o 2
+                if (decision == 0) {
+                    jugador.setAstucia(jugador.getAstucia() + 1);
+                    System.out.println("Se añadió +1 a la astucia de " + jugador.getJugador().getNombre());
+                } else if (decision == 1) {
+                    jugador.setFuerza(jugador.getFuerza() + 1);
+                    System.out.println("Se añadió +1 a la fuerza de " + jugador.getJugador().getNombre());
+                } else {
+                    jugador.setValor(jugador.getValor() + 1);
+                    System.out.println("Se añadió +1 al valor de " + jugador.getJugador().getNombre());
+                }
+                break;
+
+            // Razas
+            case "elfos+1":
+                jugador.setElfos(jugador.getElfos() + 1);
+                System.out.println("Se añadió +1 al contador de elfos de " + jugador.getJugador().getNombre());
+                break;
+
+            case "enanos+1":
+                jugador.setEnanos(jugador.getEnanos() + 1);
+                System.out.println("Se añadió +1 al contador de enanos de " + jugador.getJugador().getNombre());
+                break;
+
+            case "humanos+1":
+                jugador.setHumanos(jugador.getHumanos() + 1);
+                System.out.println("Se añadió +1 al contador de humanos de " + jugador.getJugador().getNombre());
+                break;
+
+            case "hobbits+1":
+                jugador.setHobbits(jugador.getHobbits() + 1);
+                System.out.println("Se añadió +1 al contador de hobbits de " + jugador.getJugador().getNombre());
+                break;
+
+            // Batallas
+            case "Arnor+2 || Rhovanion+2":
+                System.out.println("Selecciona entre Arnor+2 o Rhovanion+2.");
+                break;
+
+            case "Lindon+2 || Rhovanion+2":
+                System.out.println("Selecciona entre Lindon+2 o Rhovanion+2.");
+                break;
+
+            case "Lindon+2 || Enedwaith+2":
+                System.out.println("Selecciona entre Lindon+2 o Enedwaith+2.");
+                break;
+
+            case "Mordor+2 || Rohan+2":
+                System.out.println("Selecciona entre Mordor+2 o Rohan+2.");
+                break;
+
+            case "Gondor+2 || Mordor+2":
+                System.out.println("Selecciona entre Gondor+2 o Mordor+2.");
+                break;
+
+            // Misiones
+            case "avance+1":
+                System.out.println("Avance +1 en la misión.");
+                break;
+
+            case "avance+2":
+                System.out.println("Avance +2 en la misión.");
+                break;
+
+            // Oro
+            case "oro+3":
+                jugador.setOro(jugador.getOro() + 3);
+                System.out.println("Se añadió +3 de oro a " + jugador.getJugador().getNombre());
+                break;
+
+            case "oro+4":
+                jugador.setOro(jugador.getOro() + 4);
+                System.out.println("Se añadió +4 de oro a " + jugador.getJugador().getNombre());
+                break;
+
+            default:
+                System.out.println("Efecto no reconocido: " + carta.getEfecto());
+                break;
+        }
+    }
+
+    public void aplicarEfectoCartaFase3(Carta carta, JugadorPartida jugador) {
+        if (carta == null || jugador == null) {
+            System.out.println("Carta o jugador no válidos");
+            return;
+        }
+
+        switch (carta.getEfecto()) {
+            // Recursos avanzados
+            case "fuerza+3":
+                jugador.setFuerza(jugador.getFuerza() + 3);
+                System.out.println("Se añadió +3 a la fuerza de " + jugador.getJugador().getNombre());
+                break;
+
+            case "valor+3":
+                jugador.setValor(jugador.getValor() + 3);
+                System.out.println("Se añadió +3 al valor de " + jugador.getJugador().getNombre());
+                break;
+
+            case "astucia+3":
+                jugador.setAstucia(jugador.getAstucia() + 3);
+                System.out.println("Se añadió +3 a la astucia de " + jugador.getJugador().getNombre());
+                break;
+
+            case "corona+2":
+                jugador.setCorona(jugador.getCorona() + 2);
+                System.out.println("Se añadió +2 a la corona de " + jugador.getJugador().getNombre());
+                break;
+
+            case "sabiduria+2":
+                jugador.setSabiduria(jugador.getSabiduria() + 2);
+                System.out.println("Se añadió +2 a la sabiduría de " + jugador.getJugador().getNombre());
+                break;
+
+            // Razas
+            case "magos+1":
+                jugador.setMagos(jugador.getMagos() + 1);
+                System.out.println("Se añadió +1 al contador de magos de " + jugador.getJugador().getNombre());
+                break;
+
+            case "ents+1":
+                jugador.setEnts(jugador.getEnts() + 1);
+                System.out.println("Se añadió +1 al contador de ents de " + jugador.getJugador().getNombre());
+                break;
+
+            // Batallas
+            case "Gondor+3 || Arnor+3":
+                System.out.println("Selecciona entre Gondor+3 o Arnor+3.");
+                break;
+
+            case "Enedwaith+3 || Rohan+3":
+                System.out.println("Selecciona entre Enedwaith+3 o Rohan+3.");
+                break;
+
+            case "Lindon+3 || Mordor+3":
+                System.out.println("Selecciona entre Lindon+3 o Mordor+3.");
+                break;
+
+            case "Rhovanion+3 || Gondor+3":
+                System.out.println("Selecciona entre Rhovanion+3 o Gondor+3.");
+                break;
+
+            case "Enedwaith+3 || Arnor+3":
+                System.out.println("Selecciona entre Enedwaith+3 o Arnor+3.");
+                break;
+
+            case "Rhovanion+3 || Mordor+3":
+                System.out.println("Selecciona entre Rhovanion+3 o Mordor+3.");
+                break;
+
+            // Misiones
+            case "avance+2":
+                System.out.println("Avance +2 en la misión.");
+                break;
+
+            case "avance+3":
+                System.out.println("Avance +3 en la misión.");
+                break;
+
+            // Oro avanzado
+            case "oro+5":
+                jugador.setOro(jugador.getOro() + 5);
+                System.out.println("Se añadió +5 de oro a " + jugador.getJugador().getNombre());
+                break;
+
+            // Otros efectos
+            case "movimiento+1":
+                System.out.println("Se añadió +1 movimiento.");
+                break;
+
+            case "soldado-1 && oro-2":
+                System.out.println("Se eliminó un soldado y se descontaron 2 de oro.");
+                break;
+
+            case "movimiento3":
+                System.out.println("Se añadió +3 movimientos.");
+                break;
+
+            case "oro-1 && movimiento2":
+                System.out.println("Se descontó 1 de oro y se añadieron 2 movimientos.");
+                break;
+
+            default:
+                System.out.println("Efecto no reconocido: " + carta.getEfecto());
+                break;
+        }
+    }  
+    
+    public boolean comprobarRecursosFase1(Carta carta, JugadorPartida jugador) {
+        if (carta == null || jugador == null) {
+            System.out.println("Carta o jugador no válidos");
+            return false;
+        }
+
+        switch (carta.getRecursosQueRequiere()) {
+            case "0":
+                // No requiere recursos
+                return true;
+
+            case "1 sabiduria":
+                if (jugador.getSabiduria() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No tienes suficiente sabiduría. Requiere: 1 sabiduría.");
+                    return false;
+                }
+
+            case "1 corona":
+                if (jugador.getCorona() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No tienes suficientes coronas. Requiere: 1 corona.");
+                    return false;
+                }
+
+            case "1 astucia":
+                if (jugador.getAstucia() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No tienes suficiente astucia. Requiere: 1 astucia.");
+                    return false;
+                }
+
+            case "1 fuerza":
+                if (jugador.getFuerza() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No tienes suficiente fuerza. Requiere: 1 fuerza.");
+                    return false;
+                }
+
+            case "1 valor":
+                if (jugador.getValor() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No tienes suficiente valor. Requiere: 1 valor.");
+                    return false;
+                }
+
+            case "1 oro":
+                if (jugador.getOro() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No tienes suficiente oro. Requiere: 1 oro.");
+                    return false;
+                }
+
+            default:
+                System.out.println("Recurso requerido no reconocido: " + carta.getRecursosQueRequiere());
+                return false;
+        }
+    }
+
+    
+    public boolean comprobarRecursosFase2(Carta carta, JugadorPartida jugador) {
+        if (carta == null || jugador == null) {
+            System.out.println("Carta o jugador no válidos");
+            return false;
+        }
+
+        switch (carta.getRecursosQueRequiere()) {
+            case "0":
+                // No requiere recursos
+                return true;
+
+            case "1 oro":
+                if (jugador.getOro() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No tienes suficiente oro. Requiere: 1 oro.");
+                    return false;
+                }
+
+            case "1 oro && 1 astucia":
+                if (jugador.getOro() >= 1 && jugador.getAstucia() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 1 oro y 1 astucia.");
+                    return false;
+                }
+
+            case "1 oro && 1 corona && 1 sabiduria":
+                if (jugador.getOro() >= 1 && jugador.getCorona() >= 1 && jugador.getSabiduria() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 1 oro, 1 corona y 1 sabiduría.");
+                    return false;
+                }
+
+            case "1 valor && 1 corona && 1 sabiduria":
+                if (jugador.getValor() >= 1 && jugador.getCorona() >= 1 && jugador.getSabiduria() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 1 valor, 1 corona y 1 sabiduría.");
+                    return false;
+                }
+
+            case "2 fuerza && 1 valor":
+                if (jugador.getFuerza() >= 2 && jugador.getValor() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 2 fuerza y 1 valor.");
+                    return false;
+                }
+
+            case "2 astucia && 1 corona":
+                if (jugador.getAstucia() >= 2 && jugador.getCorona() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 2 astucia y 1 corona.");
+                    return false;
+                }
+
+            case "2 valor && 1 sabiduria":
+                if (jugador.getValor() >= 2 && jugador.getSabiduria() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 2 valor y 1 sabiduría.");
+                    return false;
+                }
+
+            default:
+                System.out.println("Recurso requerido no reconocido: " + carta.getRecursosQueRequiere());
+                return false;
+        }
+    }
+    public boolean comprobarRecursosFase3(Carta carta, JugadorPartida jugador) {
+        if (carta == null || jugador == null) {
+            System.out.println("Carta o jugador no válidos");
+            return false;
+        }
+
+        switch (carta.getRecursosQueRequiere()) {
+            case "0":
+                // No requiere recursos
+                return true;
+
+            case "2 astucia && 2 corona":
+                if (jugador.getAstucia() >= 2 && jugador.getCorona() >= 2) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 2 astucia y 2 corona.");
+                    return false;
+                }
+
+            case "2 fuerza && 1 corona && 1 sabiduria":
+                if (jugador.getFuerza() >= 2 && jugador.getCorona() >= 1 && jugador.getSabiduria() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 2 fuerza, 1 corona y 1 sabiduría.");
+                    return false;
+                }
+
+            case "2 fuerza && 2 sabiduria":
+                if (jugador.getFuerza() >= 2 && jugador.getSabiduria() >= 2) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 2 fuerza y 2 sabiduría.");
+                    return false;
+                }
+
+            case "2 valor && 1 corona && 1 sabiduria":
+                if (jugador.getValor() >= 2 && jugador.getCorona() >= 1 && jugador.getSabiduria() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 2 valor, 1 corona y 1 sabiduría.");
+                    return false;
+                }
+
+            case "1 astucia && 1 fuerza && 2 corona && 1 sabiduria":
+                if (jugador.getAstucia() >= 1 && jugador.getFuerza() >= 1 && jugador.getCorona() >= 2 && jugador.getSabiduria() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 1 astucia, 1 fuerza, 2 corona y 1 sabiduría.");
+                    return false;
+                }
+
+            case "3 oro":
+                if (jugador.getOro() >= 3) {
+                    return true;
+                } else {
+                    System.out.println("No tienes suficiente oro. Requiere: 3 oro.");
+                    return false;
+                }
+
+            default:
+                System.out.println("Recurso requerido no reconocido: " + carta.getRecursosQueRequiere());
+                return false;
+        }
+    }
+
+    
+    
+    public boolean comprobarRecursosLugarClave(LugarClave lugar, JugadorPartida jugador) {
+        if (lugar == null || jugador == null) {
+            System.out.println("Lugar clave o jugador no válidos");
+            return false;
+        }
+
+        switch (lugar.getRecursosQueRequiere()) {
+            case "3fuerza + 2valor +1corona":
+                if (jugador.getFuerza() >= 3 && jugador.getValor() >= 2 && jugador.getCorona() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos para " + lugar.getNombre() + 
+                                       ". Requiere: 3 fuerza, 2 valor y 1 corona.");
+                    return false;
+                }
+
+            case "2astucia+3valor+1sabiduria":
+                if (jugador.getAstucia() >= 2 && jugador.getValor() >= 3 && jugador.getSabiduria() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos para " + lugar.getNombre() + 
+                                       ". Requiere: 2 astucia, 3 valor y 1 sabiduría.");
+                    return false;
+                }
+
+            case "3astucia+1fuerza+2sabiduria":
+                if (jugador.getAstucia() >= 3 && jugador.getFuerza() >= 1 && jugador.getSabiduria() >= 2) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos para " + lugar.getNombre() + 
+                                       ". Requiere: 3 astucia, 1 fuerza y 2 sabiduría.");
+                    return false;
+                }
+
+            case "3fuerza+2corona+1sabiduria":
+                if (jugador.getFuerza() >= 3 && jugador.getCorona() >= 2 && jugador.getSabiduria() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos para " + lugar.getNombre() + 
+                                       ". Requiere: 3 fuerza, 2 corona y 1 sabiduría.");
+                    return false;
+                }
+
+            case "3valor+2corona+1sabiduria":
+                if (jugador.getValor() >= 3 && jugador.getCorona() >= 2 && jugador.getSabiduria() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos para " + lugar.getNombre() + 
+                                       ". Requiere: 3 valor, 2 corona y 1 sabiduría.");
+                    return false;
+                }
+
+            case "1astucia+2fuerza+1valor+1corona+1sabiduria":
+                if (jugador.getAstucia() >= 1 && jugador.getFuerza() >= 2 && jugador.getValor() >= 1 &&
+                    jugador.getCorona() >= 1 && jugador.getSabiduria() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos para " + lugar.getNombre() + 
+                                       ". Requiere: 1 astucia, 2 fuerza, 1 valor, 1 corona y 1 sabiduría.");
+                    return false;
+                }
+
+            default:
+                System.out.println("Recurso requerido no reconocido: " + lugar.getRecursosQueRequiere());
+                return false;
+        }
+    }
+
+    public void aplicarEfectoLugarClave(LugarClave lugar, JugadorPartida jugador) {
+        if (lugar == null || jugador == null) {
+            System.out.println("Lugar clave o jugador no válidos");
+            return;
+        }
+
+        if (!comprobarRecursosLugarClave(lugar, jugador)) {
+            System.out.println("No puedes acceder al lugar clave: " + lugar.getNombre());
+            return;
+        }
+
+        switch (lugar.getEfecto()) {
+            case "TorreArnor+soldado2+2movimiento":
+                System.out.println("Efecto aplicado: Torre Arnor. Se añadieron 2 soldados y 2 movimientos.");
+                // Lógica para añadir soldados y movimientos
+                break;
+
+            case "TorreEnedwaith+avance+1":
+                System.out.println("Efecto aplicado: Torre Enedwaith. Avance +1.");
+                // Lógica para avanzar
+                break;
+
+            case "TorreGondor+avance+2":
+                System.out.println("Efecto aplicado: Torre Gondor. Avance +2.");
+                // Lógica para avanzar
+                break;
+
+            case "TorreLindon":
+                System.out.println("Efecto aplicado: Torre Lindon.");
+                // Lógica para el efecto de Torre Lindon
+                break;
+
+            case "TorreMordor":
+                System.out.println("Efecto aplicado: Torre Mordor.");
+                // Lógica para el efecto de Torre Mordor
+                break;
+
+            case "TorreRhovanion+5oro+1movimiento":
+                jugador.setOro(jugador.getOro() + 5);
+                System.out.println("Efecto aplicado: Torre Rhovanion. Se añadieron 5 de oro y 1 movimiento.");
+                // Lógica para añadir movimientos
+                break;
+
+            case "TorreRohan+soldado3":
+                System.out.println("Efecto aplicado: Torre Rohan. Se añadieron 3 soldados.");
+                // Lógica para añadir soldados
+                break;
+
+            default:
+                System.out.println("Efecto no reconocido: " + lugar.getEfecto());
+                break;
+        }
+    }
+
+    
+    
+    
     
     
 }
