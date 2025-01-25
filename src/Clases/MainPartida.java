@@ -36,6 +36,11 @@ public class MainPartida {
             JugadorPartida jp = jugador.getId() == 1 ? jugadorPartida1 : jugadorPartida2;
             System.out.printf("%-18s | %-8s | %-3d%n", jugador.getNombre(), jp.getFaccion(), jp.getOro());
         }
+        // Inicializar unidades (7 torres y 15 soldados por jugador)
+        jugadorPartida1.inicializarUnidades();
+        jugadorPartida2.inicializarUnidades();
+       
+
 
         // Mostrar cartas iniciales en el tablero
         System.out.println("\nCartas iniciales en el tablero:");
@@ -125,6 +130,16 @@ public class MainPartida {
         for (Carta carta : jugadorPartida2.getCartas()) {
             System.out.println(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
             index++;
+        }
+    }
+    	private static void mostrarUnidades(JugadorPartida jugadorPartida) {
+        System.out.println("Torres disponibles: " + jugadorPartida.contarUnidadesDisponibles("Torre"));
+        System.out.println("Soldados disponibles: " + jugadorPartida.contarUnidadesDisponibles("Soldado"));
+        System.out.println("Unidades colocadas:");
+        for (Unidad unidad : jugadorPartida.getUnidades()) {
+            if (!unidad.getPosicionTerritorio().equals("Sin colocar")) {
+                System.out.println("- " + unidad.getTipo() + " en " + unidad.getPosicionTerritorio());
+            }
         }
     }
 }

@@ -10,7 +10,7 @@
     <children>
       <ImageView fitHeight="467.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Images/fondo.jpg" />
+            <Image url="@../Images/imagen2.jpeg" />
          </image>
       </ImageView>
        

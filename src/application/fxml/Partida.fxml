@@ -25,8 +25,13 @@
 
     <!-- Tablero Central -->
     <center>
+      <VBox>
+            <!-- Contenedor para los lugares clave -->
+        <HBox fx:id="botonLugaresClave" alignment="CENTER" spacing="10" style="-fx-padding: 10;" />
+        <HBox fx:id="botonRazas" alignment="CENTER" spacing="10" style="-fx-padding: 10;" />
         <GridPane fx:id="tableroCentral" alignment="CENTER" hgap="10" vgap="10" style="-fx-padding: 10;">
             <!-- Las cartas de la pirámide serán añadidas desde el controlador -->
         </GridPane>
+      </VBox>
     </center>
 </BorderPane>

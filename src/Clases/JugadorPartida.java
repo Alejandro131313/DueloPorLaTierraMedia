@@ -1,5 +1,6 @@
 package Clases;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class JugadorPartida {
@@ -26,15 +27,38 @@ public class JugadorPartida {
         this.oro = oro;
         this.faccion = faccion;
         this.cartas = cartas;
-        this.territorios = territorios;
-        this.unidades = unidades;
+        this.territorios = territorios != null ? territorios : new ArrayList<>();
+        this.unidades = unidades != null ? unidades : new ArrayList<>(); //
     }
-    
-    
-    
-    
-    
-    
+
+    // Métodos para inicializar unidades
+    public void inicializarUnidades() {
+        // Agregar 7 torres
+        for (int i = 0; i < 7; i++) {
+            unidades.add(new Unidad(i + 1, "Torre", "Sin colocar"));
+        }
+        // Agregar 15 soldados
+        for (int i = 0; i < 15; i++) {
+            unidades.add(new Unidad(i + 8, "Soldado", "Sin colocar"));
+        }
+    }
+    public List<Unidad> obtenerUnidadesDisponibles(String tipo) {
+        List<Unidad> disponibles = new ArrayList<>();
+        for (Unidad unidad : unidades) {
+            if (unidad.getTipo().equals(tipo) && unidad.getPosicionTerritorio().equals("Sin colocar")) {
+                disponibles.add(unidad);
+            }
+        }
+        return disponibles;  // Lista de unidades disponibles del tipo solicitado
+    }
+
+    // Métodos para contar unidades disponibles
+    public int contarUnidadesDisponibles(String tipo) {
+        return (int) unidades.stream()
+                .filter(u -> u.getTipo().equals(tipo) && u.getPosicionTerritorio().equals("Sin colocar"))
+                .count();
+    }
+	
 
     // Getters y Setters
     public Jugador getJugador() {
@@ -60,6 +84,47 @@ public class JugadorPartida {
     public void setOro(int oro) {
         this.oro = oro;
     }
+
+	public int getFuerza() {
+	    return fuerza;
+	}
+	
+	public void setFuerza(int fuerza) {
+	    this.fuerza = fuerza;
+	}
+	
+	public int getValor() {
+	    return valor;
+	}
+	
+	public void setValor(int valor) {
+	    this.valor = valor;
+	}
+	
+	public int getAstucia() {
+	    return astucia;
+	}
+	
+	public void setAstucia(int astucia) {
+	    this.astucia = astucia;
+	}
+	
+	public int getSabiduria() {
+	    return sabiduria;
+	}
+	
+	public void setSabiduria(int sabiduria) {
+	    this.sabiduria = sabiduria;
+	}
+	
+	public int getCorona() {
+	    return corona;
+	}
+	
+	public void setCorona(int corona) {
+	    this.corona = corona;
+	}
+
 
     public String getFaccion() {
         return faccion;
