@@ -52,9 +52,7 @@ public class TableroController {
         nombreJugadorComunidad.setText(comunidad);
         nombreJugadorMordor.setText(mordor);
     }
- // Lista y mapa para las razas
-    private List<Razas> razas;
-    private Map<Razas, Integer> fichasDisponibles; // Controlar las fichas restantes
+ 
     
     public void initialize() {
         // Inicializar el tablero con las cartas de la fase 1
@@ -72,45 +70,35 @@ public class TableroController {
         tablero.mezclarLugaresClave();
         List<LugarClave> seleccionados = tablero.seleccionarTresLugaresClave();
         mostrarLugaresClaveComoBotones(seleccionados);
-        initializeRazas();
+        mostrarRazasComoBotones();
     }
     
 
-    private Button crearBotonCarta(Carta carta, boolean bloqueada) {
-        Button cartaBtn = new Button("Carta " + carta.getId());
-        // Estilo del botón
+    private Button crearBotonCarta(Carta carta, boolean bloqueada) { 
+        Button cartaBtn = new Button();
+
+        // Configurar el estilo del botón
         cartaBtn.setStyle("-fx-padding: 5; -fx-border-color: black; -fx-border-radius: 5;");
 
-        try {
-            // Depurar la ruta
-            System.out.println("Intentando cargar imagen: " + carta.getImagenRuta());
-            System.out.println("Ruta absoluta: " + getClass().getResource(carta.getImagenRuta()));
-            if (getClass().getResource(carta.getImagenRuta()) == null) {
-                throw new NullPointerException("Recurso no encontrado: " + carta.getImagenRuta());
-            }
+        // Cargar la imagen directamente
+        javafx.scene.image.ImageView imagen = new javafx.scene.image.ImageView(
+                new javafx.scene.image.Image(getClass().getResource(carta.getImagenRuta()).toExternalForm())
+        );
+        imagen.setFitWidth(90);
+        imagen.setFitHeight(140);
+        cartaBtn.setGraphic(imagen);
 
-            // Cargar la imagen
-            javafx.scene.image.ImageView imagen = new javafx.scene.image.ImageView(
-                    new javafx.scene.image.Image(getClass().getResource(carta.getImagenRuta()).toExternalForm())
-            );
-            imagen.setFitWidth(90);
-            imagen.setFitHeight(140);
-            cartaBtn.setGraphic(imagen);
-        } catch (Exception e) {
-            System.err.println("Error al cargar la imagen para carta: " + carta.getNombre());
-            e.printStackTrace();
-            cartaBtn.setText(carta.getNombre()); // Mostrar el nombre como fallback
-        }
-        cartaBtn.setDisable(bloqueada); // Bloquear si no está habilitada inicialmente
+        // Configurar el estado inicial del botón
+        cartaBtn.setDisable(bloqueada);
         cartaBtn.setOnAction(e -> {
-            System.out.println("Carta seleccionada: " + carta.getNombre());
             cartasJugador1.getItems().add(carta.getNombre());
             cartaBtn.setVisible(false); // Ocultar el botón después de seleccionarlo
             actualizarCartasHabilitadas();
         });
+
         return cartaBtn;
     }
-
+    
     private boolean puedeRobarse(Carta carta) {
         // Obtener posición de la carta
         int indexCarta = tablero.getCartasCapitulo1().indexOf(carta);
@@ -177,59 +165,39 @@ public class TableroController {
         }
     }
     
-    // Inicializar y mostrar razas
-    private void initializeRazas() {
-        // Inicializar lista de razas
-        razas = new ArrayList<>();
-        razas.add(new Razas(1, "Hobbits", getClass().getResource("/Images/Fichas/FichaHobbits.png").toExternalForm()));
-        razas.add(new Razas(2, "Enanos", getClass().getResource("/Images/Fichas/FichaEnanos.png").toExternalForm()));
-        razas.add(new Razas(3, "Humanos", getClass().getResource("/Images/Fichas/FichaHumanos.png").toExternalForm()));
-        razas.add(new Razas(4, "Elfos", getClass().getResource("/Images/Fichas/FichaElfos.png").toExternalForm()));
-        razas.add(new Razas(5, "Magos", getClass().getResource("/Images/Fichas/FichaMagos.png").toExternalForm()));
-        razas.add(new Razas(6, "Ents", getClass().getResource("/Images/Fichas/FichaEnts.png").toExternalForm()));
-
-        // Inicializar mapa de fichas disponibles
-        fichasDisponibles = new HashMap<>();
-        for (Razas raza : razas) {
-            fichasDisponibles.put(raza, 3); // Cada raza tiene 3 fichas inicialmente
-        }
-
-        // Mostrar botones para las razas
-        mostrarRazasComoBotones();
-    }
 
     private void mostrarRazasComoBotones() {
         botonRazas.getChildren().clear(); // Limpiar los botones previos
 
-        for (Razas raza : razas) {
+        for (Razas raza : tablero.getRazas()) {
             // Crear un botón para cada raza
-            Button botonRaza = new Button(raza.getNombre());
-            botonRaza.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 10;");
+            Button botonRaza = new Button();
+            botonRaza.setStyle("-fx-padding: 10; -fx-font-size: 14px; -fx-font-weight: bold;");
+            
+            // Agregar imagen al botón
             javafx.scene.image.ImageView imagen = new javafx.scene.image.ImageView(new javafx.scene.image.Image(raza.getImagenRuta()));
-            imagen.setFitWidth(50); // Ajustar ancho de la imagen
-            imagen.setFitHeight(50); // Ajustar alto de la imagen
+            imagen.setFitWidth(60);
+            imagen.setFitHeight(60);
             botonRaza.setGraphic(imagen);
-            // Configurar acción para el botón
-            botonRaza.setOnAction(event -> {
-                int fichasRestantes = fichasDisponibles.get(raza);
-                if (fichasRestantes > 0) {
-                    fichasDisponibles.put(raza, fichasRestantes - 1); // Reducir la cantidad disponible
-                    System.out.println("Jugador obtuvo ficha de " + raza.getNombre() + ". Fichas restantes: " + (fichasRestantes - 1));
 
-                    // Deshabilitar el botón si ya no quedan fichas
-                    if (fichasDisponibles.get(raza) == 0) {
-                        botonRaza.setDisable(true);
+            // Configurar acción del botón
+            botonRaza.setOnAction(event -> {
+                if (tablero.obtenerFichaDeRaza(raza.getNombre())) {
+                    System.out.println("Ficha obtenida: " + raza.getNombre());
+                    if (tablero.consultarFichasDeRaza(raza.getNombre()) == 0) {
+                        botonRaza.setDisable(true); // Deshabilitar botón si no quedan fichas
                     }
+                } else {
+                    System.out.println("No quedan fichas de: " + raza.getNombre());
                 }
             });
 
-            // Deshabilitar botón si no hay fichas disponibles
-            if (fichasDisponibles.get(raza) == 0) {
+            // Deshabilitar botón si no quedan fichas
+            if (tablero.consultarFichasDeRaza(raza.getNombre()) == 0) {
                 botonRaza.setDisable(true);
             }
 
-            // Agregar el botón al HBox
-            botonRazas.getChildren().add(botonRaza);
+            botonRazas.getChildren().add(botonRaza); // Agregar el botón al HBox
         }
     }
 }

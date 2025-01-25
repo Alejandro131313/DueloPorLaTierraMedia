@@ -2,7 +2,9 @@ package Clases;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Tablero {
     private int id;
@@ -14,6 +16,7 @@ public class Tablero {
     private List<Carta> cartasCapitulo3;
     private List<LugarClave> lugaresclave;
     private List<LugarClave> lugaresClaveSeleccionados;
+    private List<Razas> razas;
     //MisionAnillo Pensar como se va hacer y añadirlo al tablero
 
     public Tablero(int id, String disposicionCartas, String capitulo) {
@@ -29,9 +32,15 @@ public class Tablero {
         inicializarLugaresClave();
         dividirCartasPorCapitulo();
         mezclarCartasCapitulos();
+        initializeRazas();
         
         
     }
+ // Lista y mapa para las razas
+    public List<Razas> getRazas() {
+        return razas;
+    }
+    private Map<Razas, Integer> fichasDisponibles;
     // Getters y Setters
     public int getId() {
         return id;
@@ -94,29 +103,29 @@ public class Tablero {
     	
 
 		cartas = new ArrayList<>();
-    	cartas.add(new Carta(1, "RecursoFuerza1", "Gris", "0", "fuerza+1", "fase1", getClass().getResource("/Images/Cartas/1.1.png").toExternalForm()));
-    	cartas.add(new Carta(2, "RecursoValor1", "Gris", "0", "valor+1", "fase1", getClass().getResource("/Images/Cartas/1.2.png").toExternalForm()));
-    	cartas.add(new Carta(3, "RecursoAstucia1", "Gris", "0", "astucia+1", "fase1", getClass().getResource("/Images/Cartas/1.3.png").toExternalForm()));
-    	cartas.add(new Carta(4, "RecursoValor2", "Gris", "0", "valor+1", "fase1", getClass().getResource("/Images/Cartas/1.4.png").toExternalForm()));
-    	cartas.add(new Carta(5, "RecursoFuerza2", "Gris", "0", "fuerza+1", "fase1", getClass().getResource("/Images/Cartas/1.5.png").toExternalForm()));
-    	cartas.add(new Carta(6, "RecursoAstucia2", "Gris", "0", "astucia+1", "fase1", getClass().getResource("/Images/Cartas/1.6.png").toExternalForm()));
-    	cartas.add(new Carta(7, "RecursoCorona1", "Gris", "0", "corona+1", "fase1", getClass().getResource("/Images/Cartas/1.7.png").toExternalForm()));
-    	cartas.add(new Carta(8, "RecursoSabiduria1", "Gris", "0", "sabiduria+1", "fase1", getClass().getResource("/Images/Cartas/1.8.png").toExternalForm()));
-    	cartas.add(new Carta(9, "RazaElfos1", "Verde", "1 sabiduria", "elfos+1", "fase1", getClass().getResource("/Images/Cartas/1.9.png").toExternalForm()));
-    	cartas.add(new Carta(10, "RazaEnanos1", "Verde", "1 corona", "enanos+1", "fase1", getClass().getResource("/Images/Cartas/1.10.png").toExternalForm()));
-    	cartas.add(new Carta(11, "RazaHumanos1", "Verde", "0", "humanos+1", "fase1", getClass().getResource("/Images/Cartas/1.11.png").toExternalForm()));
-    	cartas.add(new Carta(12, "RazaHobbits1", "Verde", "0", "hobbits+1", "fase1", getClass().getResource("/Images/Cartas/1.12.png").toExternalForm()));
-    	cartas.add(new Carta(13, "Batalla1", "Roja", "1 astucia", "Rohan+1 || Gondor+1", "fase1", getClass().getResource("/Images/Cartas/1.13.png").toExternalForm()));
-    	cartas.add(new Carta(14, "Batalla2", "Roja", "0", "Enedwatih+1 || Rhovanion+1", "fase1", getClass().getResource("/Images/Cartas/1.14.png").toExternalForm()));
-    	cartas.add(new Carta(15, "Batalla3", "Roja", "0", "Lindon +1 || Arnor+1", "fase1", getClass().getResource("/Images/Cartas/1.15.png").toExternalForm()));
-    	cartas.add(new Carta(16, "Mision1", "Azul", "1 fuerza", "avance+1", "fase1", getClass().getResource("/Images/Cartas/1.16.png").toExternalForm()));
-    	cartas.add(new Carta(17, "Mision2", "Azul", "0", "avance+1", "fase1", getClass().getResource("/Images/Cartas/1.17.png").toExternalForm()));
-    	cartas.add(new Carta(18, "Mision3", "Azul", "1 valor", "avance+1", "fase1", getClass().getResource("/Images/Cartas/1.18.png").toExternalForm()));
-    	cartas.add(new Carta(19, "Mision4", "Azul", "1 oro", "avance+1", "fase1", getClass().getResource("/Images/Cartas/1.19.png").toExternalForm()));
-    	cartas.add(new Carta(20, "Oro1", "Amarilla", "0", "oro+1", "fase1", getClass().getResource("/Images/Cartas/1.20.png").toExternalForm()));
-    	cartas.add(new Carta(21, "Oro2", "Amarilla", "0", "oro+1", "fase1", getClass().getResource("/Images/Cartas/1.21.png").toExternalForm()));
-    	cartas.add(new Carta(22, "Oro3", "Amarilla", "0", "oro+1", "fase1", getClass().getResource("/Images/Cartas/1.22.png").toExternalForm()));
-    	cartas.add(new Carta(23, "Oro4", "Amarilla", "0", "oro+1", "fase1", getClass().getResource("/Images/Cartas/1.23.png").toExternalForm()));
+    	cartas.add(new Carta(1, "RecursoFuerza1", "Gris", "0", "fuerza+1", "fase1", ("/Images/Cartas/1.1.png")));
+    	cartas.add(new Carta(2, "RecursoValor1", "Gris", "0", "valor+1", "fase1", ("/Images/Cartas/1.2.png")));
+    	cartas.add(new Carta(3, "RecursoAstucia1", "Gris", "0", "astucia+1", "fase1", ("/Images/Cartas/1.3.png")));
+    	cartas.add(new Carta(4, "RecursoValor2", "Gris", "0", "valor+1", "fase1", ("/Images/Cartas/1.4.png")));
+    	cartas.add(new Carta(5, "RecursoFuerza2", "Gris", "0", "fuerza+1", "fase1", ("/Images/Cartas/1.5.png")));
+    	cartas.add(new Carta(6, "RecursoAstucia2", "Gris", "0", "astucia+1", "fase1", ("/Images/Cartas/1.6.png")));
+    	cartas.add(new Carta(7, "RecursoCorona1", "Gris", "0", "corona+1", "fase1", ("/Images/Cartas/1.7.png")));
+    	cartas.add(new Carta(8, "RecursoSabiduria1", "Gris", "0", "sabiduria+1", "fase1", ("/Images/Cartas/1.8.png")));
+    	cartas.add(new Carta(9, "RazaElfos1", "Verde", "1 sabiduria", "elfos+1", "fase1", ("/Images/Cartas/1.9.png")));
+    	cartas.add(new Carta(10, "RazaEnanos1", "Verde", "1 corona", "enanos+1", "fase1", ("/Images/Cartas/1.10.png")));
+    	cartas.add(new Carta(11, "RazaHumanos1", "Verde", "0", "humanos+1", "fase1", ("/Images/Cartas/1.11.png")));
+    	cartas.add(new Carta(12, "RazaHobbits1", "Verde", "0", "hobbits+1", "fase1", ("/Images/Cartas/1.12.png")));
+    	cartas.add(new Carta(13, "Batalla1", "Roja", "1 astucia", "Rohan+1 || Gondor+1", "fase1", ("/Images/Cartas/1.13.png")));
+    	cartas.add(new Carta(14, "Batalla2", "Roja", "0", "Enedwatih+1 || Rhovanion+1", "fase1", ("/Images/Cartas/1.14.png")));
+    	cartas.add(new Carta(15, "Batalla3", "Roja", "0", "Lindon +1 || Arnor+1", "fase1", ("/Images/Cartas/1.15.png")));
+    	cartas.add(new Carta(16, "Mision1", "Azul", "1 fuerza", "avance+1", "fase1", ("/Images/Cartas/1.16.png")));
+    	cartas.add(new Carta(17, "Mision2", "Azul", "0", "avance+1", "fase1", ("/Images/Cartas/1.17.png")));
+    	cartas.add(new Carta(18, "Mision3", "Azul", "1 valor", "avance+1", "fase1", ("/Images/Cartas/1.18.png")));
+    	cartas.add(new Carta(19, "Mision4", "Azul", "1 oro", "avance+1", "fase1", ("/Images/Cartas/1.19.png")));
+    	cartas.add(new Carta(20, "Oro1", "Amarilla", "0", "oro+1", "fase1", ("/Images/Cartas/1.20.png")));
+    	cartas.add(new Carta(21, "Oro2", "Amarilla", "0", "oro+1", "fase1", ("/Images/Cartas/1.21.png")));
+    	cartas.add(new Carta(22, "Oro3", "Amarilla", "0", "oro+1", "fase1", ("/Images/Cartas/1.22.png")));
+    	cartas.add(new Carta(23, "Oro4", "Amarilla", "0", "oro+1", "fase1", ("/Images/Cartas/1.23.png")));
     	
     	/*cartas.add(new Carta(24, "RecursoSabiduria3", "Gris", "0", "sabiduria+1", "fase2", "Images/Cartas/2.1.png"));
     	cartas.add(new Carta(25, "RecursoCorona2", "Gris", "0", "corona+1", "fase2", "Images/Cartas/2.2.png"));
@@ -281,6 +290,44 @@ public class Tablero {
 
     
     //Anadir razas
+    public boolean obtenerFichaDeRaza(String nombreRaza) {
+        for (Razas raza : razas) {
+            if (raza.getNombre().equalsIgnoreCase(nombreRaza)) {
+                int fichasRestantes = fichasDisponibles.getOrDefault(raza, 0);
+                if (fichasRestantes > 0) {
+                    fichasDisponibles.put(raza, fichasRestantes - 1); // Resta una ficha
+                    return true; // Ficha obtenida
+                }
+                return false; // Sin fichas disponibles
+            }
+        }
+        return false; // Raza no encontrada
+    }
+    // Inicializar y mostrar razas
+    private void initializeRazas() {
+        // Inicializar lista de razas
+        razas = new ArrayList<>();
+        razas.add(new Razas(1, "Hobbits", getClass().getResource("/Images/Fichas/FichaHobbits.png").toExternalForm()));
+        razas.add(new Razas(2, "Enanos", getClass().getResource("/Images/Fichas/FichaEnanos.png").toExternalForm()));
+        razas.add(new Razas(3, "Humanos", getClass().getResource("/Images/Fichas/FichaHumanos.png").toExternalForm()));
+        razas.add(new Razas(4, "Elfos", getClass().getResource("/Images/Fichas/FichaElfos.png").toExternalForm()));
+        razas.add(new Razas(5, "Magos", getClass().getResource("/Images/Fichas/FichaMagos.png").toExternalForm()));
+        razas.add(new Razas(6, "Ents", getClass().getResource("/Images/Fichas/FichaEnts.png").toExternalForm()));
+
+        // Inicializar mapa de fichas disponibles
+        fichasDisponibles = new HashMap<>();
+        for (Razas raza : razas) {
+            fichasDisponibles.put(raza, 3); // Cada raza tiene 3 fichas inicialmente
+        }
+    }
+    public int consultarFichasDeRaza(String nombreRaza) {
+        for (Razas raza : razas) {
+            if (raza.getNombre().equalsIgnoreCase(nombreRaza)) {
+                return fichasDisponibles.getOrDefault(raza, 0);
+            }
+        }
+        return -1; // Raza no encontrada
+    }
     
     
 }
