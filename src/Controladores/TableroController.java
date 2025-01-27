@@ -62,26 +62,9 @@ public class TableroController {
             {3, 2}, {3, 4}, {3, 6}, {3, 8}, {3, 10},
             {4, 1}, {4, 3}, {4, 5}, {4, 7}, {4, 9}, {4, 11}
     };
-    
-    private final int[][] posicionesFase2 = {
-            {4, 1}, {4, 3}, {4, 5}, {4, 7}, {4, 9}, {4, 11},
-            {3, 2}, {3, 4}, {3, 6}, {3, 8}, {3, 10},
-            {2, 3}, {2, 5}, {2, 7}, {2, 9},
-            {1, 4}, {1, 6}, {1, 8},
-            {0, 5}, {0, 7}
-    };
-    
-    private final int[][] posicionesFase3 = {
-            {0, 5}, {0, 7},
-            {1, 4}, {1, 6}, {1, 8},
-            {2, 3}, {2, 5}, {2, 7}, {2, 9},
-            {3, 2}, {3, 4}, {3, 6}, {3, 8}, {3, 10},
-            {4, 1}, {4, 3}, {4, 5}, {4, 7}, {4, 9}, {4, 11}
-    };
-    
-    
-    
-    
+
+
+
     public void inicializarTablero(JugadorPartida jugadorPartida1, JugadorPartida jugadorPartida2, Tablero tablero) {
         this.jugadorActual = jugadorPartida1; // Configurar el jugador actual como jugador de la Comunidad al inicio
         this.jugadorComunidad = jugadorPartida1;
@@ -97,20 +80,31 @@ public class TableroController {
     }
 
     private void configurarTablero() {
+        tableroCentral.getChildren().clear();
+        mapaCartasBotones.clear();
+
         // Obtener las cartas de la fase actual
         List<Carta> cartasFaseActual = tablero.obtenerCartasDelCapituloActual();
-        
-        // Asegurarse de que hay suficientes cartas para construir la pirámide
-        if (cartasFaseActual.size() < posiciones.length) {
-            throw new IllegalStateException("No hay suficientes cartas para construir la pirámide de esta fase.");
+
+        int[][] posicionesActuales;
+        switch (tablero.getCapitulo()) {
+            case "fase2":
+                posicionesActuales = posiciones;
+                break;
+            case "fase3":
+                posicionesActuales = posiciones;
+                break;
+            default:
+                posicionesActuales = posiciones;
         }
 
         // Colocar todas las cartas en la pirámide
-        for (int i = 0; i < posiciones.length; i++) {
+        for (int i = 0; i < posicionesActuales.length; i++) {
+            if (i >= cartasFaseActual.size()) break;
             Carta carta = cartasFaseActual.get(i);
             Button cartaBtn = crearBotonCarta(carta, i < 14); // Todas excepto la última fila están bloqueadas
-            int row = posiciones[i][0];
-            int col = posiciones[i][1];
+            int row = posicionesActuales[i][0];
+            int col = posicionesActuales[i][1];
             tableroCentral.add(cartaBtn, col, row);
             mapaCartasBotones.put(carta, cartaBtn);
         }
@@ -139,11 +133,26 @@ public class TableroController {
         // Configurar el estado inicial del botón
         cartaBtn.setDisable(bloqueada);
         cartaBtn.setOnAction(e -> {
-            if (!tablero.comprobarRecursosFase1(carta, jugadorActual)) {
+            // Verificar si el jugador cumple los requisitos de la carta antes de robar
+            boolean recursosSuficientes = false;
+            switch (tablero.getCapitulo()) {
+                case "fase1":
+                    recursosSuficientes = tablero.comprobarRecursosFase1(carta, jugadorActual);
+                    break;
+                case "fase2":
+                    recursosSuficientes = tablero.comprobarRecursosFase2(carta, jugadorActual);
+                    break;
+                case "fase3":
+                    recursosSuficientes = tablero.comprobarRecursosFase3(carta, jugadorActual);
+                    break;
+            }
+
+            if (!recursosSuficientes) {
                 mostrarAlerta("No puedes robar esta carta", "No tienes suficientes recursos para robar esta carta.");
                 return;
             }
 
+            // Si se puede robar según las cartas inferiores
             if (puedeRobarse(carta)) {
                 if (jugadorActual.equals(jugadorComunidad)) {
                     cartasJugador1.getItems().add(carta.getNombre());
@@ -151,8 +160,22 @@ public class TableroController {
                     cartasJugador2.getItems().add(carta.getNombre());
                 }
                 cartaBtn.setVisible(false); // Ocultar el botón después de seleccionarlo
-                tablero.aplicarEfectoCartaFase1(carta, jugadorActual); // Aplica el efecto según la fase
+
+                // Aplicar el efecto correspondiente a la fase actual
+                switch (tablero.getCapitulo()) {
+                    case "fase1":
+                        tablero.aplicarEfectoCartaFase1(carta, jugadorActual);
+                        break;
+                    case "fase2":
+                        tablero.aplicarEfectoCartaFase2(carta, jugadorActual);
+                        break;
+                    case "fase3":
+                        tablero.aplicarEfectoCartaFase3(carta, jugadorActual);
+                        break;
+                }
+
                 actualizarContadores(jugadorActual, jugadorActual.equals(jugadorComunidad));
+                verificarCambioDeFase(); // Verificar si todas las cartas han sido jugadas
                 cambiarTurno();
                 actualizarCartasHabilitadas();
             } else {
@@ -160,9 +183,55 @@ public class TableroController {
             }
         });
 
+        // Agregar opción para descartar la carta
+        cartaBtn.setOnContextMenuRequested(e -> {
+            descartarCarta(carta, cartaBtn);
+        });
+
         return cartaBtn;
     }
 
+
+    private void verificarCambioDeFase() {
+        boolean todasCartasJugadas = mapaCartasBotones.values().stream().noneMatch(Button::isVisible);
+
+        if (todasCartasJugadas) {
+            switch (tablero.getCapitulo()) {
+                case "fase1":
+                    tablero.setCapitulo("fase2");
+                    configurarTablero();
+                    break;
+                case "fase2":
+                    tablero.setCapitulo("fase3");
+                    configurarTablero();
+                    break;
+                case "fase3":
+                    mostrarAlerta("Juego terminado", "No quedan más cartas por jugar.");
+                    break;
+            }
+        }
+    }
+
+    private void descartarCarta(Carta carta, Button cartaBtn) {
+        // Confirmar si se desea descartar la carta
+        Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacion.setTitle("Descartar carta");
+        confirmacion.setHeaderText(null);
+        confirmacion.setContentText("¿Estás seguro de que deseas descartar esta carta?");
+        confirmacion.showAndWait().ifPresent(response -> {
+            if (response.getText().equals("Aceptar")) {
+                // Ocultar la carta descartada
+                cartaBtn.setVisible(false);
+                // Eliminar la carta del tablero
+                tablero.eliminarCarta(carta);
+                // Cambiar de turno
+                cambiarTurno();
+                // Actualizar las cartas habilitadas
+                verificarCambioDeFase();
+                actualizarCartasHabilitadas();
+            }
+        });
+    }
 
     private void actualizarContadores(JugadorPartida jugador, boolean esComunidad) {
         if (esComunidad) {
