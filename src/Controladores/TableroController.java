@@ -126,7 +126,7 @@ public class TableroController {
         Button cartaBtn = new Button();
 
         // Configurar el estilo del botón
-        cartaBtn.setStyle("-fx-padding: 5; -fx-border-color: black; -fx-border-radius: 5;");
+        cartaBtn.setStyle("-fx-padding: 4; -fx-border-color: black; -fx-border-radius: 4;");
 
         // Cargar la imagen directamente
         javafx.scene.image.ImageView imagen = new javafx.scene.image.ImageView(

@@ -202,7 +202,7 @@ public class Tablero {
     }
 
     // Mezclar las cartas de cada capítulo
-    private void mezclarCartasCapitulos() {
+    public void mezclarCartasCapitulos() {
         Collections.shuffle(cartasCapitulo1);
         Collections.shuffle(cartasCapitulo2);
         Collections.shuffle(cartasCapitulo3);
