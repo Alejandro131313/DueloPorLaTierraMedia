@@ -462,7 +462,8 @@ public class Tablero {
                 jugador.setAstucia(jugador.getAstucia() + 2);
                 System.out.println("Se añadió +2 a la astucia de " + jugador.getJugador().getNombre());
                 break;
-
+            
+       
             case "fuerza+2":
                 jugador.setFuerza(jugador.getFuerza() + 2);
                 System.out.println("Se añadió +2 a la fuerza de " + jugador.getJugador().getNombre());
@@ -473,6 +474,8 @@ public class Tablero {
                 System.out.println("Se añadió +2 al valor de " + jugador.getJugador().getNombre());
                 break;
                 
+                
+          
                 // Caso con dos opciones 50 50%
             case "corona+1 || sabiduria+1":
                 decision = random.nextInt(2); // Genera 0 o 1
@@ -759,6 +762,8 @@ public class Tablero {
                     System.out.println("No tienes suficiente oro. Requiere: 1 oro.");
                     return false;
                 }
+           
+                
 
             case "1 oro && 1 astucia":
                 if (jugador.getOro() >= 1 && jugador.getAstucia() >= 1) {
@@ -767,7 +772,53 @@ public class Tablero {
                     System.out.println("No cumples los requisitos. Requiere: 1 oro y 1 astucia.");
                     return false;
                 }
+                
+           //añadido samuel
+            case "1 astucia && 1 fuerza && 1 valor":
+                if (jugador.getAstucia() >= 1 && jugador.getFuerza() >= 1 && jugador.getValor() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 1 astucia, 1 fuerza y 1 valor.");
+                    return false;
+                }
+            case "2 fuerza && 1 sabiduria":
+                if (jugador.getFuerza() >= 2 && jugador.getSabiduria() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 2 fuerza y 1 sabiduría.");
+                    return false;
+                }
 
+            case "3 astucia":
+                if (jugador.getAstucia() >= 3) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 3 astucia.");
+                    return false;
+                }
+            case "1 fuerza && 2 valor":
+                if (jugador.getFuerza() >= 1 && jugador.getValor() >= 2) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 1 fuerza y 2 valor.");
+                    return false;
+                }
+            case "corona+1 || sabiduria+1":
+                if (jugador.getCorona() >= 1 || jugador.getSabiduria() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 1 corona o 1 sabiduría.");
+                    return false;
+                }
+            case "astucia+1 || fuerza+1 || valor+1":
+                if (jugador.getAstucia() >= 1 || jugador.getFuerza() >= 1 || jugador.getValor() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 1 astucia, 1 fuerza o 1 valor.");
+                    return false;
+                }
+
+              //hasta aqui
             case "1 oro && 1 corona && 1 sabiduria":
                 if (jugador.getOro() >= 1 && jugador.getCorona() >= 1 && jugador.getSabiduria() >= 1) {
                     return true;
@@ -807,6 +858,8 @@ public class Tablero {
                     System.out.println("No cumples los requisitos. Requiere: 2 valor y 1 sabiduría.");
                     return false;
                 }
+             
+                
 
             default:
                 System.out.println("Recurso requerido no reconocido: " + carta.getRecursosQueRequiere());
@@ -869,6 +922,107 @@ public class Tablero {
                     return true;
                 } else {
                     System.out.println("No tienes suficiente oro. Requiere: 3 oro.");
+                    return false;
+                }
+                //Añadido por Samuel por si esta mal
+            case "2 fuerza && 2 valor":
+                if (jugador.getFuerza() >= 2 && jugador.getValor() >= 2) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 2 fuerza y 2 valor.");
+                    return false;
+                }
+            case "2 astucia && 1 valor && 2 sabiduria":
+                if (jugador.getAstucia() >= 2 && jugador.getValor() >= 1 && jugador.getSabiduria() >= 2) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 2 astucia, 1 valor y 2 sabiduría.");
+                    return false;
+                }
+            case "3 astucia && 2 corona":
+                if (jugador.getAstucia() >= 3 && jugador.getCorona() >= 2) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 3 astucia y 2 corona.");
+                    return false;
+                }
+            case "2 astucia && 2 valor":
+                if (jugador.getAstucia() >= 2 && jugador.getValor() >= 2) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 2 astucia y 2 valor.");
+                    return false;
+                }
+            case "1 astucia && 2 fuerza && 2 valor":
+                if (jugador.getAstucia() >= 1 && jugador.getFuerza() >= 2 && jugador.getValor() >= 2) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 1 astucia, 2 fuerza y 2 valor.");
+                    return false;
+                }
+            case "3 astucia && 1 valor":
+                if (jugador.getAstucia() >= 3 && jugador.getValor() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 3 astucia y 1 valor.");
+                    return false;
+                }
+            case "2 fuerza && 1 corona":
+                if (jugador.getFuerza() >= 2 && jugador.getCorona() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 2 fuerza y 1 corona.");
+                    return false;
+                }
+            case "1 astucia && 3 fuerza":
+                if (jugador.getAstucia() >= 1 && jugador.getFuerza() >= 3) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 1 astucia y 3 fuerza.");
+                    return false;
+                }
+            case "1 astucia && 1 corona && 1 sabiduria":
+                if (jugador.getAstucia() >= 1 && jugador.getCorona() >= 1 && jugador.getSabiduria() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 1 astucia, 1 corona y 1 sabiduría.");
+                    return false;
+                }
+            case "2 astucia && 1 valor":
+                if (jugador.getAstucia() >= 2 && jugador.getValor() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 2 astucia y 1 valor.");
+                    return false;
+                }
+            case "3 valor && 1 corona":
+                if (jugador.getValor() >= 3 && jugador.getCorona() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 3 valor y 1 corona.");
+                    return false;
+                }
+          
+            case "1 astucia && 1 fuerza && 1 valor && 1 sabiduria":
+                if (jugador.getAstucia() >= 1 && jugador.getFuerza() >= 1 && jugador.getValor() >= 1 && jugador.getSabiduria() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 1 astucia, 1 fuerza, 1 valor y 1 sabiduría.");
+                    return false;
+                }
+
+            case "3 fuerza && 1 sabiduria":
+                if (jugador.getFuerza() >= 3 && jugador.getSabiduria() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 3 fuerza y 1 sabiduría.");
+                    return false;
+                }
+            case "1 fuerza && 1 valor && 1 sabiduria":
+                if (jugador.getFuerza() >= 1 && jugador.getValor() >= 1 && jugador.getSabiduria() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 1 fuerza, 1 valor y 1 sabiduría.");
                     return false;
                 }
 

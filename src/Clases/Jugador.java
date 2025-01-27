@@ -1,6 +1,10 @@
 package Clases;
 
+import java.awt.Desktop;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -55,10 +59,13 @@ public class Jugador {
     
     
     public void escribirEnFicheroHTML(String nombreFichero) {
+    	 if (!nombreFichero.endsWith(".html")) {
+    	        nombreFichero += ".html";
+    	    }
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(nombreFichero))) {
             bw.write("<!DOCTYPE html>");
             bw.newLine();
-            bw.write("<html>");
+            bw.write("<html lang=\"es\">");
             bw.newLine();
             bw.write("<head>");
             bw.newLine();
@@ -101,6 +108,17 @@ public class Jugador {
             bw.write("</html>");
         } catch (IOException e) {
             System.out.println("Ocurrió un error al escribir en el fichero: " + e.getMessage());
+            return;
+        }
+        try {
+            File archivo = new File(nombreFichero);
+            if (archivo.exists() && Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().browse(archivo.toURI());
+            } else {
+                System.out.println("No se pudo abrir el fichero automáticamente.");
+            }
+        } catch (IOException e) {
+            System.out.println("Ocurrió un error al intentar abrir el fichero: " + e.getMessage());
         }
     }
 
