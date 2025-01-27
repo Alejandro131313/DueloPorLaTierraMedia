@@ -671,6 +671,10 @@ public class Tablero {
             case "oro-1 && movimiento2":
                 System.out.println("Se descontó 1 de oro y se añadieron 2 movimientos.");
                 break;
+            case "soldado-1 && oro-2 && movimiento1":
+                System.out.println("Se descontó 1 de oro y se añadieron 2 movimientos.");
+                break;
+              
 
             default:
                 System.out.println("Efecto no reconocido: " + carta.getEfecto());
@@ -858,9 +862,34 @@ public class Tablero {
                     System.out.println("No cumples los requisitos. Requiere: 2 valor y 1 sabiduría.");
                     return false;
                 }
-             
-                
-
+            case "2 valor && 1 corona":
+                if (jugador.getValor() >= 2 && jugador.getCorona() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 2 valor y 1 corona.");
+                    return false;
+                }
+            case "2 astucia && 1 sabiduria":
+                if (jugador.getAstucia() >= 2 && jugador.getSabiduria() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 2 astucia y 1 sabiduría.");
+                    return false;
+                }
+            case "1 astucia && 1 fuerza":
+                if (jugador.getAstucia() >= 1 && jugador.getSabiduria() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 1 astucia y 1 sabiduría.");
+                    return false;
+                }
+            case "1 valor && 1 fuerza":
+                if (jugador.getAstucia() >= 1 && jugador.getSabiduria() >= 1) {
+                    return true;
+                } else {
+                    System.out.println("No cumples los requisitos. Requiere: 1 valor y 1 fuerza.");
+                    return false;
+                }
             default:
                 System.out.println("Recurso requerido no reconocido: " + carta.getRecursosQueRequiere());
                 return false;
