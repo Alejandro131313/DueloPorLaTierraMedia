@@ -119,8 +119,6 @@ public class TableroController {
             System.out.println("La carta no afecta el movimiento de las fichas.");
         }
     }
-    
-   
 
     private final int[][] posiciones = {
             {0, 5}, {0, 7},
@@ -137,10 +135,6 @@ public class TableroController {
         this.jugadorComunidad = jugadorPartida1;
         this.jugadorMordor = jugadorPartida2;
         this.tablero = tablero;
-
-        // Actualizar los nombres de los jugadores
-        nombreJugadorComunidad.setText(jugadorComunidad.getJugador().getNombre());
-        nombreJugadorMordor.setText(jugadorMordor.getJugador().getNombre());
         
         Label labelSauron = (Label) pistaCarrera.getChildren().get(posicionSauron);
         labelSauron.setStyle("-fx-border-color: red; -fx-background-color:pink; -fx-padding: 10;");
@@ -149,6 +143,10 @@ public class TableroController {
         Label labelComunidad = (Label) pistaCarrera.getChildren().get(posicionComunidad);
         labelComunidad.setStyle("-fx-border-color: blue; -fx-background-color: green; -fx-padding: 10;");
         
+
+        // Actualizar los nombres de los jugadores
+        nombreJugadorComunidad.setText(jugadorComunidad.getJugador().getNombre());
+        nombreJugadorMordor.setText(jugadorMordor.getJugador().getNombre());
 
         // Configurar el tablero de juego (por ejemplo, las cartas y lugares clave)
         configurarTablero();
@@ -219,7 +217,6 @@ public class TableroController {
                     recursosSuficientes = tablero.comprobarRecursosFase2(carta, jugadorActual);
                     procesarMovimientoPorCarta(carta);
                     break;
-                    
                 case "fase3":
                     recursosSuficientes = tablero.comprobarRecursosFase3(carta, jugadorActual);
                     procesarMovimientoPorCarta(carta);
