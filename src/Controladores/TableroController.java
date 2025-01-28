@@ -259,15 +259,15 @@ public class TableroController {
             switch (tablero.getCapitulo()) {
                 case "fase1":
                     recursosSuficientes = tablero.comprobarRecursosFase1(carta, jugadorActual);
-                    procesarMovimientoPorCarta(carta);
+                   
                     break;
                 case "fase2":
                     recursosSuficientes = tablero.comprobarRecursosFase2(carta, jugadorActual);
-                    procesarMovimientoPorCarta(carta);
+                   
                     break;
                 case "fase3":
                     recursosSuficientes = tablero.comprobarRecursosFase3(carta, jugadorActual);
-                    procesarMovimientoPorCarta(carta);
+                   
                     break;
             }
 
@@ -289,12 +289,15 @@ public class TableroController {
                 switch (tablero.getCapitulo()) {
                     case "fase1":
                         tablero.aplicarEfectoCartaFase1(carta, jugadorActual);
+                        procesarMovimientoPorCarta(carta);
                         break;
                     case "fase2":
                         tablero.aplicarEfectoCartaFase2(carta, jugadorActual);
+                        procesarMovimientoPorCarta(carta);
                         break;
                     case "fase3":
                         tablero.aplicarEfectoCartaFase3(carta, jugadorActual);
+                        procesarMovimientoPorCarta(carta);
                         break;
                 }
 
