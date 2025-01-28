@@ -4,6 +4,41 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.TableroController">
+<top>
+		<HBox fx:id="pistaCarrera" alignment="CENTER" spacing="5"
+			style="-fx-padding: 10;">
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+		
+        </HBox>
+    </top>
 
     <!-- Zona del Jugador 1 -->
     <left>
