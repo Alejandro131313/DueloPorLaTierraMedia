@@ -10,6 +10,8 @@ import Clases.LugarClave;
 import Clases.Razas;
 import Clases.Tablero;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,6 +20,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class TableroController {
 
@@ -388,7 +392,11 @@ public class TableroController {
             entsMordor.setText(String.valueOf(jugador.getEnts()));
         }
     }
+
     
+    
+   
+
 
     private void actualizarFondoTurno() {
         if (jugadorActual.equals(jugadorComunidad)) {
@@ -403,10 +411,10 @@ public class TableroController {
         if (jugadorActual.equals(jugadorComunidad)) {
             jugadorActual = jugadorMordor;
         } else {
-         
-        	jugadorActual = jugadorComunidad;
+            jugadorActual = jugadorComunidad;
         }
         actualizarFondoTurno();
+        verificarVictoria(); // Verificar si alguien ha ganado
     }
 
     private boolean puedeRobarse(Carta carta) {
@@ -503,4 +511,129 @@ public class TableroController {
             botonRazas.getChildren().add(botonRaza);
         }
     }
+    
+    private void verificarVictoria() {
+        // La Comunidad gana si llega al final del camino
+        if (posicionComunidad <= 0) {
+            mostrarAlerta("¡Victoria!", "La Comunidad ha llegado al final del camino y ha ganado la partida.");
+            finalizarJuego();
+            return;
+        }
+ 
+        // Sauron gana si alcanza o supera a la Comunidad en la pista de carrera
+        if (posicionSauron >= posicionComunidad) {
+            mostrarAlerta("¡Derrota!", "Sauron ha alcanzado o superado a la Comunidad y ha ganado la partida.");
+            finalizarJuego();
+            return;
+        }
+ 
+        // Gana el jugador que haya conquistado más de 3 lugares clave
+        if (lugaresClaveRobadosComunidad.getItems().size() > 3) {
+            mostrarAlerta("¡Victoria!", "La Comunidad ha conquistado más de 3 lugares clave y ha ganado la partida.");
+            finalizarJuego();
+            return;
+        }
+ 
+        if (lugaresClaveRobadosMordor.getItems().size() > 3) {
+            mostrarAlerta("¡Derrota!", "Sauron ha conquistado más de 3 lugares clave y ha ganado la partida.");
+            finalizarJuego();
+            return;
+        }
+ 
+        // La Comunidad o Sauron ganan si tienen al menos una ficha de cada raza
+        if (tieneFichasDeTodasLasRazas(jugadorComunidad)) {
+            mostrarAlerta("¡Victoria!", "La Comunidad ha reunido una ficha de cada raza y ha ganado la partida.");
+            finalizarJuego();
+            return;
+        }
+ 
+        if (tieneFichasDeTodasLasRazas(jugadorMordor)) {
+            mostrarAlerta("¡Derrota!", "Sauron ha reunido una ficha de cada raza y ha ganado la partida.");
+            finalizarJuego();
+            return;
+        }
+ 
+        System.out.println("No se cumplen condiciones de victoria. El juego continúa.");
+    }
+ 
+    // Método auxiliar para verificar si un jugador tiene una ficha de cada raza
+    private boolean tieneFichasDeTodasLasRazas(JugadorPartida jugador) {
+        return jugador.getHobbits() > 0 &&
+               jugador.getEnanos() > 0 &&
+               jugador.getHumanos() > 0 &&
+               jugador.getElfos() > 0 &&
+               jugador.getMagos() > 0 &&
+               jugador.getEnts() > 0;
+    }
+    
+    private void finalizarJuego() {
+        // Crear una alerta personalizada para el mensaje de victoria/derrota
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Fin del Juego");
+        alerta.setHeaderText("¡Juego Terminado!");
+        
+        // Determinar el ganador basándonos en las condiciones del juego
+        String mensajeFinal;
+        if (posicionComunidad <= 0 || tieneFichasDeTodasLasRazas(jugadorComunidad) || lugaresClaveRobadosComunidad.getItems().size() > 3) {
+            mensajeFinal = "🎉 ¡La Comunidad ha ganado la partida! 🏆\n\n";
+            mensajeFinal += "¡El bien triunfa sobre el mal en la Tierra Media! 🌿✨";
+        } else {
+            mensajeFinal = "💀 ¡Sauron ha ganado la partida! 🔥\n\n";
+            mensajeFinal += "La oscuridad domina la Tierra Media... 🕳️🖤";
+        }
+ 
+        // Agregar el mensaje final a la alerta
+        alerta.setContentText(mensajeFinal);
+ 
+        // Mostrar la alerta
+        alerta.showAndWait();
+ 
+        // Acción guapa: Abrir ventana con animaciones o imágenes (opcional)
+        mostrarPantallaFinal(mensajeFinal);
+ 
+        // Salir del juego (puedes personalizar esta acción para reiniciar o regresar al menú)
+        System.out.println("El juego ha terminado.");
+        System.exit(0); // Salir del juego (puedes reemplazar con un cambio de escena si deseas regresar al menú principal)
+    }
+ 
+    // Método para mostrar pantalla final con diseño atractivo
+    private void mostrarPantallaFinal(String mensaje) {
+        Stage ventanaFinal = new Stage();
+        ventanaFinal.setTitle("Resultado Final");
+ 
+        // Crear un diseño visual para la ventana
+        VBox diseño = new VBox(20);
+        diseño.setAlignment(Pos.CENTER);
+        diseño.setStyle("-fx-background-color: #333; -fx-padding: 20px;");
+ 
+        Label etiquetaTitulo = new Label("Fin del Juego");
+        etiquetaTitulo.setStyle("-fx-font-size: 24px; -fx-text-fill: white; -fx-font-weight: bold;");
+ 
+        Label etiquetaMensaje = new Label(mensaje);
+        etiquetaMensaje.setWrapText(true);
+        etiquetaMensaje.setStyle("-fx-font-size: 16px; -fx-text-fill: white;");
+ 
+        // Botón para cerrar la ventana
+        Button botonCerrar = new Button("Cerrar");
+        botonCerrar.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10px;");
+        botonCerrar.setOnAction(event -> ventanaFinal.close());
+ 
+        // Agregar elementos al diseño
+        diseño.getChildren().addAll(etiquetaTitulo, etiquetaMensaje, botonCerrar);
+ 
+        // Mostrar la ventana
+        Scene escena = new Scene(diseño, 400, 300);
+        ventanaFinal.setScene(escena);
+        ventanaFinal.show();
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

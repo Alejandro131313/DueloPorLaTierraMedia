@@ -158,6 +158,13 @@ public class ConfigurarPartidaController {
             Tablero tablero = new Tablero(1, "Disposición inicial", "fase1");
             Partida partida = new Partida(1, "12:00", "2025-01-01", tablero);
             JugadorPartida jugadorPartida1 = new JugadorPartida(jugador1, partida, 0, "Comunidad", null, null, null);
+            
+            
+            jugadorPartida1.setFuerza(20); jugadorPartida1.setValor(20); jugadorPartida1.setAstucia(20); jugadorPartida1.setSabiduria(20); jugadorPartida1.setCorona(20);
+            
+            
+            jugadorPartida1.setOro(20);
+            
             JugadorPartida jugadorPartida2 = new JugadorPartida(jugador2, partida, 0, "Sauron", null, null, null);
 
             // Configurar los jugadores y el tablero en el controlador del tablero
