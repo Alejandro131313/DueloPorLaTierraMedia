@@ -68,11 +68,75 @@ public class TableroController {
     @FXML
     private ImageView iconoHobbitsMordor, iconoEnanosMordor, iconoHumanosMordor, iconoElfosMordor, iconoMagosMordor, iconoEntsMordor;
     
-    
+    @FXML
+    private HBox pistaCarrera;
+
 
     private JugadorPartida jugadorActual;
     private JugadorPartida jugadorComunidad;
     private JugadorPartida jugadorMordor;
+    
+  
+    private int posicionSauron = 0; 
+    private int posicionComunidad = 14; 
+    
+    private void moverFicha(int posicionActual, int cantidad, String colorFicha) {
+        int nuevaPosicion = posicionActual + cantidad;
+
+
+        if (nuevaPosicion >= 0 && nuevaPosicion < pistaCarrera.getChildren().size()) {
+           
+            Label labelActual = (Label) pistaCarrera.getChildren().get(posicionActual);
+            labelActual.setStyle("-fx-padding: 10; -fx-background-color: white; -fx-border-color: black;");
+
+           
+            posicionActual = nuevaPosicion;
+
+        
+            Label nuevoLabel = (Label) pistaCarrera.getChildren().get(posicionActual);
+            nuevoLabel.setStyle("-fx-border-color: " + colorFicha + "; -fx-background-color: " + obtenerColorFondoFicha(colorFicha) + "; -fx-padding: 10;");
+
+            System.out.println("Ficha (" + colorFicha + ") se movió a la posición: " + (posicionActual + 1));
+        } else {
+            
+            System.out.println("Movimiento fuera de rango para la ficha (" + colorFicha + ").");
+        }
+
+ 
+        if (colorFicha.equals("red")) {
+            posicionSauron = posicionActual;
+        } else if (colorFicha.equals("blue")) {
+            posicionComunidad = posicionActual;
+        }
+    }
+
+    // Método auxiliar para obtener el color de fondo según la ficha
+    private String obtenerColorFondoFicha(String colorFicha) {
+        if (colorFicha.equals("red")) {
+            return "pink"; // Color de fondo para Sauron
+        } else if (colorFicha.equals("blue")) {
+            return "green"; // Color de fondo para La Comunidad
+        } else {
+            return "yellow"; // Color por defecto para otras fichas
+        }
+    }
+    private void procesarMovimientoPorCarta(Carta carta) {
+       
+        String efecto = carta.getEfecto();
+
+        if (efecto.startsWith("avance+")) {
+            int avance = Integer.parseInt(efecto.replace("avance+", ""));
+           
+            moverFicha(posicionSauron, avance, "red");
+            moverFicha(posicionComunidad, avance, "blue");
+        } else if (efecto.equals("oro+1")) {
+            
+            moverFicha(posicionSauron, 1, "red");
+        } else {
+            System.out.println("La carta no afecta el movimiento de las fichas.");
+        }
+    }
+    
 
     private final int[][] posiciones = {
             {0, 5}, {0, 7},
@@ -94,6 +158,15 @@ public class TableroController {
         //Actualizr nombrs de jguadores
         nombreJugadorComunidad.setText(jugadorComunidad.getJugador().getNombre());
         nombreJugadorMordor.setText(jugadorMordor.getJugador().getNombre());
+        
+        Label labelSauron = (Label) pistaCarrera.getChildren().get(posicionSauron);
+        labelSauron.setStyle("-fx-border-color: red; -fx-background-color:pink; -fx-padding: 10;");
+        
+
+        Label labelComunidad = (Label) pistaCarrera.getChildren().get(posicionComunidad);
+        labelComunidad.setStyle("-fx-border-color: blue; -fx-background-color: green; -fx-padding: 10;");
+        
+        
         configurarTablero();
         actualizarFondoTurno();
     }
@@ -185,12 +258,15 @@ public class TableroController {
             switch (tablero.getCapitulo()) {
                 case "fase1":
                     recursosSuficientes = tablero.comprobarRecursosFase1(carta, jugadorActual);
+                    procesarMovimientoPorCarta(carta);
                     break;
                 case "fase2":
                     recursosSuficientes = tablero.comprobarRecursosFase2(carta, jugadorActual);
+                    procesarMovimientoPorCarta(carta);
                     break;
                 case "fase3":
                     recursosSuficientes = tablero.comprobarRecursosFase3(carta, jugadorActual);
+                    procesarMovimientoPorCarta(carta);
                     break;
             }
 

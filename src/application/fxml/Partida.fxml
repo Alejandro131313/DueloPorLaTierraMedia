@@ -5,6 +5,10 @@
 <?import javafx.scene.image.ImageView?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.TableroController">
+
+
+
+
     <!-- Zona del Jugador 1 -->
     <left>
         <VBox fx:id="zonaJugador1" spacing="10" alignment="CENTER" style="-fx-padding: 10;" prefWidth="160" maxWidth="160">
@@ -96,4 +100,41 @@
             <GridPane fx:id="tableroCentral" alignment="CENTER" hgap="10" vgap="10" style="-fx-padding: 10;" />
         </VBox>
     </center>
+     <!-- Carrera Anillo -->
+    <top>
+		<HBox fx:id="pistaCarrera" alignment="CENTER" spacing="5"
+			style="-fx-padding: 10;">
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+		
+        </HBox>
+    </top>
+    
 </BorderPane>
