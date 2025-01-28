@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 public class MainPartida {
     public static void main(String[] args) {
-        // Crear jugadores
+        
+    	System.setProperty("prism.order", "sw");
+    	// Crear jugadores
         Jugador jugador1 = new Jugador(1, "Pedro", 30, 0);
         Jugador jugador2 = new Jugador(2, "Paco", 25, 0);
 

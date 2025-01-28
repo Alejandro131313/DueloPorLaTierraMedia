@@ -57,7 +57,6 @@ public class JugadorPartida {
 
 
     public JugadorPartida(String comunidad, String string) {
-		// TODO Auto-generated constructor stub
 	}
 
 
@@ -79,7 +78,7 @@ public class JugadorPartida {
                 disponibles.add(unidad);
             }
         }
-        return disponibles;  // Lista de unidades disponibles del tipo solicitado
+        return disponibles;
     }
 
     // Métodos para contar unidades disponibles

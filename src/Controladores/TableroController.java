@@ -14,6 +14,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
@@ -27,11 +29,17 @@ public class TableroController {
 
     @FXML
     private ListView<String> cartasJugador2;
+    @FXML
+    private ListView<String> lugaresClaveRobadosComunidad;
+
+    @FXML
+    private ListView<String> lugaresClaveRobadosMordor;
 
     private Tablero tablero;
     private Map<Carta, Button> mapaCartasBotones = new HashMap<>();
     @FXML
     private HBox botonLugaresClave;
+    
     @FXML
     private HBox botonRazas;
 
@@ -40,16 +48,27 @@ public class TableroController {
 
     @FXML
     private Label nombreJugadorMordor;
-
+    
     @FXML
     private Label oroComunidad, fuerzaComunidad, valorComunidad, astuciaComunidad, sabiduriaComunidad, coronaComunidad;
     @FXML
+    private ImageView iconoOroComunidad, iconoFuerzaComunidad, iconoValorComunidad, iconoAstuciaComunidad, iconoSabiduriaComunidad, iconoCoronaComunidad;
+    @FXML
     private Label hobbitsComunidad, enanosComunidad, humanosComunidad, elfosComunidad, magosComunidad, entsComunidad;
-
+    @FXML
+    private ImageView iconoHobbitsComunidad, iconoEnanosComunidad, iconoHumanosComunidad, iconoElfosComunidad, iconoMagosComunidad, iconoEntsComunidad;
+    
+    
     @FXML
     private Label oroMordor, fuerzaMordor, valorMordor, astuciaMordor, sabiduriaMordor, coronaMordor;
     @FXML
+    private ImageView iconoOroMordor, iconoFuerzaMordor, iconoValorMordor, iconoAstuciaMordor, iconoSabiduriaMordor, iconoCoronaMordor;
+    @FXML
     private Label hobbitsMordor, enanosMordor, humanosMordor, elfosMordor, magosMordor, entsMordor;
+    @FXML
+    private ImageView iconoHobbitsMordor, iconoEnanosMordor, iconoHumanosMordor, iconoElfosMordor, iconoMagosMordor, iconoEntsMordor;
+    
+    
 
     private JugadorPartida jugadorActual;
     private JugadorPartida jugadorComunidad;
@@ -66,24 +85,59 @@ public class TableroController {
 
 
     public void inicializarTablero(JugadorPartida jugadorPartida1, JugadorPartida jugadorPartida2, Tablero tablero) {
-        this.jugadorActual = jugadorPartida1; // Configurar el jugador actual como jugador de la Comunidad al inicio
-        this.jugadorComunidad = jugadorPartida1;
-        this.jugadorMordor = jugadorPartida2;
+        this.jugadorActual = jugadorPartida1; //Config inicial
+        this.jugadorMordor = jugadorPartida1;
+        this.jugadorComunidad = jugadorPartida2;
         this.tablero = tablero;
-
-        // Actualizar los nombres de los jugadores
+        inicializarIconos();
+        inicializarIconosRazas();
+        //Actualizr nombrs de jguadores
         nombreJugadorComunidad.setText(jugadorComunidad.getJugador().getNombre());
         nombreJugadorMordor.setText(jugadorMordor.getJugador().getNombre());
-
-        // Configurar el tablero de juego (por ejemplo, las cartas y lugares clave)
         configurarTablero();
+        actualizarFondoTurno();
+    }
+    private void inicializarIconos() {
+        //JugadorComunidad
+        iconoOroComunidad.setImage(new Image(getClass().getResource("/Images/Fichas/IconoOro.png").toExternalForm()));
+        iconoFuerzaComunidad.setImage(new Image(getClass().getResource("/Images/Fichas/IconoFuerza.png").toExternalForm()));
+        iconoValorComunidad.setImage(new Image(getClass().getResource("/Images/Fichas/IconoValor.png").toExternalForm()));
+        iconoAstuciaComunidad.setImage(new Image(getClass().getResource("/Images/Fichas/IconoAstucia.png").toExternalForm()));
+        iconoSabiduriaComunidad.setImage(new Image(getClass().getResource("/Images/Fichas/IconoSabiduria.png").toExternalForm()));
+        iconoCoronaComunidad.setImage(new Image(getClass().getResource("/Images/Fichas/IconoCorona.png").toExternalForm()));
+
+        //JugadorMordor
+        iconoOroMordor.setImage(new Image(getClass().getResource("/Images/Fichas/IconoOro.png").toExternalForm()));
+        iconoFuerzaMordor.setImage(new Image(getClass().getResource("/Images/Fichas/IconoFuerza.png").toExternalForm()));
+        iconoValorMordor.setImage(new Image(getClass().getResource("/Images/Fichas/IconoValor.png").toExternalForm()));
+        iconoAstuciaMordor.setImage(new Image(getClass().getResource("/Images/Fichas/IconoAstucia.png").toExternalForm()));
+        iconoSabiduriaMordor.setImage(new Image(getClass().getResource("/Images/Fichas/IconoSabiduria.png").toExternalForm()));
+        iconoCoronaMordor.setImage(new Image(getClass().getResource("/Images/Fichas/IconoCorona.png").toExternalForm()));
+    }
+    private void inicializarIconosRazas() {
+        //JugadorComunidad
+        iconoHobbitsComunidad.setImage(new Image(getClass().getResource("/Images/Fichas/FichaHobbits.png").toExternalForm()));
+        iconoEnanosComunidad.setImage(new Image(getClass().getResource("/Images/Fichas/FichaEnanos.png").toExternalForm()));
+        iconoHumanosComunidad.setImage(new Image(getClass().getResource("/Images/Fichas/FichaHumanos.png").toExternalForm()));
+        iconoElfosComunidad.setImage(new Image(getClass().getResource("/Images/Fichas/FichaElfos.png").toExternalForm()));
+        iconoMagosComunidad.setImage(new Image(getClass().getResource("/Images/Fichas/FichaMagos.png").toExternalForm()));
+        iconoEntsComunidad.setImage(new Image(getClass().getResource("/Images/Fichas/FichaEnts.png").toExternalForm()));
+
+        //JugadorMordor
+        iconoHobbitsMordor.setImage(new Image(getClass().getResource("/Images/Fichas/FichaHobbits.png").toExternalForm()));
+        iconoEnanosMordor.setImage(new Image(getClass().getResource("/Images/Fichas/FichaEnanos.png").toExternalForm()));
+        iconoHumanosMordor.setImage(new Image(getClass().getResource("/Images/Fichas/FichaHumanos.png").toExternalForm()));
+        iconoElfosMordor.setImage(new Image(getClass().getResource("/Images/Fichas/FichaElfos.png").toExternalForm()));
+        iconoMagosMordor.setImage(new Image(getClass().getResource("/Images/Fichas/FichaMagos.png").toExternalForm()));
+        iconoEntsMordor.setImage(new Image(getClass().getResource("/Images/Fichas/FichaEnts.png").toExternalForm()));
     }
 
     private void configurarTablero() {
         tableroCentral.getChildren().clear();
+        botonLugaresClave.getChildren().clear();
         mapaCartasBotones.clear();
 
-        // Obtener las cartas de la fase actual
+        //Obtener cartas de la fase actual
         List<Carta> cartasFaseActual = tablero.obtenerCartasDelCapituloActual();
 
         int[][] posicionesActuales;
@@ -98,7 +152,7 @@ public class TableroController {
                 posicionesActuales = posiciones;
         }
 
-        // Colocar todas las cartas en la pirámide
+        //Colocar todas las cartas enpirámide
         for (int i = 0; i < posicionesActuales.length; i++) {
             if (i >= cartasFaseActual.size()) break;
             Carta carta = cartasFaseActual.get(i);
@@ -109,7 +163,7 @@ public class TableroController {
             mapaCartasBotones.put(carta, cartaBtn);
         }
 
-        // Configurar lugares clave y razas
+        //Config lugares clave y razas
         tablero.mezclarLugaresClave();
         List<LugarClave> seleccionados = tablero.seleccionarTresLugaresClave();
         mostrarLugaresClaveComoBotones(seleccionados);
@@ -118,22 +172,15 @@ public class TableroController {
 
     private Button crearBotonCarta(Carta carta, boolean bloqueada) {
         Button cartaBtn = new Button();
-
-        // Configurar el estilo del botón
         cartaBtn.setStyle("-fx-padding: 4; -fx-border-color: black; -fx-border-radius: 4;");
-
-        // Cargar la imagen directamente
-        javafx.scene.image.ImageView imagen = new javafx.scene.image.ImageView(
-                new javafx.scene.image.Image(getClass().getResource(carta.getImagenRuta()).toExternalForm())
-        );
+        javafx.scene.image.ImageView imagen = new javafx.scene.image.ImageView(new javafx.scene.image.Image(getClass().getResource(carta.getImagenRuta()).toExternalForm()));
         imagen.setFitWidth(90);
         imagen.setFitHeight(140);
         cartaBtn.setGraphic(imagen);
 
-        // Configurar el estado inicial del botón
+        // configuración inicial
         cartaBtn.setDisable(bloqueada);
         cartaBtn.setOnAction(e -> {
-            // Verificar si el jugador cumple los requisitos de la carta antes de robar
             boolean recursosSuficientes = false;
             switch (tablero.getCapitulo()) {
                 case "fase1":
@@ -152,16 +199,16 @@ public class TableroController {
                 return;
             }
 
-            // Si se puede robar según las cartas inferiores
+            // se puede robar?
             if (puedeRobarse(carta)) {
                 if (jugadorActual.equals(jugadorComunidad)) {
                     cartasJugador1.getItems().add(carta.getNombre());
                 } else {
                     cartasJugador2.getItems().add(carta.getNombre());
                 }
-                cartaBtn.setVisible(false); // Ocultar el botón después de seleccionarlo
+                cartaBtn.setVisible(false); 
 
-                // Aplicar el efecto correspondiente a la fase actual
+                // aplicar efecto
                 switch (tablero.getCapitulo()) {
                     case "fase1":
                         tablero.aplicarEfectoCartaFase1(carta, jugadorActual);
@@ -183,7 +230,7 @@ public class TableroController {
             }
         });
 
-        // Agregar opción para descartar la carta
+        //opcion para descartar carta
         cartaBtn.setOnContextMenuRequested(e -> {
             descartarCarta(carta, cartaBtn);
         });
@@ -196,6 +243,10 @@ public class TableroController {
         boolean todasCartasJugadas = mapaCartasBotones.values().stream().noneMatch(Button::isVisible);
 
         if (todasCartasJugadas) {
+            //limpia
+            tableroCentral.getChildren().clear();
+            botonLugaresClave.getChildren().clear();
+            mapaCartasBotones.clear();
             switch (tablero.getCapitulo()) {
                 case "fase1":
                     tablero.setCapitulo("fase2");
@@ -213,20 +264,15 @@ public class TableroController {
     }
 
     private void descartarCarta(Carta carta, Button cartaBtn) {
-        // Confirmar si se desea descartar la carta
         Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
         confirmacion.setTitle("Descartar carta");
         confirmacion.setHeaderText(null);
         confirmacion.setContentText("¿Estás seguro de que deseas descartar esta carta?");
         confirmacion.showAndWait().ifPresent(response -> {
             if (response.getText().equals("Aceptar")) {
-                // Ocultar la carta descartada
                 cartaBtn.setVisible(false);
-                // Eliminar la carta del tablero
                 tablero.eliminarCarta(carta);
-                // Cambiar de turno
                 cambiarTurno();
-                // Actualizar las cartas habilitadas
                 verificarCambioDeFase();
                 actualizarCartasHabilitadas();
             }
@@ -262,13 +308,25 @@ public class TableroController {
             entsMordor.setText(String.valueOf(jugador.getEnts()));
         }
     }
+    
 
+    private void actualizarFondoTurno() {
+        if (jugadorActual.equals(jugadorComunidad)) {
+            nombreJugadorComunidad.getParent().setStyle("-fx-background-color: lightgreen;");
+            nombreJugadorMordor.getParent().setStyle("-fx-background-color: transparent;");
+        } else {
+            nombreJugadorMordor.getParent().setStyle("-fx-background-color: lightcoral;");
+            nombreJugadorComunidad.getParent().setStyle("-fx-background-color: transparent;");
+        }
+    }
     private void cambiarTurno() {
         if (jugadorActual.equals(jugadorComunidad)) {
             jugadorActual = jugadorMordor;
         } else {
-            jugadorActual = jugadorComunidad;
+         
+        	jugadorActual = jugadorComunidad;
         }
+        actualizarFondoTurno();
     }
 
     private boolean puedeRobarse(Carta carta) {
@@ -318,19 +376,35 @@ public class TableroController {
             imagen.setFitHeight(140);
             botonLugar.setGraphic(imagen);
 
-            botonLugar.setOnAction(event -> {
                 // tiene los recurss?
-                if (tablero.comprobarRecursosLugarClave(lugar, jugadorActual)) {
-                    tablero.aplicarEfectoLugarClave(lugar, jugadorActual);
-                    actualizarContadores(jugadorActual, jugadorActual.equals(jugadorComunidad));
-                } else {
-                    mostrarAlerta("No puedes acceder", "No tienes los recursos necesarios para acceder a " + lugar.getNombre());
-                }
-            });
-
+             botonLugar.setOnAction(event -> manejarRoboLugarClave(lugar, botonLugar));
             botonLugaresClave.getChildren().add(botonLugar);
-        }
+            }
+      
     }
+      private void manejarRoboLugarClave(LugarClave lugar, Button botonLugar) {
+            if (tablero.comprobarRecursosLugarClave(lugar, jugadorActual)) {
+                //aplicar el efecto del lugar clave
+                tablero.aplicarEfectoLugarClave(lugar, jugadorActual);
+
+                //ocultar el botón del lugar clave robado
+                botonLugar.setVisible(false);
+
+                //añadir el nombre del lugar clave robado a la `ListView` correspondiente
+                if (jugadorActual.equals(jugadorComunidad)) {
+                    lugaresClaveRobadosComunidad.getItems().add(lugar.getNombre());
+                } else if (jugadorActual.equals(jugadorMordor)) {
+                    lugaresClaveRobadosMordor.getItems().add(lugar.getNombre());
+                }
+
+                //actualizar los contadores del jugador actual
+                actualizarContadores(jugadorActual, jugadorActual.equals(jugadorComunidad));
+                cambiarTurno();
+            } else {
+                //mostrar alerta si no tiene los recursos necesarios
+                mostrarAlerta("No puedes robar este lugar clave", "No tienes suficientes recursos para robar este lugar clave.");
+            }
+        }
 
     private void mostrarRazasComoBotones() {
         botonRazas.getChildren().clear();
