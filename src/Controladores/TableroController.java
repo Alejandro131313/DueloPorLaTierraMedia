@@ -121,23 +121,24 @@ public class TableroController {
         }
     }
     private void procesarMovimientoPorCarta(Carta carta) {
-       
         String efecto = carta.getEfecto();
 
         if (efecto.startsWith("avance+")) {
             int avance = Integer.parseInt(efecto.replace("avance+", ""));
-           
-            moverFicha(posicionSauron, avance, "red");
-            moverFicha(posicionComunidad, avance, "blue");
-        } else if (efecto.equals("oro+1")) {
-            
-            moverFicha(posicionSauron, 1, "red");
+
+            // Verificar el turno del jugador actual
+            if (jugadorActual.equals(jugadorComunidad)) {
+                // La Comunidad avanza y Sauron también avanza
+                moverFicha(posicionComunidad, avance, "blue");
+                moverFicha(posicionSauron, avance, "red");
+            } else if (jugadorActual.equals(jugadorMordor)) {
+                // Solo Sauron avanza
+                moverFicha(posicionSauron, avance, "red");
+            }
         } else {
             System.out.println("La carta no afecta el movimiento de las fichas.");
         }
     }
-    
-
     private final int[][] posiciones = {
             {0, 5}, {0, 7},
             {1, 4}, {1, 6}, {1, 8},

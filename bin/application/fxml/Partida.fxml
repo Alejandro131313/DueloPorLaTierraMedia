@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.TableroController">
+
+
+
+
+    <!-- Zona del Jugador 1 -->
+    <left>
+        <VBox fx:id="zonaJugador1" spacing="10" alignment="CENTER" style="-fx-padding: 10;" prefWidth="160" maxWidth="160">
+            <Label text="Jugador Mordor" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+            <Label fx:id="nombreJugadorMordor" text="Nombre Mordor" style="-fx-font-size: 14px;" />
+            <ListView fx:id="cartasJugador2" prefWidth="150" prefHeight="300"/>
+            <Label text="Lugares Clave Robados" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+    		<ListView fx:id="lugaresClaveRobadosMordor" prefHeight="100" prefWidth="150"/>
+            <Label text="Contadores Atributos" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+            <HBox spacing="10" alignment="CENTER" style="-fx-padding: 5;" prefWidth="200" maxWidth="200">
+                 <ImageView fx:id="iconoOroMordor" fitWidth="20" fitHeight="20" />
+				 <Label fx:id="oroMordor" text="0" style="-fx-font-size: 14px;" prefWidth="30"/>
+				 <ImageView fx:id="iconoFuerzaMordor" fitWidth="20" fitHeight="20" />
+				 <Label fx:id="fuerzaMordor" text="0" style="-fx-font-size: 14px;" prefWidth="30"/>
+				 <ImageView fx:id="iconoValorMordor" fitWidth="20" fitHeight="20" />
+				 <Label fx:id="valorMordor" text="0" style="-fx-font-size: 14px;" prefWidth="30"/>
+				 <ImageView fx:id="iconoAstuciaMordor" fitWidth="20" fitHeight="20" />
+				 <Label fx:id="astuciaMordor" text="0" style="-fx-font-size: 14px;" prefWidth="30"/>
+				 <ImageView fx:id="iconoSabiduriaMordor" fitWidth="20" fitHeight="20" />
+				 <Label fx:id="sabiduriaMordor" text="0" style="-fx-font-size: 14px;" prefWidth="30"/>
+				 <ImageView fx:id="iconoCoronaMordor" fitWidth="20" fitHeight="20" />
+				 <Label fx:id="coronaMordor" text="0" style="-fx-font-size: 14px;" prefWidth="30"/>
+            </HBox>
+            <Label text="Contadores Razas" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+            <HBox spacing="10" alignment="CENTER">
+			    <ImageView fx:id="iconoHobbitsMordor" fitWidth="20" fitHeight="20" />
+			    <Label fx:id="hobbitsMordor" text="0" style="-fx-font-size: 14px;" prefWidth="30"/>
+			    <ImageView fx:id="iconoEnanosMordor" fitWidth="20" fitHeight="20" />
+			    <Label fx:id="enanosMordor" text="0" style="-fx-font-size: 14px;" prefWidth="30"/>
+			    <ImageView fx:id="iconoHumanosMordor" fitWidth="20" fitHeight="20" />
+			    <Label fx:id="humanosMordor" text="0" style="-fx-font-size: 14px;" prefWidth="30"/>
+			    <ImageView fx:id="iconoElfosMordor" fitWidth="20" fitHeight="20" />
+			    <Label fx:id="elfosMordor" text="0" style="-fx-font-size: 14px;" prefWidth="30"/>
+			    <ImageView fx:id="iconoMagosMordor" fitWidth="20" fitHeight="20" />
+			    <Label fx:id="magosMordor" text="0" style="-fx-font-size: 14px;" prefWidth="30"/>
+			    <ImageView fx:id="iconoEntsMordor" fitWidth="20" fitHeight="20" />
+			    <Label fx:id="entsMordor" text="0" style="-fx-font-size: 14px;" prefWidth="30"/>
+            </HBox>
+        </VBox>
+    </left>
+
+    <!-- Zona del Jugador 2 -->
+    <right>
+        <VBox fx:id="zonaJugador2" spacing="10" alignment="CENTER" style="-fx-padding: 10;" prefWidth="160" maxWidth="160">
+            <Label text="Jugador Comunidad" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+            <Label fx:id="nombreJugadorComunidad" text="Nombre Comunidad" style="-fx-font-size: 14px;" />
+            <ListView fx:id="cartasJugador1" prefWidth="150" prefHeight="300"/>
+            <Label text="Lugares Clave Robados" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+    		<ListView fx:id="lugaresClaveRobadosComunidad" prefHeight="100" prefWidth="150" />
+            <Label text="Contadores Atributos" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+            <HBox spacing="10" alignment="CENTER" style="-fx-padding: 5;" prefWidth="200" maxWidth="200">
+                <ImageView fx:id="iconoOroComunidad" fitWidth="20" fitHeight="20" />
+			    <Label fx:id="oroComunidad" text="0" style="-fx-font-size: 14px;" prefWidth="30"/>
+			    <ImageView fx:id="iconoFuerzaComunidad" fitWidth="20" fitHeight="20" />
+			    <Label fx:id="fuerzaComunidad" text="0" style="-fx-font-size: 14px;" prefWidth="30"/>
+			    <ImageView fx:id="iconoValorComunidad" fitWidth="20" fitHeight="20" />
+			    <Label fx:id="valorComunidad" text="0" style="-fx-font-size: 14px;" prefWidth="30"/>
+			    <ImageView fx:id="iconoAstuciaComunidad" fitWidth="20" fitHeight="20" />
+			    <Label fx:id="astuciaComunidad" text="0" style="-fx-font-size: 14px;" prefWidth="30"/>
+			    <ImageView fx:id="iconoSabiduriaComunidad" fitWidth="20" fitHeight="20" />
+			    <Label fx:id="sabiduriaComunidad" text="0" style="-fx-font-size: 14px;" prefWidth="30"/>
+			    <ImageView fx:id="iconoCoronaComunidad" fitWidth="20" fitHeight="20" />
+			    <Label fx:id="coronaComunidad" text="0" style="-fx-font-size: 14px;" prefWidth="30"/>
+            </HBox>
+            <Label text="Contadores Razas" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+            <HBox spacing="10" alignment="CENTER" style="-fx-padding: 5;" prefWidth="300" maxWidth="300">
+				<ImageView fx:id="iconoHobbitsComunidad" fitWidth="20" fitHeight="20" />
+			    <Label fx:id="hobbitsComunidad" text="0" style="-fx-font-size: 14px;"/>
+			    <ImageView fx:id="iconoEnanosComunidad" fitWidth="20" fitHeight="20" />
+			    <Label fx:id="enanosComunidad" text="0" style="-fx-font-size: 14px;"/>
+			    <ImageView fx:id="iconoHumanosComunidad" fitWidth="20" fitHeight="20" />
+			    <Label fx:id="humanosComunidad" text="0" style="-fx-font-size: 14px;"/>
+			    <ImageView fx:id="iconoElfosComunidad" fitWidth="20" fitHeight="20" />
+			    <Label fx:id="elfosComunidad" text="0" style="-fx-font-size: 14px;"/>
+			    <ImageView fx:id="iconoMagosComunidad" fitWidth="20" fitHeight="20" />
+			    <Label fx:id="magosComunidad" text="0" style="-fx-font-size: 14px;"/>
+			    <ImageView fx:id="iconoEntsComunidad" fitWidth="20" fitHeight="20" />
+			    <Label fx:id="entsComunidad" text="0" style="-fx-font-size: 14px;"/>
+            </HBox>
+        </VBox>
+    </right>
+
+
+    <!-- Tablero Central -->
+    <center>
+        <VBox>
+            <HBox fx:id="botonLugaresClave" alignment="CENTER" spacing="10" style="-fx-padding: 10;" />
+            <HBox fx:id="botonRazas" alignment="CENTER" spacing="10" style="-fx-padding: 10;" />
+            <GridPane fx:id="tableroCentral" alignment="CENTER" hgap="10" vgap="10" style="-fx-padding: 10;" />
+        </VBox>
+    </center>
+     <!-- Carrera Anillo -->
+    <top>
+		<HBox fx:id="pistaCarrera" alignment="CENTER" spacing="5"
+			style="-fx-padding: 10;">
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+			<Label style="-fx-padding: 10; -fx-background-color: white;" />
+		
+        </HBox>
+    </top>
+    
+</BorderPane>
