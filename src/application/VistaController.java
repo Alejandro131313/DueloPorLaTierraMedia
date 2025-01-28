@@ -1,6 +1,10 @@
 package application;
 
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+
 import Clases.Jugador;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -68,14 +72,28 @@ public class VistaController {
     }
     @FXML
     private void onmostrarJugador() {
-        // Crear un jugador
-        Jugador jugador = new Jugador(1, "Pepe", 25, 15);
+    	try {
+            // Nombre del archivo generado previamente en ConfigurarPartidaController
+            String nombreArchivo = "datos_partida.html"; // Asegúrate de que el nombre coincide
 
-        // Mostrar los datos del jugador por pantalla
+            // Crear referencia al archivo
+            File archivo = new File(nombreArchivo);
 
-
-        // Escribir los datos del jugador en un fichero
-        jugador.escribirEnFicheroHTML("jugadores.html");
+            // Verificar si el archivo existe
+            if (archivo.exists()) {
+                // Intentar abrir el archivo en el navegador
+                if (Desktop.isDesktopSupported()) {
+                    Desktop.getDesktop().browse(archivo.toURI());
+                } else {
+                    mostrarAlerta("Error", "Tu sistema no soporta la apertura automática de archivos.");
+                }
+            } else {
+                mostrarAlerta("Archivo no encontrado", "El archivo HTML no existe. Genera el archivo antes de intentar abrirlo.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo abrir el archivo HTML: " + e.getMessage());
+        }
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {

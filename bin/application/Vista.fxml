@@ -20,8 +20,7 @@
 			<Button onAction="#onNuevaPartida" text="Nueva Partida" />
             <Button onAction="#onCargarPartida" text="Cargar Partida" />
             <Button onAction="#onTutorial" text="Tutorial" />
-            <Button layoutX="50" layoutY="50" onAction="#onmostrarJugador" text="Fichero de Jugador" />
-         
+            
             <Button onAction="#onSalir" text="Salir" />
         </VBox>
     </children>
