@@ -83,7 +83,7 @@ public class TableroController {
 	private JugadorPartida jugadorMordor;
 
 	private int posicionSauron = 0;
-	private int posicionComunidad = 27;
+	private int posicionComunidad = 20;
 
 	private void moverFicha(int posicionActual, int cantidad, String colorFicha) {
 		int nuevaPosicion = posicionActual + cantidad;
