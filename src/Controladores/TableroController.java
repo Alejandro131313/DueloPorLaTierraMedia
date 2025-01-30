@@ -112,12 +112,12 @@ public class TableroController {
 		}
 	}
 
-	// Método auxiliar para obtener el color de fondo según la ficha
+	//Método aux para obtener el color de fondo según la ficha
 	private String obtenerColorFondoFicha(String colorFicha) {
 		if (colorFicha.equals("red")) {
-			return "pink"; // Color de fondo para Sauron
+			return "pink"; //Clor de fondo para Sauron
 		} else if (colorFicha.equals("blue")) {
-			return "green"; // Color de fondo para La Comunidad
+			return "green"; //Color de fondo pra La Comunidad
 		} else {
 			return "yellow"; // Color por defecto para otras fichas
 		}
@@ -129,12 +129,12 @@ public class TableroController {
 		if (efecto.startsWith("avance+")) {
 			int avance = Integer.parseInt(efecto.replace("avance+", ""));
 
-			// Verificar el turno del jugador actual
+			//Verificar el turno del jugador actual
 			if (jugadorActual.equals(jugadorComunidad)) {
-				// La Comunidad roba y avanza SU ficha (blue)
+				//La Comunidad roba y avanza SU ficha (blue)
 				moverFicha(posicionComunidad, avance, "blue");
 			} else if (jugadorActual.equals(jugadorMordor)) {
-				// Sauron roba y avanza SU ficha (red)
+				//Sauron roba y avanza SU ficha (red)
 				moverFicha(posicionSauron, avance, "red");
 			}
 
@@ -167,58 +167,45 @@ public class TableroController {
 		configurarTablero();
 		actualizarFondoTurno();
 	}
+	
+	private Image cargarImagenIconos(String ruta, double ancho, double alto) {
+	    return new Image(getClass().getResource(ruta).toExternalForm(), ancho, alto, true, true);
+	}
 
 	private void inicializarIconos() {
-		// JugadorComunidad
-		iconoOroComunidad.setImage(new Image(getClass().getResource("/Images/Fichas/IconoOro.png").toExternalForm()));
-		iconoFuerzaComunidad
-				.setImage(new Image(getClass().getResource("/Images/Fichas/IconoFuerza.png").toExternalForm()));
-		iconoValorComunidad
-				.setImage(new Image(getClass().getResource("/Images/Fichas/IconoValor.png").toExternalForm()));
-		iconoAstuciaComunidad
-				.setImage(new Image(getClass().getResource("/Images/Fichas/IconoAstucia.png").toExternalForm()));
-		iconoSabiduriaComunidad
-				.setImage(new Image(getClass().getResource("/Images/Fichas/IconoSabiduria.png").toExternalForm()));
-		iconoCoronaComunidad
-				.setImage(new Image(getClass().getResource("/Images/Fichas/IconoCorona.png").toExternalForm()));
+		//JugadorComunidad
+	    iconoOroComunidad.setImage(cargarImagenIconos("/Images/Fichas/IconoOro.png", 30, 30));
+	    iconoFuerzaComunidad.setImage(cargarImagenIconos("/Images/Fichas/IconoFuerza.png", 30, 30));
+	    iconoValorComunidad.setImage(cargarImagenIconos("/Images/Fichas/IconoValor.png", 30, 30));
+	    iconoAstuciaComunidad.setImage(cargarImagenIconos("/Images/Fichas/IconoAstucia.png", 30, 30));
+	    iconoSabiduriaComunidad.setImage(cargarImagenIconos("/Images/Fichas/IconoSabiduria.png", 30, 30));
+	    iconoCoronaComunidad.setImage(cargarImagenIconos("/Images/Fichas/IconoCorona.png", 30, 30));
 
-		// JugadorMordor
-		iconoOroMordor.setImage(new Image(getClass().getResource("/Images/Fichas/IconoOro.png").toExternalForm()));
-		iconoFuerzaMordor
-				.setImage(new Image(getClass().getResource("/Images/Fichas/IconoFuerza.png").toExternalForm()));
-		iconoValorMordor.setImage(new Image(getClass().getResource("/Images/Fichas/IconoValor.png").toExternalForm()));
-		iconoAstuciaMordor
-				.setImage(new Image(getClass().getResource("/Images/Fichas/IconoAstucia.png").toExternalForm()));
-		iconoSabiduriaMordor
-				.setImage(new Image(getClass().getResource("/Images/Fichas/IconoSabiduria.png").toExternalForm()));
-		iconoCoronaMordor
-				.setImage(new Image(getClass().getResource("/Images/Fichas/IconoCorona.png").toExternalForm()));
+	    //Jugadr Mordor
+	    iconoOroMordor.setImage(cargarImagenIconos("/Images/Fichas/IconoOro.png", 30, 30));
+	    iconoFuerzaMordor.setImage(cargarImagenIconos("/Images/Fichas/IconoFuerza.png", 30, 30));
+	    iconoValorMordor.setImage(cargarImagenIconos("/Images/Fichas/IconoValor.png", 30, 30));
+	    iconoAstuciaMordor.setImage(cargarImagenIconos("/Images/Fichas/IconoAstucia.png", 30, 30));
+	    iconoSabiduriaMordor.setImage(cargarImagenIconos("/Images/Fichas/IconoSabiduria.png", 30, 30));
+	    iconoCoronaMordor.setImage(cargarImagenIconos("/Images/Fichas/IconoCorona.png", 30, 30));
 	}
 
 	private void inicializarIconosRazas() {
-		// JugadorComunidad
-		iconoHobbitsComunidad
-				.setImage(new Image(getClass().getResource("/Images/Fichas/FichaHobbits.png").toExternalForm()));
-		iconoEnanosComunidad
-				.setImage(new Image(getClass().getResource("/Images/Fichas/FichaEnanos.png").toExternalForm()));
-		iconoHumanosComunidad
-				.setImage(new Image(getClass().getResource("/Images/Fichas/FichaHumanos.png").toExternalForm()));
-		iconoElfosComunidad
-				.setImage(new Image(getClass().getResource("/Images/Fichas/FichaElfos.png").toExternalForm()));
-		iconoMagosComunidad
-				.setImage(new Image(getClass().getResource("/Images/Fichas/FichaMagos.png").toExternalForm()));
-		iconoEntsComunidad.setImage(new Image(getClass().getResource("/Images/Fichas/FichaEnts.png").toExternalForm()));
+	    //Jugador Comunidad
+	    iconoHobbitsComunidad.setImage(cargarImagenIconos("/Images/Fichas/FichaHobbits.png", 40, 40));
+	    iconoEnanosComunidad.setImage(cargarImagenIconos("/Images/Fichas/FichaEnanos.png", 40, 40));
+	    iconoHumanosComunidad.setImage(cargarImagenIconos("/Images/Fichas/FichaHumanos.png", 40, 40));
+	    iconoElfosComunidad.setImage(cargarImagenIconos("/Images/Fichas/FichaElfos.png", 40, 40));
+	    iconoMagosComunidad.setImage(cargarImagenIconos("/Images/Fichas/FichaMagos.png", 40, 40));
+	    iconoEntsComunidad.setImage(cargarImagenIconos("/Images/Fichas/FichaEnts.png", 40, 40));
 
-		// JugadorMordor
-		iconoHobbitsMordor
-				.setImage(new Image(getClass().getResource("/Images/Fichas/FichaHobbits.png").toExternalForm()));
-		iconoEnanosMordor
-				.setImage(new Image(getClass().getResource("/Images/Fichas/FichaEnanos.png").toExternalForm()));
-		iconoHumanosMordor
-				.setImage(new Image(getClass().getResource("/Images/Fichas/FichaHumanos.png").toExternalForm()));
-		iconoElfosMordor.setImage(new Image(getClass().getResource("/Images/Fichas/FichaElfos.png").toExternalForm()));
-		iconoMagosMordor.setImage(new Image(getClass().getResource("/Images/Fichas/FichaMagos.png").toExternalForm()));
-		iconoEntsMordor.setImage(new Image(getClass().getResource("/Images/Fichas/FichaEnts.png").toExternalForm()));
+	    //Jugador Mordor
+	    iconoHobbitsMordor.setImage(cargarImagenIconos("/Images/Fichas/FichaHobbits.png", 40, 40));
+	    iconoEnanosMordor.setImage(cargarImagenIconos("/Images/Fichas/FichaEnanos.png", 40, 40));
+	    iconoHumanosMordor.setImage(cargarImagenIconos("/Images/Fichas/FichaHumanos.png", 40, 40));
+	    iconoElfosMordor.setImage(cargarImagenIconos("/Images/Fichas/FichaElfos.png", 40, 40));
+	    iconoMagosMordor.setImage(cargarImagenIconos("/Images/Fichas/FichaMagos.png", 40, 40));
+	    iconoEntsMordor.setImage(cargarImagenIconos("/Images/Fichas/FichaEnts.png", 40, 40));
 	}
 
 	private void configurarTablero() {
@@ -226,7 +213,7 @@ public class TableroController {
 		botonLugaresClave.getChildren().clear();
 		mapaCartasBotones.clear();
 
-		// Obtener cartas de la fase actual
+		//Obtener cartas de la fase actual
 		List<Carta> cartasFaseActual = tablero.obtenerCartasDelCapituloActual();
 
 		int[][] posicionesActuales;
@@ -257,17 +244,21 @@ public class TableroController {
 		tablero.mezclarLugaresClave();
 		List<LugarClave> seleccionados = tablero.seleccionarTresLugaresClave();
 		mostrarLugaresClaveComoBotones(seleccionados);
-		mostrarRazasComoBotones();
+		//mostrarRazasComoBotones();
 	}
 
 	private Button crearBotonCarta(Carta carta, boolean bloqueada) {
 		Button cartaBtn = new Button();
 		cartaBtn.setStyle("-fx-padding: 4; -fx-border-color: black; -fx-border-radius: 4;");
-		javafx.scene.image.ImageView imagen = new javafx.scene.image.ImageView(
-				new javafx.scene.image.Image(getClass().getResource(carta.getImagenRuta()).toExternalForm()));
-		imagen.setFitWidth(90);
-		imagen.setFitHeight(140);
-		cartaBtn.setGraphic(imagen);
+		//antigua manera de geenrar cartas, se prueba otra para comprobar si mejora rendimiento
+		//javafx.scene.image.ImageView imagen = new javafx.scene.image.ImageView(new javafx.scene.image.Image(getClass().getResource(carta.getImagenRuta()).toExternalForm()));
+		//imageView.setFitWidth(70);
+		//imageView.setFitHeight(110);
+		javafx.scene.image.Image imagen = new javafx.scene.image.Image(getClass().getResource(carta.getImagenRuta()).toExternalForm(),70, 110, true, true);
+	    ImageView imageView = new ImageView(imagen);
+	    cartaBtn.setGraphic(imageView);
+
+		cartaBtn.setGraphic(imageView);
 
 		// configuración inicial
 		cartaBtn.setDisable(bloqueada);
@@ -319,7 +310,7 @@ public class TableroController {
 				}
 
 				actualizarContadores(jugadorActual, jugadorActual.equals(jugadorComunidad));
-				verificarCambioDeFase(); // Verificar si todas las cartas han sido jugadas
+				verificarCambioDeFase(); 
 				cambiarTurno();
 				actualizarCartasHabilitadas();
 			} else {
@@ -422,7 +413,7 @@ public class TableroController {
 		} else {
 			jugadorActual = jugadorComunidad;
 		}
-		verificarVictoria(); // Verificar si alguien ha ganado
+		verificarVictoria();
 		actualizarFondoTurno();
 		System.out.println("Posicion Comunidad" + posicionComunidad);
 		System.out.println("Posicion Sauron" + posicionSauron);
@@ -473,11 +464,13 @@ public class TableroController {
 		botonLugaresClave.getChildren().clear();
 		for (LugarClave lugar : lugares) {
 			Button botonLugar = new Button();
-			javafx.scene.image.ImageView imagen = new javafx.scene.image.ImageView(
-					new javafx.scene.image.Image(getClass().getResource(lugar.getImagenRuta()).toExternalForm()));
-			imagen.setFitWidth(140);
-			imagen.setFitHeight(140);
-			botonLugar.setGraphic(imagen);
+			botonLugar.setStyle("-fx-padding: 4; -fx-border-color: black; -fx-border-radius: 4;");
+			/*javafx.scene.image.ImageView imagen = new javafx.scene.image.ImageView(new javafx.scene.image.Image(getClass().getResource(lugar.getImagenRuta()).toExternalForm()));
+			imagen.setFitWidth(110);
+			imagen.setFitHeight(110);*/
+	        javafx.scene.image.Image imagen = new javafx.scene.image.Image(getClass().getResource(lugar.getImagenRuta()).toExternalForm(),110, 110, true, true);
+	        ImageView imageView = new ImageView(imagen);
+	        botonLugar.setGraphic(imageView);
 
 			// tiene los recurss?
 			botonLugar.setOnAction(event -> manejarRoboLugarClave(lugar, botonLugar));
@@ -511,7 +504,9 @@ public class TableroController {
 		}
 	}
 
-	private void mostrarRazasComoBotones() {
+	/*Se comenta este método para futuras versiones
+	 * 
+	 * private void mostrarRazasComoBotones() {
 		botonRazas.getChildren().clear();
 		for (Razas raza : tablero.getRazas()) {
 			Button botonRaza = new Button();
@@ -530,24 +525,21 @@ public class TableroController {
 				botonRaza.setDisable(true);
 			botonRazas.getChildren().add(botonRaza);
 		}
-	}
+	}*/
 
 	private void verificarVictoria() {
-		// La Comunidad gana si llega al final del camino
 		if (posicionComunidad >= 28) {
 			mostrarAlerta("¡Victoria!", "La Comunidad ha llegado al final del camino y ha ganado la partida.");
 			finalizarJuego();
 			return;
 		}
 
-		// Sauron gana si alcanza o supera a la Comunidad en la pista de carrera
 		if (posicionSauron >= posicionComunidad) {
 			mostrarAlerta("¡Derrota!", "Sauron ha alcanzado o superado a la Comunidad y ha ganado la partida.");
 			finalizarJuego();
 			return;
 		}
 
-		// Gana el jugador que haya conquistado más de 3 lugares clave
 		if (lugaresClaveRobadosComunidad.getItems().size() >= 3) {
 			mostrarAlerta("¡Victoria!", "La Comunidad ha conquistado más de 3 lugares clave y ha ganado la partida.");
 			finalizarJuego();
@@ -560,7 +552,6 @@ public class TableroController {
 			return;
 		}
 
-		// La Comunidad o Sauron ganan si tienen al menos una ficha de cada raza
 		if (tieneFichasDeTodasLasRazas(jugadorComunidad)) {
 			mostrarAlerta("¡Victoria!", "La Comunidad ha reunido una ficha de cada raza y ha ganado la partida.");
 			finalizarJuego();
@@ -576,19 +567,16 @@ public class TableroController {
 		System.out.println("No se cumplen condiciones de victoria. El juego continúa.");
 	}
 
-	// Método auxiliar para verificar si un jugador tiene una ficha de cada raza
 	private boolean tieneFichasDeTodasLasRazas(JugadorPartida jugador) {
 		return jugador.getHobbits() > 0 && jugador.getEnanos() > 0 && jugador.getHumanos() > 0 && jugador.getElfos() > 0
 				&& jugador.getMagos() > 0 && jugador.getEnts() > 0;
 	}
 
 	private void finalizarJuego() {
-		// Crear una alerta personalizada para el mensaje de victoria/derrota
 		Alert alerta = new Alert(Alert.AlertType.INFORMATION);
 		alerta.setTitle("Fin del Juego");
 		alerta.setHeaderText("¡Juego Terminado!");
 
-		// Determinar el ganador basándonos en las condiciones del juego
 		String mensajeFinal;
 		if (posicionComunidad >= 28 || tieneFichasDeTodasLasRazas(jugadorComunidad)
 				|| lugaresClaveRobadosComunidad.getItems().size() >= 3) {
@@ -599,23 +587,17 @@ public class TableroController {
 			mensajeFinal += "La oscuridad domina la Tierra Media🕳️🖤";
 		}
 
-		// Agregar el mensaje final a la alerta
 		alerta.setContentText(mensajeFinal);
 
-		// Mostrar la alerta
 		alerta.showAndWait();
 
-		// Acción guapa: Abrir ventana con animaciones o imágenes (opcional)
 		mostrarPantallaFinal(mensajeFinal);
 
-		// Salir del juego (puedes personalizar esta acción para reiniciar o regresar al
-		// menú)
+
 		System.out.println("El juego ha terminado.");
-		System.exit(0); // Salir del juego (puedes reemplazar con un cambio de escena si deseas regresar
-						// al menú principal)
+		System.exit(0); 
 	}
 
-	// Método para mostrar pantalla final con diseño atractivo
 	private void mostrarPantallaFinal(String mensaje) {
 		Stage ventanaFinal = new Stage();
 		ventanaFinal.setTitle("Resultado Final");

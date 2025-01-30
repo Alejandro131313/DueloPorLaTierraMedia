@@ -28,7 +28,7 @@ public class ConfigurarPartidaController {
 	@FXML
 	private void onComenzarPartida() {
 		try {
-			// Validar los nombres ingresados
+			//Validar los nombres ingresados
 			if (nombreComunidad.getText().isEmpty() || nombreMordor.getText().isEmpty()) {
 				Alert alert = new Alert(Alert.AlertType.WARNING);
 				alert.setTitle("Datos faltantes");
@@ -38,28 +38,26 @@ public class ConfigurarPartidaController {
 				return;
 			}
 
-			// Generar datos aleatorios para los jugadores
+			//Generar datos random para los jugadores
 			int edadJugador1 = (int) (Math.random() * (50 - 18 + 1) + 18); // Edad entre 18 y 50
 			int victoriasJugador1 = (int) (Math.random() * 101); // Número de victorias entre 0 y 100
 
 			int edadJugador2 = (int) (Math.random() * (50 - 18 + 1) + 18); // Edad entre 18 y 50
 			int victoriasJugador2 = (int) (Math.random() * 101); // Número de victorias entre 0 y 100
 
-			// Crear los jugadores con los datos ingresados y aleatorios
-			Jugador jugador1 = new Jugador(1, nombreComunidad.getText(), edadJugador1, victoriasJugador1);
-			Jugador jugador2 = new Jugador(2, nombreMordor.getText(), edadJugador2, victoriasJugador2);
+			//Crear los jugadores con los datos ingresados y aleatorios
+			Jugador jugador1 = new Jugador(1, nombreMordor.getText(), edadJugador1, victoriasJugador1);
+			Jugador jugador2 = new Jugador(2, nombreComunidad.getText(), edadJugador2, victoriasJugador2);
 
-			// Generar el archivo HTML con los datos de ambos jugadores y guardarlo en el
-			// escritorio
-			String nombreArchivo = System.getProperty("user.home") + File.separator + "Desktop" + File.separator
-					+ "datos_partida.html";
+			// Generar el archivo HTML con los datos de ambos jugadores y guardarlo en la ruta
+			String nombreArchivo = new File("datos_partida.html").getAbsolutePath();
 			guardarArchivoHTML(nombreArchivo, jugador1, jugador2);
 
 			// Mostrar mensaje de éxito
 			Alert alert = new Alert(Alert.AlertType.INFORMATION);
 			alert.setTitle("Éxito");
-			alert.setHeaderText("Archivo HTML generado");
-			alert.setContentText("El archivo se ha guardado correctamente en el escritorio.");
+			alert.setHeaderText("Archivo generado");
+			alert.setContentText("El archivo se ha guardado correctamente tu carpeta.");
 			alert.showAndWait();
 
 			// Cargar la vista del tablero del juego
@@ -93,7 +91,7 @@ public class ConfigurarPartidaController {
 			bw.write("<style>");
 			bw.newLine();
 
-			// Estilos CSS
+			//Estilos CSS
 			bw.write(
 					"body { font-family: Arial, sans-serif; background-color: #f4f4f9; color: #333; margin: 0; padding: 20px; }");
 			bw.newLine();
@@ -113,7 +111,7 @@ public class ConfigurarPartidaController {
 			bw.write("<h1 style=\"text-align: center;\">Datos de los Jugadores</h1>");
 			bw.newLine();
 
-			// Tabla con los datos de los jugadores
+			//Tabla con los datos de los jugadores
 			bw.write("<table>");
 			bw.newLine();
 			bw.write("<tr><th>ID</th><th>Nombre</th><th>Edad</th><th>Victorias</th></tr>");
@@ -128,7 +126,7 @@ public class ConfigurarPartidaController {
 			bw.write("</tr>");
 			bw.newLine();
 
-			// Datos del Jugador 2
+			// datos del Jugador 2
 			bw.write("<tr>");
 			bw.write("<td>" + jugador2.getId() + "</td>");
 			bw.write("<td>" + jugador2.getNombre() + "</td>");
@@ -150,23 +148,23 @@ public class ConfigurarPartidaController {
 
 	private void cargarVistaTablero(Jugador jugador1, Jugador jugador2) {
 		try {
-			// Cargar la vista del tablero
+			//Cargar la vista del tablero
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/fxml/Partida.fxml"));
 			Parent root = loader.load();
 
-			// Obtener el controlador del tablero
+			// pbtener el controlador del tablero
 			TableroController tableroController = loader.getController();
 
-			// Crear la partida y configurar los jugadores
+			//Crear la partida y configurar los jugadores
 			Tablero tablero = new Tablero(1, "Disposición inicial", "fase1");
 			Partida partida = new Partida(1, "12:00", "2025-01-01", tablero);
-			JugadorPartida jugadorPartida1 = new JugadorPartida(jugador1, partida, 0, "Comunidad", null, null, null);
-			JugadorPartida jugadorPartida2 = new JugadorPartida(jugador2, partida, 0, "Sauron", null, null, null);
+			JugadorPartida jugadorPartida1 = new JugadorPartida(jugador1, partida, 0, "Sauron", null, null, null);
+			JugadorPartida jugadorPartida2 = new JugadorPartida(jugador2, partida, 0, "Comunidad", null, null, null);
 
 			// Configurar los jugadores y el tablero en el controlador del tablero
 			tableroController.inicializarTablero(jugadorPartida1, jugadorPartida2, tablero);
 
-			// Cambiar a la nueva escena
+			//Cambiar a la nueva escena
 			Stage stage = (Stage) nombreComunidad.getScene().getWindow();
 			stage.setScene(new Scene(root));
 			stage.setTitle("Tablero de Juego");

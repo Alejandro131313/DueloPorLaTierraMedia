@@ -14,8 +14,8 @@ public class MainPartida {
         Tablero tablero = new Tablero(1, "Disposición inicial", "fase1");
 
         // Crear jugador-partida
-        JugadorPartida jugadorPartida1 = new JugadorPartida(jugador1, null, 0, "Comunidad", new ArrayList<>(), null, null);
-        JugadorPartida jugadorPartida2 = new JugadorPartida(jugador2, null, 0, "Sauron", new ArrayList<>(), null, null);
+        JugadorPartida jugadorPartida1 = new JugadorPartida(jugador1, null, 0, "Sauron", new ArrayList<>(), null, null);
+        JugadorPartida jugadorPartida2 = new JugadorPartida(jugador2, null, 0, "Comunidad", new ArrayList<>(), null, null);
 
         // Crear la partida
         Partida partida = new Partida(1, "10:00", "2025-01-10", tablero);

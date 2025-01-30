@@ -37,15 +37,15 @@ public class Tablero {
         inicializarLugaresClave();
         dividirCartasPorCapitulo();
         mezclarCartasCapitulos();
-        initializeRazas();
+        //initializeRazas();
         
         
     }
  // Lista y mapa para las razas
-    public List<Razas> getRazas() {
+/*    public List<Razas> getRazas() {
         return razas;
     }
-    private Map<Razas, Integer> fichasDisponibles;
+    private Map<Razas, Integer> fichasDisponibles;*/
     // Getters y Setters
     public int getId() {
         return id;
@@ -313,7 +313,7 @@ public class Tablero {
     }
 
     
-    //Anadir razas
+    /*Se comenta este método para futuras versiones
     public boolean obtenerFichaDeRaza(String nombreRaza) {
         for (Razas raza : razas) {
             if (raza.getNombre().equalsIgnoreCase(nombreRaza)) {
@@ -327,9 +327,9 @@ public class Tablero {
         }
         return false; // Raza no encontrada
     }
-    // Inicializar y mostrar razas
+  
+    
     private void initializeRazas() {
-        // Inicializar lista de razas
         razas = new ArrayList<>();
         razas.add(new Razas(1, "Hobbits", getClass().getResource("/Images/Fichas/FichaHobbits.png").toExternalForm()));
         razas.add(new Razas(2, "Enanos", getClass().getResource("/Images/Fichas/FichaEnanos.png").toExternalForm()));
@@ -352,7 +352,7 @@ public class Tablero {
         }
         return -1; // Raza no encontrada
     }
-    
+      */
     
     
     public void aplicarEfectoCartaFase1(Carta carta, JugadorPartida jugador) {
@@ -476,7 +476,7 @@ public class Tablero {
                 
                 
           
-                // Caso con dos opciones 50 50%
+                //Caso con dos opciones 50 50%
             case "corona+1 || sabiduria+1":
                 decision = random.nextInt(2); // Genera 0 o 1
                 if (decision == 0) {
@@ -488,7 +488,7 @@ public class Tablero {
                 }
                 break;
 
-            // Caso con tres opciones 33 33 33%
+            //Caso con tres opciones 33 33 33%
             case "astucia+1 || fuerza+1 || valor+1":
                 decision = random.nextInt(3); // Genera 0, 1 o 2
                 if (decision == 0) {
