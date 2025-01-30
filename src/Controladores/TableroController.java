@@ -82,67 +82,89 @@ public class TableroController {
 	private JugadorPartida jugadorComunidad;
 	private JugadorPartida jugadorMordor;
 
-	private int posicionSauron = 0;
-	private int posicionComunidad = 20;
+	private int posicionSauron = 0; 
+	private int posicionComunidad = 14; 
 
 	private void moverFicha(int posicionActual, int cantidad, String colorFicha) {
-		int nuevaPosicion = posicionActual + cantidad;
+	    int nuevaPosicion = posicionActual + cantidad;
 
-		if (nuevaPosicion >= 0 && nuevaPosicion < pistaCarrera.getChildren().size()) {
+	    if (colorFicha.equals("red") && (posicionSauron + cantidad) >= posicionComunidad) {
+	        posicionSauron = posicionComunidad;
+	        verificarVictoria();
+	        return;
+	    }
+	    
+	    if (colorFicha.equals("blue") && (posicionComunidad + cantidad) >= 29) {
+	        posicionComunidad = 29;
+	        verificarVictoria();
+	        return;
+	    }
 
-			Label labelActual = (Label) pistaCarrera.getChildren().get(posicionActual);
-			labelActual.setStyle("-fx-padding: 10; -fx-background-color: white; -fx-border-color: black;");
+	    if (nuevaPosicion >= 0 && nuevaPosicion < pistaCarrera.getChildren().size()) {
+	        Label labelActual = (Label) pistaCarrera.getChildren().get(posicionActual);
+	        labelActual.setStyle("-fx-padding: 10; -fx-background-color: white; -fx-border-color: black;");
 
-			posicionActual = nuevaPosicion;
+	        posicionActual = nuevaPosicion;
 
-			Label nuevoLabel = (Label) pistaCarrera.getChildren().get(posicionActual);
-			nuevoLabel.setStyle("-fx-border-color: " + colorFicha + "; -fx-background-color: "
-					+ obtenerColorFondoFicha(colorFicha) + "; -fx-padding: 10;");
+	        Label nuevoLabel = (Label) pistaCarrera.getChildren().get(posicionActual);
+	        nuevoLabel.setStyle("-fx-border-color: " + colorFicha + "; -fx-background-color: " + obtenerColorFondoFicha(colorFicha) + "; -fx-padding: 10;");
 
-			System.out.println("Ficha (" + colorFicha + ") se movió a la posición: " + (posicionActual + 1));
-		} else {
+	        System.out.println("Ficha (" + colorFicha + ") se movió a la posición: " + (posicionActual + 1));
+	    } else {
+	        System.out.println("Movimiento fuera de rango para la ficha (" + colorFicha + ").");
+	    }
 
-			System.out.println("Movimiento fuera de rango para la ficha (" + colorFicha + ").");
-		}
+	    if (colorFicha.equals("red")) {
+	        posicionSauron = posicionActual;
+	    } else if (colorFicha.equals("blue")) {
+	        posicionComunidad = posicionActual;
+	    }
 
-		if (colorFicha.equals("red")) {
-			posicionSauron = posicionActual;
-		} else if (colorFicha.equals("blue")) {
-			posicionComunidad = posicionActual;
-		}
-	}
-
-	//Método aux para obtener el color de fondo según la ficha
-	private String obtenerColorFondoFicha(String colorFicha) {
-		if (colorFicha.equals("red")) {
-			return "pink"; //Clor de fondo para Sauron
-		} else if (colorFicha.equals("blue")) {
-			return "green"; //Color de fondo pra La Comunidad
-		} else {
-			return "yellow"; // Color por defecto para otras fichas
-		}
+	    verificarVictoria();
 	}
 
 	private void procesarMovimientoPorCarta(Carta carta) {
-		String efecto = carta.getEfecto();
+	    String efecto = carta.getEfecto();
 
-		if (efecto.startsWith("avance+")) {
-			int avance = Integer.parseInt(efecto.replace("avance+", ""));
+	    if (efecto.startsWith("avance+")) {
+	        int avance = Integer.parseInt(efecto.replace("avance+", ""));
 
-			//Verificar el turno del jugador actual
-			if (jugadorActual.equals(jugadorComunidad)) {
-				//La Comunidad roba y avanza SU ficha (blue)
-				moverFicha(posicionComunidad, avance, "blue");
-			} else if (jugadorActual.equals(jugadorMordor)) {
-				//Sauron roba y avanza SU ficha (red)
-				moverFicha(posicionSauron, avance, "red");
-			}
-
-		} else {
-			System.out.println("La carta no afecta el movimiento de las fichas.");
-		}
+	        if (jugadorActual.equals(jugadorComunidad)) {
+	            if (posicionComunidad + avance >= 29) {
+	                posicionComunidad = 29;
+	                verificarVictoria();
+	                return;
+	            }
+	            moverFicha(posicionComunidad, avance, "blue");
+	            if (posicionSauron + avance >= posicionComunidad) {
+	                posicionSauron = posicionComunidad;
+	                verificarVictoria();
+	                return;
+	            }
+	            moverFicha(posicionSauron, avance, "red");
+	        } else if (jugadorActual.equals(jugadorMordor)) {
+	            if (posicionSauron + avance >= posicionComunidad) {
+	                posicionSauron = posicionComunidad;
+	                verificarVictoria();
+	                return;
+	            }
+	            moverFicha(posicionSauron, avance, "red");
+	        }
+	    } else {
+	        System.out.println("La carta no afecta el movimiento de las fichas.");
+	    }
+	}
+	private String obtenerColorFondoFicha(String colorFicha) {
+	    if (colorFicha.equals("red")) {
+	        return "pink"; // Color de fondo para Sauron
+	    } else if (colorFicha.equals("blue")) {
+	        return "green"; // Color de fondo para La Comunidad
+	    } else {
+	        return "yellow"; // Color por defecto para otras fichas
+	    }
 	}
 
+	
 	private final int[][] posiciones = { { 0, 5 }, { 0, 7 }, { 1, 4 }, { 1, 6 }, { 1, 8 }, { 2, 3 }, { 2, 5 }, { 2, 7 },
 			{ 2, 9 }, { 3, 2 }, { 3, 4 }, { 3, 6 }, { 3, 8 }, { 3, 10 }, { 4, 1 }, { 4, 3 }, { 4, 5 }, { 4, 7 },
 			{ 4, 9 }, { 4, 11 } };
