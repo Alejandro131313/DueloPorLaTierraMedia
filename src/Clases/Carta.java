@@ -22,7 +22,7 @@ public class Carta {
 
 
 
-
+    //test tadeo
 	// Getters y Setters
     public int getId() {
         return id;
