@@ -20,7 +20,7 @@ public class Carta {
         this.imagenRuta = imagenRuta;
     }
 
-
+    // Test commit
 
 
 	// Getters y Setters
