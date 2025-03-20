@@ -8,7 +8,6 @@ public class Carta {
     private String efecto;
     private String fase;
     private String imagenRuta;
-	///preuba
 
     public Carta(int id, String nombre, String color, String recursosQueRequiere, String efecto, String fase, String imagenRuta) {
         this.id = id;
@@ -20,9 +19,6 @@ public class Carta {
         this.imagenRuta = imagenRuta;
     }
 
-    // Test commit
-
-    //test tadeo
 	// Getters y Setters
     public int getId() {
         return id;
