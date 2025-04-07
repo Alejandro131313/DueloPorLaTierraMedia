@@ -1,5 +1,6 @@
 package Controladores;
 
+import Clases.Database;
 import Clases.Jugador;
 import Clases.JugadorPartida;
 import Clases.Partida;
@@ -36,6 +37,12 @@ public class ConfigurarPartidaController {
 				alert.setContentText("Por favor, ingrese nombres válidos para ambos jugadores.");
 				alert.showAndWait();
 				return;
+			}
+			else {
+				String jugadorComunidad = nombreComunidad.getText();
+				String jugadorMordor = nombreMordor.getText();
+				Database.insertarJugador(jugadorMordor);
+				Database.insertarJugador(jugadorComunidad);
 			}
 
 			//Generar datos random para los jugadores

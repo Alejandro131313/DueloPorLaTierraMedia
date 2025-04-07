@@ -14,7 +14,7 @@ public class LugarClave {
         this.efecto = efecto;
         this.imagenRuta = imagenRuta;
     }
-
+//test
     // Getter y Setter
     public int getId() {
         return id;
