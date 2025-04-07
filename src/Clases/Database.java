@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Database {
-
+/*
 	private static final String DB_URL = "jdbc:mysql://avnadmin:AVNS_RXeC2nx-cKz4gsGBbDv@mysql-37a0894f-dueloporlatierramedia.f.aivencloud.com:10339/duelotierramedia?ssl-mode=REQUIRED";
     private static final String USER = "avnadmin";
     private static final String PASS = "AVNS_RXeC2nx-cKz4gsGBbDv";
@@ -38,6 +38,6 @@ public class Database {
         }
 
     }
-
+*/
 
 }
