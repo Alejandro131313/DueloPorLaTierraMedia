@@ -8,7 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Database {
-/*
+	private static final String DB_URL = "";
+    private static final String USER = "";
+    private static final String PASS = "";
     
     public static void insertarJugador(String nombre) throws SQLException {
         Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -35,6 +37,34 @@ public class Database {
         }
 
     }
-*/
+    public static boolean insertarUsuario(String usuario, String contrasena, String email) {
+        String sql = "INSERT INTO Jugadores (NombreJugador, Password, EmailJugador) VALUES (?, ?, ?)";
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, usuario);
+            stmt.setString(2, contrasena);
+            stmt.setString(3, email);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean verificarUsuario(String usuario, String contrasena) {
+        String sql = "SELECT * FROM Jugadores WHERE NombreJugador = ? AND Password = ?";
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, usuario);
+            stmt.setString(2, contrasena);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
 }

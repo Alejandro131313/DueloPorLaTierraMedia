@@ -41,6 +41,8 @@ public class VistaController {
         videoStage.setScene(scene);
         videoStage.show();
     }
+
+    
     @FXML
     private void onNuevaPartida(javafx.event.ActionEvent event) {
         try {
