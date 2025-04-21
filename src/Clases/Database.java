@@ -1,5 +1,5 @@
-	
 package Clases;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,10 +8,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Database {
-	private static final String DB_URL = "";
+
+    private static final String DB_URL = "";
     private static final String USER = "";
     private static final String PASS = "";
-    
+
+    // Inserta un nuevo jugador (nombre sin contraseña)
     public static void insertarJugador(String nombre) throws SQLException {
         Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
         try (Connection conn1 = DriverManager.getConnection(DB_URL, USER, PASS)) {
@@ -24,6 +26,7 @@ public class Database {
             System.err.println("Error al insertar jugador en la BBDD:");
             e.printStackTrace();
         }
+
         System.out.println("Lista de jugadores registrados:");
         String query = "SELECT idJugadores, NombreJugador FROM Jugadores";
         try (Statement st = conn.createStatement();
@@ -35,14 +38,20 @@ public class Database {
                 System.out.println("ID: " + id + " | Nombre: " + nombreJugador);
             }
         }
-
     }
+
+    // Registro: Guarda el hash de la contraseña
     public static boolean insertarUsuario(String usuario, String contrasena, String email) {
         String sql = "INSERT INTO Jugadores (NombreJugador, Password, EmailJugador) VALUES (?, ?, ?)";
+
+        // Encriptar la contraseña con BCrypt
+        String hash = Seguridad.encriptar(contrasena);
+
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, usuario);
-            stmt.setString(2, contrasena);
+            stmt.setString(2, hash);  // Guarda el hash, no la contraseña en texto plano
             stmt.setString(3, email);
             stmt.executeUpdate();
             return true;
@@ -52,19 +61,25 @@ public class Database {
         }
     }
 
+    // Login: Verifica que el hash de la contraseña coincida
     public static boolean verificarUsuario(String usuario, String contrasena) {
-        String sql = "SELECT * FROM Jugadores WHERE NombreJugador = ? AND Password = ?";
+        String sql = "SELECT Password FROM Jugadores WHERE NombreJugador = ?";
+
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, usuario);
-            stmt.setString(2, contrasena);
             ResultSet rs = stmt.executeQuery();
-            return rs.next();
+
+            if (rs.next()) {
+                String hashGuardado = rs.getString("Password");
+                return Seguridad.verificar(contrasena, hashGuardado);
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
+
+        return false;
     }
-
-
 }

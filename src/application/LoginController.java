@@ -10,7 +10,8 @@ import javafx.scene.Parent;
 import javafx.scene.layout.*;
 
 public class LoginController {
-	@FXML private VBox formulario;
+
+    @FXML private VBox formulario;
     @FXML private VBox botonesInicio;
     @FXML private TextField campoUsuario;
     @FXML private PasswordField campoContrasena;
@@ -19,6 +20,7 @@ public class LoginController {
 
     private boolean esRegistro = false;
 
+    // Mostrar formulario de inicio de sesión
     @FXML
     private void mostrarLogin() {
         esRegistro = false;
@@ -31,6 +33,7 @@ public class LoginController {
         botonesInicio.setManaged(false);
     }
 
+    // Mostrar formulario de registro
     @FXML
     private void mostrarRegistro() {
         esRegistro = true;
@@ -43,6 +46,7 @@ public class LoginController {
         botonesInicio.setManaged(false);
     }
 
+    // Ocultar formulario actual
     @FXML
     private void ocultarFormulario() {
         formulario.setVisible(false);
@@ -54,7 +58,7 @@ public class LoginController {
         campoEmail.clear();
     }
 
-
+    // Acción cuando se pulsa el botón de confirmar login o registro
     @FXML
     private void onAccionFormulario() {
         String usuario = campoUsuario.getText().trim();
@@ -76,20 +80,55 @@ public class LoginController {
         } else {
             if (Database.verificarUsuario(usuario, contrasena)) {
                 mostrarAlerta("Bienvenido", "Inicio de sesión correcto.");
-                // Cargar Vista.fxml aquí
-                // ...
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/Vista.fxml"));
+                cargarPantallaMultijugador();
             } else {
                 mostrarAlerta("Error", "Usuario o contraseña incorrectos.");
             }
         }
     }
 
+    // Cargar vista Multijugador
+    private void cargarPantallaMultijugador() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/Multijugador.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+
+            Stage stage = (Stage) campoUsuario.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Modo Multijugador");
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo cargar la pantalla multijugador.");
+        }
+    }
+
+    // Salir de la aplicación
     @FXML
     private void onSalir() {
         System.exit(0);
     }
 
+    // Volver al menú principal (Vista.fxml)
+    @FXML
+    private void onVolverAlMenu() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Vista.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+
+            Stage stage = (Stage) campoUsuario.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Duelo por la Tierra Media - Menú Principal");
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo cargar el menú principal.");
+        }
+    }
+
+    // Método reutilizable para mostrar alertas
     private void mostrarAlerta(String titulo, String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setTitle(titulo);
@@ -98,4 +137,3 @@ public class LoginController {
         alerta.showAndWait();
     }
 }
-

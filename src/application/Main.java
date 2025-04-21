@@ -14,7 +14,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         try {
             // Carga vista fxml
-            AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("VistaInicial.fxml"));
+            AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("Vista.fxml"));
             Scene scene = new Scene(root);
             
             //forzado de render por software

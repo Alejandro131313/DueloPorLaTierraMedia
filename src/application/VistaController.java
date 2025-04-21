@@ -5,7 +5,6 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 
-import Clases.Jugador;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -106,5 +105,24 @@ public class VistaController {
         alerta.showAndWait();
     }
  
+    @FXML
+    private void onMultijugador(javafx.event.ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("VistaInicial.fxml"));
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene); // Usamos scene que ya creamos, no otra nueva
+            stage.setTitle("Duelo por la Tierra Media - Inicio");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    
 }
 

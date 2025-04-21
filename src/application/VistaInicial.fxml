@@ -32,6 +32,7 @@
                     <Button text="Cancelar" onAction="#ocultarFormulario"/>
                 </VBox>
             </VBox>
+                    <Button text="Volver al Menú" onAction="#onVolverAlMenu"/>
 
             <Button onAction="#onSalir" text="Salir" />
         </VBox>
