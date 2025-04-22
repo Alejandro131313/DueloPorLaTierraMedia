@@ -28,12 +28,12 @@ public class Database {
         }
 
         System.out.println("Lista de jugadores registrados:");
-        String query = "SELECT idJugadores, NombreJugador FROM Jugadores";
+        String query = "SELECT idJugador, NombreJugador FROM Jugadores";
         try (Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(query)) {
 
             while (rs.next()) {
-                int id = rs.getInt("idJugadores");
+                int id = rs.getInt("idJugador");
                 String nombreJugador = rs.getString("NombreJugador");
                 System.out.println("ID: " + id + " | Nombre: " + nombreJugador);
             }
@@ -44,14 +44,14 @@ public class Database {
     public static boolean insertarUsuario(String usuario, String contrasena, String email) {
         String sql = "INSERT INTO Jugadores (NombreJugador, Password, EmailJugador) VALUES (?, ?, ?)";
 
-        // Encriptar la contraseña con BCrypt
+        //encriptar la contraseña conBCrypt
         String hash = Seguridad.encriptar(contrasena);
 
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, usuario);
-            stmt.setString(2, hash);  // Guarda el hash, no la contraseña en texto plano
+            stmt.setString(2, hash);  //guarda el hash, no la contraseña en texto plano
             stmt.setString(3, email);
             stmt.executeUpdate();
             return true;

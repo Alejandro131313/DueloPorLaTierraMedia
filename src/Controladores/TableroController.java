@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import Clases.Carta;
+import Clases.DueloClient;
 import Clases.JugadorPartida;
 import Clases.LugarClave;
 import Clases.Razas;
@@ -84,6 +85,9 @@ public class TableroController {
 
 	private int posicionSauron = 0; 
 	private int posicionComunidad = 14; 
+	private DueloClient cliente;
+	
+
 
 	private void moverFicha(int posicionActual, int cantidad, String colorFicha) {
 	    int nuevaPosicion = posicionActual + cantidad;
@@ -122,7 +126,17 @@ public class TableroController {
 
 	    verificarVictoria();
 	}
-
+	private TableroNetworkController redController;
+	
+	public void setCliente(DueloClient cliente) {
+	    this.cliente = cliente;
+	}
+	
+	public void setRedController(TableroNetworkController redController) {
+	    this.redController = redController;
+	    
+	}
+	
 	private void procesarMovimientoPorCarta(Carta carta) {
 	    String efecto = carta.getEfecto();
 
@@ -188,6 +202,12 @@ public class TableroController {
 
 		configurarTablero();
 		actualizarFondoTurno();
+		//conexi´n de red
+		//this.redController = new TableroNetworkController();
+		this.redController.setTablero(tablero);
+		this.redController.setTableroController(this);
+
+
 	}
 	
 	private Image cargarImagenIconos(String ruta, double ancho, double alto) {
@@ -285,6 +305,15 @@ public class TableroController {
 		// configuración inicial
 		cartaBtn.setDisable(bloqueada);
 		cartaBtn.setOnAction(e -> {
+			if (!puedeRobarse(carta)) {
+			      mostrarAlerta("No puedes robar esta carta", "Debes desbloquear primero las cartas inferiores.");
+			      return;
+			  }
+
+			// Enviar solicitud de robo al servidor
+			redController.robarCartaDesdeCliente(carta.getId());
+			
+			/* Prueba control de carta por servidor
 			boolean recursosSuficientes = false;
 			switch (tablero.getCapitulo()) {
 			case "fase1":
@@ -338,7 +367,7 @@ public class TableroController {
 			} else {
 				mostrarAlerta("No puedes robar esta carta",
 						"Debes cumplir los requisitos o desbloquear las cartas inferiores.");
-			}
+			}*/
 		});
 
 		// opcion para descartar carta
@@ -347,6 +376,39 @@ public class TableroController {
 		});
 
 		return cartaBtn;
+	}
+	
+	public void procesarCartaRobada(Carta carta) {
+	    Button boton = mapaCartasBotones.get(carta);
+	    if (boton != null) {
+	        boton.setVisible(false);
+	    }
+
+	    if (jugadorActual.equals(jugadorComunidad)) {
+	        cartasJugador1.getItems().add(carta.getNombre());
+	    } else {
+	        cartasJugador2.getItems().add(carta.getNombre());
+	    }
+
+	    switch (tablero.getCapitulo()) {
+	        case "fase1":
+	            tablero.aplicarEfectoCartaFase1(carta, jugadorActual);
+	            procesarMovimientoPorCarta(carta);
+	            break;
+	        case "fase2":
+	            tablero.aplicarEfectoCartaFase2(carta, jugadorActual);
+	            procesarMovimientoPorCarta(carta);
+	            break;
+	        case "fase3":
+	            tablero.aplicarEfectoCartaFase3(carta, jugadorActual);
+	            procesarMovimientoPorCarta(carta);
+	            break;
+	    }
+
+	    actualizarContadores(jugadorActual, jugadorActual.equals(jugadorComunidad));
+	    verificarCambioDeFase();
+	    cambiarTurno();
+	    actualizarCartasHabilitadas();
 	}
 
 	private void verificarCambioDeFase() {

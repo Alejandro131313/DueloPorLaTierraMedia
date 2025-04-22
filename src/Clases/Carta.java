@@ -1,7 +1,10 @@
-package Clases;
 
-public class Carta {
-    private int id;
+package Clases;
+import java.io.Serializable;
+
+public class Carta implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private int id;
     private String nombre;
     private String color;
     private String recursosQueRequiere;

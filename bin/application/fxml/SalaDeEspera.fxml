@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="application.SalaDeEsperaController"
+      alignment="CENTER" spacing="20" prefWidth="400" prefHeight="200">
+    
+    <Label fx:id="mensajeLabel" text="Esperando al otro jugador..."
+           style="-fx-font-size: 18px; -fx-text-fill: #333;">
+        <font>
+            <Font name="Arial Bold" size="18" />
+        </font>
+    </Label>
+
+    <ProgressIndicator fx:id="cargando" progress="-1.0" />
+
+</VBox>

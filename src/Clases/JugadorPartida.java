@@ -58,7 +58,28 @@ public class JugadorPartida {
 
     public JugadorPartida(String comunidad, String string) {
 	}
-
+    public JugadorPartida(Jugador jugador, String faccion) {
+        this.jugador = jugador;
+        this.faccion = faccion;
+        this.partida = null;
+        this.oro = 0;
+        this.fuerza = 0;
+        this.valor = 0;
+        this.astucia = 0;
+        this.sabiduria = 0;
+        this.corona = 0;
+        this.hobbits = 0;
+        this.enanos = 0;
+        this.humanos = 0;
+        this.elfos = 0;
+        this.magos = 0;
+        this.ents = 0;
+        this.cartas = new ArrayList<>();
+        this.territorios = new ArrayList<>();
+        this.unidades = new ArrayList<>();
+    }
+    
+    
 
 	// Métodos para inicializar unidades
     public void inicializarUnidades() {

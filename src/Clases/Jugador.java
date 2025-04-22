@@ -22,6 +22,9 @@ public class Jugador {
         this.edad = edad;
         this.numeroVictorias = numeroVictorias;
     }
+    public Jugador(String nombre) {
+        this.nombre = nombre;
+    }
 
     // Getters y Setters
     public int getId() {

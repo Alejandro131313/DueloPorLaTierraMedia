@@ -1192,6 +1192,13 @@ public class Tablero {
                 break;
         }
     }
+    
+    public Carta buscarCartaPorId(int id) {
+        for (Carta carta : obtenerCartasDelCapituloActual()) {
+            if (carta.getId() == id) return carta;
+        }
+        return null;
+    }
 
     
 }
