@@ -24,13 +24,13 @@ public class MultijugadorController {
 	@FXML
 	private void onHost(ActionEvent event) {
 	    new Thread(() -> {
-	        DueloServer server = new DueloServer(5000);
+	        DueloServer server = new DueloServer(2396);
 	        server.iniciar();  
 	    }).start();
 
 	    try {
 	        Thread.sleep(500);
-	        DueloClient client = new DueloClient("localhost", 5000);
+	        DueloClient client = new DueloClient("localhost", 2396);
 	        client.conectar();
 	        
 	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/fxml/SalaDeEspera.fxml"));
@@ -59,7 +59,7 @@ public class MultijugadorController {
     @FXML
     private void onUnirse(ActionEvent event) {
         try {
-            DueloClient client = new DueloClient("localhost", 5000);
+            DueloClient client = new DueloClient("localhost", 2396);
             client.conectar();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/fxml/SalaDeEspera.fxml"));
