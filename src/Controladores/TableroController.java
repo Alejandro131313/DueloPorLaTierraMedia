@@ -204,8 +204,10 @@ public class TableroController {
 		actualizarFondoTurno();
 		//conexi´n de red
 		//this.redController = new TableroNetworkController();
-		this.redController.setTablero(tablero);
-		this.redController.setTableroController(this);
+		if (this.redController != null) {
+		    this.redController.setTablero(tablero);
+		    this.redController.setTableroController(this);
+		}
 
 
 	}
@@ -310,8 +312,11 @@ public class TableroController {
 			      return;
 			  }
 
-			// Enviar solicitud de robo al servidor
-			redController.robarCartaDesdeCliente(carta.getId());
+			 if (redController != null) {
+				 	redController.robarCartaDesdeCliente(carta.getId());
+			    } else {
+			        procesarCartaRobada(carta);
+			    }
 			
 			/* Prueba control de carta por servidor
 			boolean recursosSuficientes = false;

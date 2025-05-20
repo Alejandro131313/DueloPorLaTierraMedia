@@ -49,9 +49,8 @@ public class Database {
 
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
             stmt.setString(1, usuario);
-            stmt.setString(2, hash);  //guarda el hash, no la contraseña en texto plano
+            stmt.setString(2, hash);
             stmt.setString(3, email);
             stmt.executeUpdate();
             return true;
