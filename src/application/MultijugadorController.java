@@ -85,7 +85,7 @@ public class MultijugadorController {
     @FXML
     private void onVolver(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/fxml/VistaInicial.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("VistaInicial.fxml"));
             Parent root = loader.load();
 
             // Aplicar CSS
