@@ -4,31 +4,33 @@ import java.io.Serializable;
 
 public class Carta implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private int id;
+	private int idCarta;
     private String nombre;
     private String color;
-    private String recursosQueRequiere;
+    private String recursos;
     private String efecto;
     private String fase;
     private String imagenRuta;
 
-    public Carta(int id, String nombre, String color, String recursosQueRequiere, String efecto, String fase, String imagenRuta) {
-        this.id = id;
-        this.nombre = nombre;
-        this.color = color;
-        this.recursosQueRequiere = recursosQueRequiere;
-        this.efecto = efecto;
-        this.fase = fase;
-        this.imagenRuta = imagenRuta;
-    }
+    public Carta(final int idCarta, final String nombre, final String color,
+            final String recursos, final String efecto, final String fase,
+            final String imagenRuta) {
+   this.idCarta = idCarta;
+   this.nombre = nombre;
+   this.color = color;
+   this.recursos = recursos;
+   this.efecto = efecto;
+   this.fase = fase;
+   this.imagenRuta = imagenRuta;
+}
 
 	// Getters y Setters
     public int getId() {
-        return id;
+        return idCarta;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.idCarta = id;
     }
 
     public String getNombre() {
@@ -48,11 +50,11 @@ public class Carta implements Serializable {
     }
 
     public String getRecursosQueRequiere() {
-        return recursosQueRequiere;
+        return recursos;
     }
 
-    public void setRecursosQueRequiere(String recursosQueRequiere) {
-        this.recursosQueRequiere = recursosQueRequiere;
+    public void setRecursosQueRequiere(String recursos) {
+        this.recursos = recursos;
     }
 
     public String getEfecto() {

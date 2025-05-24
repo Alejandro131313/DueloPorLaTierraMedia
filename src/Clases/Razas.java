@@ -1,38 +1,38 @@
 package Clases;
 
 public class Razas {
-    private int id;
+    private int idRaza;
     private String nombre;
     private String imagenRuta;
 	
 
-    public Razas(int id, String nombre, String imagenRuta) {
-        this.id = id;
+    public Razas(final int idRaza, final String nombre, final String imagenRuta) {
+        this.idRaza = idRaza;
         this.nombre = nombre;
         this.imagenRuta = imagenRuta;
     }
     
 	// Getters y Setters
     public int getId() {
-        return id;
+        return idRaza;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(final int idRaza) {
+        this.idRaza = idRaza;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
+    public void setNombre(final String nombre) {
         this.nombre = nombre;
     }
     public String getImagenRuta() {
         return imagenRuta;
     }
 
-    public void setImagenRuta(String imagenRuta) {
+    public void setImagenRuta(final String imagenRuta) {
         this.imagenRuta = imagenRuta;
     }
 

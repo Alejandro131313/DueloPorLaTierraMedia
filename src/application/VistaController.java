@@ -14,28 +14,31 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class VistaController {
 		
+    private static final Logger LOGGER = Logger.getLogger(VistaController.class.getName());
 
     @FXML
     private void onTutorial() {
         // URL del video de YouTube
-        String videoUrl = "https://www.youtube.com/watch?v=ZEScRyJ_KuM&t=203s"; 
+        final String videoUrl = "https://www.youtube.com/watch?v=ZEScRyJ_KuM&t=203s"; 
         
         // Crea un WebView para cargar la URL de YouTube
-        WebView webView = new WebView();
+        final WebView webView = new WebView();
         webView.getEngine().load(videoUrl);
 
         // Crear un StackPane para contener el WebView
-        StackPane root = new StackPane();
+        final StackPane root = new StackPane();
         root.getChildren().add(webView);
 
         // Crear una nueva escena con el WebView
-        Scene scene = new Scene(root, 800, 600);
+        final Scene scene = new Scene(root, 800, 600);
 
         // Crear una nueva ventana (Stage) para mostrar el video
-        Stage videoStage = new Stage();
+        final Stage videoStage = new Stage();
         videoStage.setTitle("Tutorial");
         videoStage.setScene(scene);
         videoStage.show();
@@ -43,18 +46,18 @@ public class VistaController {
 
     
     @FXML
-    private void onNuevaPartida(javafx.event.ActionEvent event) {
+    private void onNuevaPartida(final javafx.event.ActionEvent event) {
         try {
             // Cargar la vista de selección de facción
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/SeleccionFaccion.fxml"));
-            Parent root = loader.load();
+        	final FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/SeleccionFaccion.fxml"));
+        	final Parent root = loader.load();
 
             // Cambiar a la nueva escena
-            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        	final Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Configurar Partida");
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error al cargar la vista de selección de facción", e);
         }
     }
 
@@ -75,10 +78,10 @@ public class VistaController {
     private void onmostrarJugador() {
     	try {
             // Nombre del archivo generado previamente en ConfigurarPartidaController
-            String nombreArchivo = "datos_partida.html"; // Asegúrate de que el nombre coincide
+    		final String nombreArchivo = "datos_partida.html"; // Asegúrate de que el nombre coincide
 
             // Crear referencia al archivo
-            File archivo = new File(nombreArchivo);
+    		final File archivo = new File(nombreArchivo);
 
             // Verificar si el archivo existe
             if (archivo.exists()) {
@@ -92,13 +95,13 @@ public class VistaController {
                 mostrarAlerta("Archivo no encontrado", "El archivo HTML no existe. Genera el archivo antes de intentar abrirlo.");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "No se pudo abrir el archivo HTML", e);
             mostrarAlerta("Error", "No se pudo abrir el archivo HTML: " + e.getMessage());
         }
     }
 
-    private void mostrarAlerta(String titulo, String mensaje) {
-        Alert alerta = new Alert(AlertType.INFORMATION);
+    private void mostrarAlerta(final String titulo, final String mensaje) {
+    	final Alert alerta = new Alert(AlertType.INFORMATION);
         alerta.setTitle(titulo);
         alerta.setHeaderText(null);
         alerta.setContentText(mensaje);
@@ -108,17 +111,17 @@ public class VistaController {
     @FXML
     private void onMultijugador(javafx.event.ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("VistaInicial.fxml"));
-            Parent root = loader.load();
+        	final FXMLLoader loader = new FXMLLoader(getClass().getResource("VistaInicial.fxml"));
+        	final Parent root = loader.load();
 
-            Scene scene = new Scene(root);
+        	final Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
-            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            final Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene); // Usamos scene que ya creamos, no otra nueva
             stage.setTitle("Duelo por la Tierra Media - Inicio");
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error al cargar VistaInicial.fxml", e);
         }
     }
 

@@ -2,8 +2,13 @@ package Clases;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class JugadorPartida {
+
+    private static final Logger logger = Logger.getLogger(JugadorPartida.class.getName());
+    
     private Jugador jugador;
     private Partida partida;
     //Contadores Atributos
@@ -30,7 +35,7 @@ public class JugadorPartida {
     private List<Unidad> unidades;        //Array Torres 7 y 15 Soladados /Atributo posicionTerritorio SinColocar De Priemras
    
 
-    public JugadorPartida(Jugador jugador, Partida partida, int oro, String faccion, List<Carta> cartas, List<LugarClave> territorios, List<Unidad> unidades) {
+    public JugadorPartida(final Jugador jugador, final Partida partida, final int oro, final String faccion, final List<Carta> cartas, final List<LugarClave> territorios, final List<Unidad> unidades) {
         this.jugador = jugador;
         this.partida = partida;
         this.oro = oro;
@@ -56,9 +61,7 @@ public class JugadorPartida {
     }
 
 
-    public JugadorPartida(String comunidad, String string) {
-	}
-    public JugadorPartida(Jugador jugador, String faccion) {
+    public JugadorPartida(final Jugador jugador, final String faccion) {
         this.jugador = jugador;
         this.faccion = faccion;
         this.partida = null;
@@ -85,7 +88,7 @@ public class JugadorPartida {
     public void inicializarUnidades() {
         // Agregar 7 torres
         for (int i = 0; i < 7; i++) {
-            unidades.add(new Unidad(i + 1, "Torre", "Sin colocar"));
+            unidades.add(new Unidad(i + 1, "Torre", "Sin 	"));
         }
         // Agregar 15 soldados
         for (int i = 0; i < 15; i++) {
@@ -115,7 +118,7 @@ public class JugadorPartida {
         return jugador;
     }
 
-    public void setJugador(Jugador jugador) {
+    public void setJugador(final Jugador jugador) {
         this.jugador = jugador;
     }
 
@@ -123,7 +126,7 @@ public class JugadorPartida {
         return partida;
     }
 
-    public void setPartida(Partida partida) {
+    public void setPartida(final Partida partida) {
         this.partida = partida;
     }
 
@@ -139,7 +142,7 @@ public class JugadorPartida {
 	    return fuerza;
 	}
 	
-	public void setFuerza(int fuerza) {
+	public void setFuerza(final int fuerza) {
 	    this.fuerza = fuerza;
 	}
 	
@@ -147,7 +150,7 @@ public class JugadorPartida {
 	    return valor;
 	}
 	
-	public void setValor(int valor) {
+	public void setValor(final int valor) {
 	    this.valor = valor;
 	}
 	
@@ -155,7 +158,7 @@ public class JugadorPartida {
 	    return astucia;
 	}
 	
-	public void setAstucia(int astucia) {
+	public void setAstucia(final int astucia) {
 	    this.astucia = astucia;
 	}
 	
@@ -163,7 +166,7 @@ public class JugadorPartida {
 	    return sabiduria;
 	}
 	
-	public void setSabiduria(int sabiduria) {
+	public void setSabiduria(final int sabiduria) {
 	    this.sabiduria = sabiduria;
 	}
 	
@@ -171,7 +174,7 @@ public class JugadorPartida {
 	    return corona;
 	}
 	
-	public void setCorona(int corona) {
+	public void setCorona(final int corona) {
 	    this.corona = corona;
 	}
 
@@ -180,7 +183,7 @@ public class JugadorPartida {
         return faccion;
     }
 
-    public void setFaccion(String faccion) {
+    public void setFaccion(final String faccion) {
         this.faccion = faccion;
     }
 
@@ -188,7 +191,7 @@ public class JugadorPartida {
         return cartas;
     }
 
-    public void setCartas(List<Carta> cartas) {
+    public void setCartas(final List<Carta> cartas) {
         this.cartas = cartas;
     }
 
@@ -196,7 +199,7 @@ public class JugadorPartida {
         return territorios;
     }
 
-    public void setTerritorios(List<LugarClave> territorios) {
+    public void setTerritorios(final List<LugarClave> territorios) {
         this.territorios = territorios;
     }
 
@@ -204,7 +207,7 @@ public class JugadorPartida {
         return unidades;
     }
 
-    public void setUnidades(List<Unidad> unidades) {
+    public void setUnidades(final List<Unidad> unidades) {
         this.unidades = unidades;
     }
     
@@ -215,7 +218,7 @@ public class JugadorPartida {
 		return hobbits;
 	}
 
-	public void setHobbits(int hobbits) {
+	public void setHobbits(final int hobbits) {
 		this.hobbits = hobbits;
 	}
 
@@ -223,7 +226,7 @@ public class JugadorPartida {
 		return enanos;
 	}
 
-	public void setEnanos(int enanos) {
+	public void setEnanos(final int enanos) {
 		this.enanos = enanos;
 	}
 
@@ -231,7 +234,7 @@ public class JugadorPartida {
 		return humanos;
 	}
 
-	public void setHumanos(int humanos) {
+	public void setHumanos(final int humanos) {
 		this.humanos = humanos;
 	}
 
@@ -239,7 +242,7 @@ public class JugadorPartida {
 		return elfos;
 	}
 
-	public void setElfos(int elfos) {
+	public void setElfos(final int elfos) {
 		this.elfos = elfos;
 	}
 
@@ -247,7 +250,7 @@ public class JugadorPartida {
 		return magos;
 	}
 
-	public void setMagos(int magos) {
+	public void setMagos(final int magos) {
 		this.magos = magos;
 	}
 
@@ -255,14 +258,14 @@ public class JugadorPartida {
 		return ents;
 	}
 
-	public void setEnts(int ents) {
+	public void setEnts(final int ents) {
 		this.ents = ents;
 	}
 
 	public void añadirCarta(Carta carta) {
         if (carta != null) {
             cartas.add(carta);
-            System.out.println(jugador.getNombre() + " ha robado la carta: " + carta.getNombre());
+            logger.info(jugador.getNombre() + " ha robado la carta: " + carta.getNombre());
         }
     }
 

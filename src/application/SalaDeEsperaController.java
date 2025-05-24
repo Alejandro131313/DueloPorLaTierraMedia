@@ -17,8 +17,11 @@ import Clases.Unidad;
 import Clases.Mensajes;
 import Controladores.TableroController;
 import Controladores.TableroNetworkController;
+import java.util.logging.Logger;
 
 public class SalaDeEsperaController {
+	 private static final Logger logger = Logger.getLogger(SalaDeEsperaController.class.getName());
+	 
 
     @FXML
     private Label mensajeLabel;
@@ -33,10 +36,10 @@ public class SalaDeEsperaController {
 
     private void esperarTurno() {
         try {
-            System.out.println("⌛ Esperando mensaje del servidor...");
+            logger.info("Esperando mensaje del servidor...");
             while (true) {
                 Object obj = redController.leerSiguienteMensaje();
-                System.out.println("📩 Mensaje recibido: " + obj);
+                logger.info("Mensaje recibido: " + obj);
 
                 if (obj instanceof Mensajes) {
                     Mensajes mensaje = (Mensajes) obj;

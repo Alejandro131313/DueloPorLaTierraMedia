@@ -2,30 +2,30 @@ package Clases;
 
 
 public class Unidad {
-    private int id;
+    private int idUnidad;
     private String tipo;
     private String posicionTerritorio;
 
-    public Unidad(int id, String tipo, String posicionTerritorio) {
-        this.id = id;
+    public Unidad(final int idUnidad, final String tipo, final String posicionTerritorio) {
+        this.idUnidad = idUnidad;
         this.tipo = tipo;
         this.posicionTerritorio = posicionTerritorio;
     }
 
     // Getters y Setters
     public int getId() {
-        return id;
+        return idUnidad;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int idUnidad) {
+        this.idUnidad = idUnidad;
     }
 
     public String getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(final String tipo) {
         this.tipo = tipo;
     }
 
@@ -33,7 +33,7 @@ public class Unidad {
         return posicionTerritorio;
     }
 
-    public void setPosicionTerritorio(String posicionTerritorio) {
+    public void setPosicionTerritorio(final String posicionTerritorio) {
         this.posicionTerritorio = posicionTerritorio;
     }
 }

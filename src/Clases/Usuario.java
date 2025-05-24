@@ -15,7 +15,7 @@ public class Usuario {
         return nombreUsuario;
     }
 
-    public void setNombreUsuario(String nombreUsuario) {
+    public void setNombreUsuario(final String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
     }
 
@@ -23,7 +23,7 @@ public class Usuario {
         return contrasena;
     }
 
-    public void setContrasena(String contrasena) {
+    public void setContrasena(final String contrasena) {
         this.contrasena = contrasena;
     }
 }

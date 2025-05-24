@@ -15,21 +15,21 @@ public class Mensajes implements Serializable {
     }
 
     private Tipo tipo;
-    private int idCarta;
+    private int idMensaje;
     private String jugador;
     private Object contenido; // Puede ser una Carta o estado del juego
 
-    public Mensajes(Tipo tipo) {
+    public Mensajes(final Tipo tipo) {
         this.tipo = tipo;
     }
 
-    public Mensajes(Tipo tipo, int idCarta, String jugador) {
+    public Mensajes(final Tipo tipo, final int idMensaje, final String jugador) {
         this.tipo = tipo;
-        this.idCarta = idCarta;
+        this.idMensaje = idMensaje;
         this.jugador = jugador;
     }
 
-    public Mensajes(Tipo tipo, Object contenido) {
+    public Mensajes(final Tipo tipo, final Object contenido) {
         this.tipo = tipo;
         this.contenido = contenido;
     }
@@ -38,23 +38,23 @@ public class Mensajes implements Serializable {
         return tipo;
     }
 
-    public void setTipo(Tipo tipo) {
+    public void setTipo(final Tipo tipo) {
         this.tipo = tipo;
     }
 
     public int getIdCarta() {
-        return idCarta;
+        return idMensaje;
     }
 
-    public void setIdCarta(int idCarta) {
-        this.idCarta = idCarta;
+    public void setIdCarta(final int idCarta) {
+        this.idMensaje = idCarta;
     }
 
     public String getJugador() {
         return jugador;
     }
 
-    public void setJugador(String jugador) {
+    public void setJugador(final String jugador) {
         this.jugador = jugador;
     }
 
@@ -62,7 +62,7 @@ public class Mensajes implements Serializable {
         return contenido;
     }
 
-    public void setContenido(Object contenido) {
+    public void setContenido(final Object contenido) {
         this.contenido = contenido;
     }
 }  

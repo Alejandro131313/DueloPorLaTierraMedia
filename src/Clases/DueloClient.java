@@ -4,8 +4,12 @@ import java.io.*;
 import java.net.*;
 
 import Controladores.TableroNetworkController;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DueloClient {
+
+    private static final Logger LOGGER = Logger.getLogger(DueloClient.class.getName());
     private String host;
     private int puerto;
     private ObjectOutputStream salida;
@@ -17,7 +21,7 @@ public class DueloClient {
     public TableroNetworkController getRedController() {
         return redController;
     }
-    public DueloClient(String host, int puerto) {
+    public DueloClient(final String host, final int puerto) {
     	this.host = host;
     	this.puerto = puerto;
     }
@@ -33,16 +37,15 @@ public class DueloClient {
         	redController = new TableroNetworkController();
         	redController.inicializarConStreams(socket, entrada, salida);
         } catch (IOException e) {
-            System.err.println("error al conectar con el servidor: " + e.getMessage());
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error al conectar con el servidor", e);
         }
     }
-    public void enviarRoboCarta(int idCarta) {
+    public void enviarRoboCarta(final int idCarta) {
         try {
-            Mensajes mensaje = new Mensajes(Mensajes.Tipo.ROBAR_CARTA, idCarta, "cliente");
+            final Mensajes mensaje = new Mensajes(Mensajes.Tipo.ROBAR_CARTA, idCarta, "cliente");
             salida.writeObject(mensaje);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error al conectar con el servidor", e);
         }
     }
 

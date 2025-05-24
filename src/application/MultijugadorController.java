@@ -8,18 +8,14 @@ import javafx.stage.Stage;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.Node;
-
-
 import java.net.URL; 
-
 import Clases.DueloClient;
 import Clases.DueloServer;
-import Controladores.TableroController;
-import Controladores.TableroNetworkController;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import java.util.logging.Logger;
 
 public class MultijugadorController {
+	 private static final Logger logger = Logger.getLogger(MultijugadorController.class.getName());
 
 	@FXML
 	private void onHost(ActionEvent event) {
@@ -50,7 +46,7 @@ public class MultijugadorController {
 	        stage.setTitle("Sala de Espera - Esperando jugador...");
 
 	    } catch (Exception e) {
-	        System.out.println("❌ Error al cargar SalaDeEspera:");
+	        logger.info("Error al cargar SalaDeEspera:");
 	        e.printStackTrace();
 	        mostrarAlerta("Error", "No se pudo iniciar la partida.");
 	    }

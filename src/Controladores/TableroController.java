@@ -23,8 +23,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import java.util.logging.Logger;
+
 
 public class TableroController {
+	 private static final Logger logger = Logger.getLogger(TableroController.class.getName());
 
 	@FXML
 	private GridPane tableroCentral;
@@ -113,9 +116,9 @@ public class TableroController {
 	        Label nuevoLabel = (Label) pistaCarrera.getChildren().get(posicionActual);
 	        nuevoLabel.setStyle("-fx-border-color: " + colorFicha + "; -fx-background-color: " + obtenerColorFondoFicha(colorFicha) + "; -fx-padding: 10;");
 
-	        System.out.println("Ficha (" + colorFicha + ") se movió a la posición: " + (posicionActual + 1));
+	        logger.info("Ficha (" + colorFicha + ") se movió a la posición: " + (posicionActual + 1));
 	    } else {
-	        System.out.println("Movimiento fuera de rango para la ficha (" + colorFicha + ").");
+	        logger.info("Movimiento fuera de rango para la ficha (" + colorFicha + ").");
 	    }
 
 	    if (colorFicha.equals("red")) {
@@ -165,7 +168,7 @@ public class TableroController {
 	            moverFicha(posicionSauron, avance, "red");
 	        }
 	    } else {
-	        System.out.println("La carta no afecta el movimiento de las fichas.");
+	        logger.info("La carta no afecta el movimiento de las fichas.");
 	    }
 	}
 	private String obtenerColorFondoFicha(String colorFicha) {
@@ -504,8 +507,8 @@ public class TableroController {
 		}
 		verificarVictoria();
 		actualizarFondoTurno();
-		System.out.println("Posicion Comunidad" + posicionComunidad);
-		System.out.println("Posicion Sauron" + posicionSauron);
+		logger.info("Posicion Comunidad" + posicionComunidad);
+		logger.info("Posicion Sauron" + posicionSauron);
 
 	}
 
@@ -653,7 +656,7 @@ public class TableroController {
 			return;
 		}
 
-		System.out.println("No se cumplen condiciones de victoria. El juego continúa.");
+		logger.info("No se cumplen condiciones de victoria. El juego continúa.");
 	}
 
 	private boolean tieneFichasDeTodasLasRazas(JugadorPartida jugador) {
@@ -669,11 +672,11 @@ public class TableroController {
 		String mensajeFinal;
 		if (posicionComunidad >= 28 || tieneFichasDeTodasLasRazas(jugadorComunidad)
 				|| lugaresClaveRobadosComunidad.getItems().size() >= 3) {
-			mensajeFinal = "🎉¡La Comunidad ha ganado la partida! 🏆\n\n";
-			mensajeFinal += "¡El bien triunfa sobre el mal en la Tierra Media!🌿✨";
+			mensajeFinal = "¡La Comunidad ha ganado la partida!";
+			mensajeFinal += "¡El bien triunfa sobre el mal en la Tierra Media!";
 		} else {
-			mensajeFinal = "💀¡Sauron ha ganado la partida! 🔥\n\n";
-			mensajeFinal += "La oscuridad domina la Tierra Media🕳️🖤";
+			mensajeFinal = "¡Sauron ha ganado la partida!";
+			mensajeFinal += "La oscuridad domina la Tierra Media";
 		}
 
 		alerta.setContentText(mensajeFinal);
@@ -683,7 +686,7 @@ public class TableroController {
 		mostrarPantallaFinal(mensajeFinal);
 
 
-		System.out.println("El juego ha terminado.");
+		logger.info("El juego ha terminado.");
 		System.exit(0); 
 	}
 

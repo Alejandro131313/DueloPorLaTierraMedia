@@ -4,11 +4,19 @@ import org.mindrot.jbcrypt.BCrypt;
 
 public class Seguridad {
 
-    public static String encriptar(String contrasena) {
-        return BCrypt.hashpw(contrasena, BCrypt.gensalt(12)); // cost = 12
+    private static final int COSTE_HASH = 12;
+
+    public static String encriptar(final String contrasena) {
+        if (contrasena == null) {
+            throw new IllegalArgumentException("La contraseña no puede ser null.");
+        }
+        return BCrypt.hashpw(contrasena, BCrypt.gensalt(COSTE_HASH));
     }
 
-    public static boolean verificar(String contrasena, String hash) {
+    public static boolean verificar(final String contrasena, final String hash) {
+        if (contrasena == null || hash == null) {
+            throw new IllegalArgumentException("La contraseña y el hash no pueden ser null.");
+        }
         return BCrypt.checkpw(contrasena, hash);
     }
 }

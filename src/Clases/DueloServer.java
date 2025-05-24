@@ -4,37 +4,39 @@ import java.io.*;
 import java.net.*;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DueloServer {
-    private int puerto;
+    private static final Logger LOGGER = Logger.getLogger(DueloServer.class.getName());
+    private final int puerto;
     private final List<ObjectOutputStream> clientesConectados = new CopyOnWriteArrayList<ObjectOutputStream>();
     private Tablero tablero;
 
-    public DueloServer(int puerto) {
+    public DueloServer(final int puerto) {
         this.puerto = puerto;
     }
 
     public void iniciar() {
         try (ServerSocket serverSocket = new ServerSocket(puerto)) {
             int numConexiones = 0;
-
             while (numConexiones < 2) {
-                Socket socket = serverSocket.accept();
+            	final Socket socket = serverSocket.accept();
                 new Thread(new ClienteHandler(socket, numConexiones)).start();
                 numConexiones++;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error al iniciar el servidor", e);
         }
     }
 
     private class ClienteHandler implements Runnable {
-        private Socket socket;
+        private final Socket socket;
         private ObjectOutputStream salida;
         private ObjectInputStream entrada;
-        private int indiceJugador;
+        private final int indiceJugador;
 
-        public ClienteHandler(Socket socket, int indiceJugador) {
+        public ClienteHandler(final Socket socket, final int indiceJugador) {
             this.socket = socket;
             this.indiceJugador = indiceJugador;
         }
@@ -55,23 +57,23 @@ public class DueloServer {
                             clientesConectados.get(0).writeObject(new Mensajes(Mensajes.Tipo.TURNO_JUGADOR, "JUGADOR1"));
                             clientesConectados.get(1).writeObject(new Mensajes(Mensajes.Tipo.TURNO_JUGADOR, "JUGADOR2"));
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            LOGGER.log(Level.SEVERE, "Error al enviar mensajes de turno", e);
                         }
                     }
                 }
 
                 while (true) {
-                    Object recibido = entrada.readObject();
+                	final Object recibido = entrada.readObject();
                     if (recibido instanceof Mensajes) {
                         Mensajes mensaje = (Mensajes) recibido;
 
                         if (mensaje.getTipo() == Mensajes.Tipo.ROBAR_CARTA) {
-                            int id = mensaje.getIdCarta();
+                        	final int idMensaje = mensaje.getIdCarta();
                             Carta carta = null;
-                            List<Carta> cartas = tablero.obtenerCartasDelCapituloActual();
+                            final List<Carta> cartas = tablero.obtenerCartasDelCapituloActual();
 
-                            for (Carta c : cartas) {
-                                if (c.getId() == id) {
+                            for (final Carta c : cartas) {
+                                if (c.getId() == idMensaje) {
                                     carta = c;
                                     break;
                                 }
@@ -84,7 +86,7 @@ public class DueloServer {
                                 salida.writeObject(new Mensajes(Mensajes.Tipo.CARTA_INVALIDA, "Carta no válida"));
                             }
                             if (cartas.isEmpty()) {
-                                for (ObjectOutputStream out : clientesConectados) {
+                                for (final ObjectOutputStream out : clientesConectados) {
                                     out.writeObject(new Mensajes(Mensajes.Tipo.FIN_PARTIDA));
                                 }
                                 break;
@@ -93,15 +95,15 @@ public class DueloServer {
                     }
                 }
 
-                System.out.println("p artida finalizada");
+                LOGGER.info("Partida finalizada");
 
             } catch (Exception e) {
-                e.printStackTrace();
+                LOGGER.log(Level.SEVERE, "Error durante la ejecución del cliente", e);
             } finally {
                 try {
                     if (socket != null) socket.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOGGER.log(Level.WARNING, "Error al cerrar socket del cliente", e);
                 }
             }
         }

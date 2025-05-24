@@ -1,9 +1,13 @@
 package Clases;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class MainPartida {
+	
+    private static final Logger logger = Logger.getLogger(MainPartida.class.getName());
     public static void main(String[] args) {
+    	
         
     	System.setProperty("prism.order", "sw");
     	// Crear jugadores
@@ -29,10 +33,10 @@ public class MainPartida {
         partida.agregarJugador(jugador2);
 
         // Confirmar la creación
-        System.out.println("Partida creada con los jugadores:");
-        System.out.println("-----------------------------------");
-        System.out.println("Nombre del Jugador | Facción | Oro");
-        System.out.println("-----------------------------------");
+        logger.info("Partida creada con los jugadores:");
+        logger.info("-----------------------------------");
+        logger.info("Nombre del Jugador | Facción | Oro");
+        logger.info("-----------------------------------");
 
         for (Jugador jugador : partida.getJugadores()) {
             JugadorPartida jp = jugador.getId() == 1 ? jugadorPartida1 : jugadorPartida2;
@@ -45,23 +49,23 @@ public class MainPartida {
 
 
         // Mostrar cartas iniciales en el tablero
-        System.out.println("\nCartas iniciales en el tablero:");
+        logger.info("\nCartas iniciales en el tablero:");
         int index = 1;
         for (Carta carta : tablero.getCartas()) {
-            System.out.println(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
+            logger.info(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
             index++;
         }
 
         // Mostrar cartas disponibles en el capítulo actual antes de robar
-        System.out.println("\nCartas disponibles en el capítulo actual (" + tablero.getCapitulo() + ") antes de robar:");
+        logger.info("\nCartas disponibles en el capítulo actual (" + tablero.getCapitulo() + ") antes de robar:");
         index = 1;
         for (Carta carta : tablero.obtenerCartasDelCapituloActual()) {
-            System.out.println(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
+            logger.info(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
             index++;
         }
 
         // Robar cartas en el capítulo actual
-        System.out.println("\n--- Robar cartas en capítulo 1 ---");
+        logger.info("\n--- Robar cartas en capítulo 1 ---");
         Carta cartaRobada1 = tablero.robarCarta(tablero.getCapitulo());
         jugadorPartida1.añadirCarta(cartaRobada1);
 
@@ -69,26 +73,26 @@ public class MainPartida {
         jugadorPartida2.añadirCarta(cartaRobada2);
 
         // Mostrar cartas restantes en el tablero
-        System.out.println("\nCartas restantes en el tablero (capítulo 1):");
+        logger.info("\nCartas restantes en el tablero (capítulo 1):");
         index = 1;
         for (Carta carta : tablero.obtenerCartasDelCapituloActual()) {
-            System.out.println(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
+            logger.info(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
             index++;
         }
 
         // Mostrar cartas robadas
-        System.out.println("\nCartas robadas:");
-        System.out.println(jugador1.getNombre() + " tiene: ");
+        logger.info("\nCartas robadas:");
+        logger.info(jugador1.getNombre() + " tiene: ");
         index = 1;
         for (Carta carta : jugadorPartida1.getCartas()) {
-            System.out.println(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
+            logger.info(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
             index++;
         }
 
-        System.out.println(jugador2.getNombre() + " tiene: ");
+        logger.info(jugador2.getNombre() + " tiene: ");
         index = 1;
         for (Carta carta : jugadorPartida2.getCartas()) {
-            System.out.println(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
+            logger.info(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
             index++;
         }
 
@@ -96,14 +100,14 @@ public class MainPartida {
         tablero.setCapitulo("fase2");
 
         // Mostrar cartas disponibles en el capítulo 2 antes de robar
-        System.out.println("\nCartas disponibles en el capítulo actual (" + tablero.getCapitulo() + ") antes de robar:");
+        logger.info("\nCartas disponibles en el capítulo actual (" + tablero.getCapitulo() + ") antes de robar:");
         index = 1;
         for (Carta carta : tablero.obtenerCartasDelCapituloActual()) {
-            System.out.println(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
+            logger.info(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
             index++;
         }
 
-        System.out.println("\n--- Robar cartas en capítulo 2 ---");
+        logger.info("\n--- Robar cartas en capítulo 2 ---");
         Carta cartaRobada3 = tablero.robarCarta(tablero.getCapitulo());
         jugadorPartida1.añadirCarta(cartaRobada3);
 
@@ -111,36 +115,36 @@ public class MainPartida {
         jugadorPartida2.añadirCarta(cartaRobada4);
 
         // Mostrar cartas restantes en el tablero
-        System.out.println("\nCartas restantes en el tablero (capítulo 2):");
+        logger.info("\nCartas restantes en el tablero (capítulo 2):");
         index = 1;
         for (Carta carta : tablero.obtenerCartasDelCapituloActual()) {
-            System.out.println(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
+            logger.info(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
             index++;
         }
 
         // Mostrar cartas robadas en el capítulo 2
-        System.out.println("\nCartas robadas en capítulo 2:");
-        System.out.println(jugador1.getNombre() + " tiene: ");
+        logger.info("\nCartas robadas en capítulo 2:");
+        logger.info(jugador1.getNombre() + " tiene: ");
         index = 1;
         for (Carta carta : jugadorPartida1.getCartas()) {
-            System.out.println(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
+            logger.info(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
             index++;
         }
 
-        System.out.println(jugador2.getNombre() + " tiene: ");
+        logger.info(jugador2.getNombre() + " tiene: ");
         index = 1;
         for (Carta carta : jugadorPartida2.getCartas()) {
-            System.out.println(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
+            logger.info(index + " - " + carta.getNombre() + " (" + carta.getFase() + ")");
             index++;
         }
     }
     	private static void mostrarUnidades(JugadorPartida jugadorPartida) {
-        System.out.println("Torres disponibles: " + jugadorPartida.contarUnidadesDisponibles("Torre"));
-        System.out.println("Soldados disponibles: " + jugadorPartida.contarUnidadesDisponibles("Soldado"));
-        System.out.println("Unidades colocadas:");
+        logger.info("Torres disponibles: " + jugadorPartida.contarUnidadesDisponibles("Torre"));
+        logger.info("Soldados disponibles: " + jugadorPartida.contarUnidadesDisponibles("Soldado"));
+        logger.info("Unidades colocadas:");
         for (Unidad unidad : jugadorPartida.getUnidades()) {
             if (!unidad.getPosicionTerritorio().equals("Sin colocar")) {
-                System.out.println("- " + unidad.getTipo() + " en " + unidad.getPosicionTerritorio());
+                logger.info("- " + unidad.getTipo() + " en " + unidad.getPosicionTerritorio());
             }
         }
     }
