@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 public class Jugador {
 	
-    private static final Logger logger = Logger.getLogger(Jugador.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Jugador.class.getName());
     
     private int idJugador;
     private String nombre;
@@ -52,7 +52,7 @@ public class Jugador {
         return edad;
     }
 
-    public void setEdad(int edad) {
+    public void setEdad(final int edad) {
         this.edad = edad;
     }
 
@@ -119,7 +119,7 @@ public class Jugador {
             buffWrit.newLine();
 
             // Agregar una fila por cada jugador
-            for (Jugador jugador : jugadores) {
+            for (final Jugador jugador : jugadores) {
                 buffWrit.write("<tr>");
                 buffWrit.write("<td>" + jugador.getId() + "</td>");
                 buffWrit.write("<td>" + jugador.getNombre() + "</td>");
@@ -136,7 +136,7 @@ public class Jugador {
             buffWrit.newLine();
             buffWrit.write("</html>");
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Error al escribir el fichero HTML", e);
+            LOGGER.log(Level.SEVERE, "Error al escribir el fichero HTML", e);
         }
 
         // Intentar abrir el archivo automáticamente
@@ -145,10 +145,10 @@ public class Jugador {
             if (archivo.exists() && Desktop.isDesktopSupported()) {
                 Desktop.getDesktop().browse(archivo.toURI());
             } else {
-                logger.warning("No se pudo abrir el fichero automáticamente.");
+                LOGGER.warning("No se pudo abrir el fichero automáticamente.");
             }
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Error al intentar abrir el fichero", e);
+            LOGGER.log(Level.SEVERE, "Error al intentar abrir el fichero", e);
         }
     }
 }

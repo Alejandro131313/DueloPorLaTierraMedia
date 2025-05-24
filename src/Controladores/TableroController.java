@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 
 
 public class TableroController {
-	 private static final Logger logger = Logger.getLogger(TableroController.class.getName());
+	 private static final Logger LOGGER = Logger.getLogger(TableroController.class.getName());
 
 	@FXML
 	private GridPane tableroCentral;
@@ -116,9 +116,9 @@ public class TableroController {
 	        Label nuevoLabel = (Label) pistaCarrera.getChildren().get(posicionActual);
 	        nuevoLabel.setStyle("-fx-border-color: " + colorFicha + "; -fx-background-color: " + obtenerColorFondoFicha(colorFicha) + "; -fx-padding: 10;");
 
-	        logger.info("Ficha (" + colorFicha + ") se movió a la posición: " + (posicionActual + 1));
+	        LOGGER.info("Ficha (" + colorFicha + ") se movió a la posición: " + (posicionActual + 1));
 	    } else {
-	        logger.info("Movimiento fuera de rango para la ficha (" + colorFicha + ").");
+	        LOGGER.info("Movimiento fuera de rango para la ficha (" + colorFicha + ").");
 	    }
 
 	    if (colorFicha.equals("red")) {
@@ -168,7 +168,7 @@ public class TableroController {
 	            moverFicha(posicionSauron, avance, "red");
 	        }
 	    } else {
-	        logger.info("La carta no afecta el movimiento de las fichas.");
+	        LOGGER.info("La carta no afecta el movimiento de las fichas.");
 	    }
 	}
 	private String obtenerColorFondoFicha(String colorFicha) {
@@ -507,8 +507,8 @@ public class TableroController {
 		}
 		verificarVictoria();
 		actualizarFondoTurno();
-		logger.info("Posicion Comunidad" + posicionComunidad);
-		logger.info("Posicion Sauron" + posicionSauron);
+		LOGGER.info("Posicion Comunidad" + posicionComunidad);
+		LOGGER.info("Posicion Sauron" + posicionSauron);
 
 	}
 
@@ -656,7 +656,7 @@ public class TableroController {
 			return;
 		}
 
-		logger.info("No se cumplen condiciones de victoria. El juego continúa.");
+		LOGGER.info("No se cumplen condiciones de victoria. El juego continúa.");
 	}
 
 	private boolean tieneFichasDeTodasLasRazas(JugadorPartida jugador) {
@@ -686,7 +686,7 @@ public class TableroController {
 		mostrarPantallaFinal(mensajeFinal);
 
 
-		logger.info("El juego ha terminado.");
+		LOGGER.info("El juego ha terminado.");
 		System.exit(0); 
 	}
 

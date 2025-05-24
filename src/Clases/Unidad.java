@@ -17,7 +17,7 @@ public class Unidad {
         return idUnidad;
     }
 
-    public void setId(int idUnidad) {
+    public void setId(final int idUnidad) {
         this.idUnidad = idUnidad;
     }
 

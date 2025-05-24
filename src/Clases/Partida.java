@@ -49,7 +49,7 @@ public class Partida {
         return jugadores;
     }
 
-    public void agregarJugador(Jugador jugador) {
+    public void agregarJugador(final Jugador jugador) {
         if (jugador == null) {
             throw new IllegalArgumentException("El jugador no puede ser null.");
         }

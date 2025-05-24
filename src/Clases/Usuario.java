@@ -5,7 +5,7 @@ public class Usuario {
     private String nombreUsuario;
     private String contrasena;
 
-    public Usuario(String nombreUsuario, String contrasena) {
+    public Usuario(final String nombreUsuario, final String contrasena) {
         this.nombreUsuario = nombreUsuario;
         this.contrasena = contrasena;
     }

@@ -29,15 +29,15 @@ public class Carta implements Serializable {
         return idCarta;
     }
 
-    public void setId(int id) {
-        this.idCarta = id;
+    public void setId(final int idCarta) {
+        this.idCarta = idCarta;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
+    public void setNombre(final String nombre) {
         this.nombre = nombre;
     }
 
@@ -45,7 +45,7 @@ public class Carta implements Serializable {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(final String color) {
         this.color = color;
     }
 
@@ -53,7 +53,7 @@ public class Carta implements Serializable {
         return recursos;
     }
 
-    public void setRecursosQueRequiere(String recursos) {
+    public void setRecursosQueRequiere(final String recursos) {
         this.recursos = recursos;
     }
 
@@ -61,14 +61,14 @@ public class Carta implements Serializable {
         return efecto;
     }
 
-    public void setEfecto(String efecto) {
+    public void setEfecto(final String efecto) {
         this.efecto = efecto;
     }
     public String getFase() {
         return fase;
     }
 
-    public void setFase(String fase) {
+    public void setFase(final String fase) {
         this.fase = fase;
     }
 
@@ -76,7 +76,7 @@ public class Carta implements Serializable {
         return imagenRuta;
     }
 
-    public void setImagenRuta(String imagenRuta) {
+    public void setImagenRuta(final String imagenRuta) {
         this.imagenRuta = imagenRuta;
     }
 }

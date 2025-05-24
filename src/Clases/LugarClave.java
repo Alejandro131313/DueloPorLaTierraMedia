@@ -20,8 +20,8 @@ public class LugarClave {
         return idLugar;
     }
 
-    public void setId(final int id) {
-        this.idLugar = id;
+    public void setId(final int idLugar) {
+        this.idLugar = idLugar;
     }
     
     public String getNombre() {

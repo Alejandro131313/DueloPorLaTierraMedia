@@ -17,17 +17,19 @@ import Clases.Unidad;
 import Clases.Mensajes;
 import Controladores.TableroController;
 import Controladores.TableroNetworkController;
+
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SalaDeEsperaController {
-	 private static final Logger logger = Logger.getLogger(SalaDeEsperaController.class.getName());
+	 private static final Logger LOGGER = Logger.getLogger(SalaDeEsperaController.class.getName());
 	 
 
     @FXML
     private Label mensajeLabel;
 
     private TableroNetworkController redController;
-    public void setRedController(TableroNetworkController redController) {
+    final public void setRedController(TableroNetworkController redController) {
         this.redController = redController;
         new Thread(() -> {
             esperarTurno();
@@ -36,13 +38,13 @@ public class SalaDeEsperaController {
 
     private void esperarTurno() {
         try {
-            logger.info("Esperando mensaje del servidor...");
+            LOGGER.info("Esperando mensaje del servidor...");
             while (true) {
-                Object obj = redController.leerSiguienteMensaje();
-                logger.info("Mensaje recibido: " + obj);
+            	final Object obj = redController.leerSiguienteMensaje();
+                LOGGER.info("Mensaje recibido: " + obj);
 
                 if (obj instanceof Mensajes) {
-                    Mensajes mensaje = (Mensajes) obj;
+                	final Mensajes mensaje = (Mensajes) obj;
                     if (mensaje.getTipo() == Mensajes.Tipo.TURNO_JUGADOR) {
                         final String rol = (String) mensaje.getContenido();                   
                         Platform.runLater(() -> {
@@ -58,16 +60,16 @@ public class SalaDeEsperaController {
     }
 
 
-    private void cargarPantallaPartida(String rol) {
+    private void cargarPantallaPartida(final String rol) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/fxml/Partida.fxml"));
-            Parent root = loader.load();
+        	final FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/fxml/Partida.fxml"));
+        	final Parent root = loader.load();
 
-            TableroController controller = loader.getController();
+        	final TableroController controller = loader.getController();
             controller.setRedController(redController);
             redController.setTableroController(controller);
 
-            Tablero tablero = new Tablero(1, "modoPiramidal", "fase1");
+            final Tablero tablero = new Tablero(1, "modoPiramidal", "fase1");
 
             JugadorPartida jugador1;
             JugadorPartida jugador2;
@@ -82,11 +84,11 @@ public class SalaDeEsperaController {
 
             controller.inicializarTablero(jugador1, jugador2, tablero);
 
-            Stage stage = (Stage) mensajeLabel.getScene().getWindow();
+            final Stage stage = (Stage) mensajeLabel.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Duelo por la Tierra Media - Partida en curso");
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error", e);
         }
     }
 }

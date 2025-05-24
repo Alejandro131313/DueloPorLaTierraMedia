@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 public class Tablero {
 	
-	private static final Logger logger = Logger.getLogger(Tablero.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(Tablero.class.getName());
 	
     private int idTablero;
     private String disposicionCartas;
@@ -80,11 +80,11 @@ public class Tablero {
         return cartas;
     }
 
-    public void agregarCarta(Carta carta) {
+    public void agregarCarta(final Carta carta) {
         this.cartas.add(carta);
     }
 
-    public void eliminarCarta(Carta carta) {
+    public void eliminarCarta(final Carta carta) {
         this.cartas.remove(carta);
     }
   
@@ -106,7 +106,7 @@ public class Tablero {
 	public void setCartasCapitulo3(List<Carta> cartasCapitulo3) {
 		this.cartasCapitulo3 = cartasCapitulo3;
 	}
-	public void setCartas(List<Carta> cartas) {
+	public void setCartas(final List<Carta> cartas) {
 		this.cartas = cartas;
 	}
 	private void inicializarCartas() {
@@ -193,7 +193,7 @@ public class Tablero {
 
  // Dividir las cartas en listas por capítulo
     private void dividirCartasPorCapitulo() {
-        for (Carta carta : cartas) {
+        for (final Carta carta : cartas) {
             switch (carta.getFase()) {
                 case "fase1":
                     cartasCapitulo1.add(carta);
@@ -204,6 +204,8 @@ public class Tablero {
                 case "fase3":
                     cartasCapitulo3.add(carta);
                     break;
+                default:
+                    LOGGER.warning("Capítulo inválido: " + capitulo);    	
             }
         }
     }
@@ -253,14 +255,14 @@ public class Tablero {
                 cartasDelCapitulo = cartasCapitulo3;
                 break;
             default:
-                logger.warning("Capítulo inválido: " + capitulo);
+                LOGGER.warning("Capítulo inválido: " + capitulo);
                 return null;
         }
 
         if (!cartasDelCapitulo.isEmpty()) {
             cartaRobada = cartasDelCapitulo.remove(0);
         } else {
-            logger.warning("No hay más cartas en " + capitulo);
+            LOGGER.warning("No hay más cartas en " + capitulo);
         }
 
         return cartaRobada;
@@ -359,7 +361,7 @@ public class Tablero {
     
     public void aplicarEfectoCartaFase1(final Carta carta, final JugadorPartida jugador) {
         if (carta == null || jugador == null) {
-            logger.warning("Carta o jugador no válidos en Fase 1");
+            LOGGER.warning("Carta o jugador no válidos en Fase 1");
             return;
         }
 
@@ -367,113 +369,111 @@ public class Tablero {
             // Recursos básicos
             case "fuerza+1":
                 jugador.setFuerza(jugador.getFuerza() + 1);
-                logger.info("Se añadió +1 a la fuerza de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +1 a la fuerza de " + jugador.getJugador().getNombre());
                 break;
 
             case "valor+1":
                 jugador.setValor(jugador.getValor() + 1);
-                logger.info("Se añadió +1 al valor de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +1 al valor de " + jugador.getJugador().getNombre());
                 break;
 
             case "astucia+1":
                 jugador.setAstucia(jugador.getAstucia() + 1);
-                logger.info("Se añadió +1 a la astucia de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +1 a la astucia de " + jugador.getJugador().getNombre());
                 break;
 
             case "corona+1":
                 jugador.setCorona(jugador.getCorona() + 1);
-                logger.info("Se añadió +1 a la corona de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +1 a la corona de " + jugador.getJugador().getNombre());
                 break;
 
             case "sabiduria+1":
                 jugador.setSabiduria(jugador.getSabiduria() + 1);
-                logger.info("Se añadió +1 a la sabiduría de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +1 a la sabiduría de " + jugador.getJugador().getNombre());
                 break;
 
             // Razas
             case "elfos+1":
                 jugador.setElfos(jugador.getElfos() + 1);
-                logger.info("Se añadió +1 al contador de elfos de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +1 al contador de elfos de " + jugador.getJugador().getNombre());
                 break;
 
             case "enanos+1":
                 jugador.setEnanos(jugador.getEnanos() + 1);
-                logger.info("Se añadió +1 al contador de enanos de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +1 al contador de enanos de " + jugador.getJugador().getNombre());
                 break;
 
             case "humanos+1":
                 jugador.setHumanos(jugador.getHumanos() + 1);
-                logger.info("Se añadió +1 al contador de humanos de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +1 al contador de humanos de " + jugador.getJugador().getNombre());
                 break;
 
             case "hobbits+1":
                 jugador.setHobbits(jugador.getHobbits() + 1);
-                logger.info("Se añadió +1 al contador de hobbits de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +1 al contador de hobbits de " + jugador.getJugador().getNombre());
                 break;
 
             // Batallas
             case "Rohan+1 || Gondor+1":
-                logger.info("Selecciona entre Rohan+1 o Gondor+1 para aplicar el efecto.");
+                LOGGER.info("Selecciona entre Rohan+1 o Gondor+1 para aplicar el efecto.");
                 break;
 
             case "Enedwatih+1 || Rhovanion+1":
-                logger.info("Selecciona entre Enedwaith+1 o Rhovanion+1 para aplicar el efecto.");
+                LOGGER.info("Selecciona entre Enedwaith+1 o Rhovanion+1 para aplicar el efecto.");
                 break;
 
             case "Lindon +1 || Arnor+1":
-                logger.info("Selecciona entre Lindon+1 o Arnor+1 para aplicar el efecto.");
+                LOGGER.info("Selecciona entre Lindon+1 o Arnor+1 para aplicar el efecto.");
                 break;
 
             // Misiones
             case "avance+1":
-                logger.info("Avance +1 en la misión.");
+                LOGGER.info("Avance +1 en la misión.");
                 break;
 
             // Oro
             case "oro+1":
                 jugador.setOro(jugador.getOro() + 1);
-                logger.info("Se añadió +1 de oro a " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +1 de oro a " + jugador.getJugador().getNombre());
                 break;
 
             default:
-                logger.warning("Efecto no reconocido: " + carta.getEfecto());
+                LOGGER.warning("Efecto no reconocido: " + carta.getEfecto());
                 break;
         }
     }
-
-    
-    public void aplicarEfectoCartaFase2(Carta carta, JugadorPartida jugador) {
+   
+    public void aplicarEfectoCartaFase2(final Carta carta, final JugadorPartida jugador) {
         if (carta == null || jugador == null) {
-            logger.info("Carta o jugador no válidos");
+            LOGGER.info("Carta o jugador no válidos");
             return;
         }
-
         switch (carta.getEfecto()) {
             // Recursos avanzados
             case "sabiduria+1":
                 jugador.setSabiduria(jugador.getSabiduria() + 1);
-                logger.info("Se añadió +1 a la sabiduría de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +1 a la sabiduría de " + jugador.getJugador().getNombre());
                 break;
 
             case "corona+1":
                 jugador.setCorona(jugador.getCorona() + 1);
-                logger.info("Se añadió +1 a la corona de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +1 a la corona de " + jugador.getJugador().getNombre());
                 break;
 
             case "astucia+2":
                 jugador.setAstucia(jugador.getAstucia() + 2);
-                logger.info("Se añadió +2 a la astucia de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +2 a la astucia de " + jugador.getJugador().getNombre());
                 break;
             
        
             case "fuerza+2":
                 jugador.setFuerza(jugador.getFuerza() + 2);
-                logger.info("Se añadió +2 a la fuerza de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +2 a la fuerza de " + jugador.getJugador().getNombre());
                 break;
 
             case "valor+2":
                 jugador.setValor(jugador.getValor() + 2);
-                logger.info("Se añadió +2 al valor de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +2 al valor de " + jugador.getJugador().getNombre());
                 break;
                 
                 
@@ -483,10 +483,10 @@ public class Tablero {
                 decision = random.nextInt(2); // Genera 0 o 1
                 if (decision == 0) {
                     jugador.setCorona(jugador.getCorona() + 1);
-                    logger.info("Se añadió +1 a la corona de " + jugador.getJugador().getNombre());
+                    LOGGER.info("Se añadió +1 a la corona de " + jugador.getJugador().getNombre());
                 } else {
                     jugador.setSabiduria(jugador.getSabiduria() + 1);
-                    logger.info("Se añadió +1 a la sabiduría de " + jugador.getJugador().getNombre());
+                    LOGGER.info("Se añadió +1 a la sabiduría de " + jugador.getJugador().getNombre());
                 }
                 break;
 
@@ -495,87 +495,87 @@ public class Tablero {
                 decision = random.nextInt(3); // Genera 0, 1 o 2
                 if (decision == 0) {
                     jugador.setAstucia(jugador.getAstucia() + 1);
-                    logger.info("Se añadió +1 a la astucia de " + jugador.getJugador().getNombre());
+                    LOGGER.info("Se añadió +1 a la astucia de " + jugador.getJugador().getNombre());
                 } else if (decision == 1) {
                     jugador.setFuerza(jugador.getFuerza() + 1);
-                    logger.info("Se añadió +1 a la fuerza de " + jugador.getJugador().getNombre());
+                    LOGGER.info("Se añadió +1 a la fuerza de " + jugador.getJugador().getNombre());
                 } else {
                     jugador.setValor(jugador.getValor() + 1);
-                    logger.info("Se añadió +1 al valor de " + jugador.getJugador().getNombre());
+                    LOGGER.info("Se añadió +1 al valor de " + jugador.getJugador().getNombre());
                 }
                 break;
 
             // Razas
             case "elfos+1":
                 jugador.setElfos(jugador.getElfos() + 1);
-                logger.info("Se añadió +1 al contador de elfos de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +1 al contador de elfos de " + jugador.getJugador().getNombre());
                 break;
 
             case "enanos+1":
                 jugador.setEnanos(jugador.getEnanos() + 1);
-                logger.info("Se añadió +1 al contador de enanos de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +1 al contador de enanos de " + jugador.getJugador().getNombre());
                 break;
 
             case "humanos+1":
                 jugador.setHumanos(jugador.getHumanos() + 1);
-                logger.info("Se añadió +1 al contador de humanos de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +1 al contador de humanos de " + jugador.getJugador().getNombre());
                 break;
 
             case "hobbits+1":
                 jugador.setHobbits(jugador.getHobbits() + 1);
-                logger.info("Se añadió +1 al contador de hobbits de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +1 al contador de hobbits de " + jugador.getJugador().getNombre());
                 break;
 
             // Batallas
             case "Arnor+2 || Rhovanion+2":
-                logger.info("Selecciona entre Arnor+2 o Rhovanion+2.");
+                LOGGER.info("Selecciona entre Arnor+2 o Rhovanion+2.");
                 break;
 
             case "Lindon+2 || Rhovanion+2":
-                logger.info("Selecciona entre Lindon+2 o Rhovanion+2.");
+                LOGGER.info("Selecciona entre Lindon+2 o Rhovanion+2.");
                 break;
 
             case "Lindon+2 || Enedwaith+2":
-                logger.info("Selecciona entre Lindon+2 o Enedwaith+2.");
+                LOGGER.info("Selecciona entre Lindon+2 o Enedwaith+2.");
                 break;
 
             case "Mordor+2 || Rohan+2":
-                logger.info("Selecciona entre Mordor+2 o Rohan+2.");
+                LOGGER.info("Selecciona entre Mordor+2 o Rohan+2.");
                 break;
 
             case "Gondor+2 || Mordor+2":
-                logger.info("Selecciona entre Gondor+2 o Mordor+2.");
+                LOGGER.info("Selecciona entre Gondor+2 o Mordor+2.");
                 break;
 
             // Misiones
             case "avance+1":
-                logger.info("Avance +1 en la misión.");
+                LOGGER.info("Avance +1 en la misión.");
                 break;
 
             case "avance+2":
-                logger.info("Avance +2 en la misión.");
+                LOGGER.info("Avance +2 en la misión.");
                 break;
 
             // Oro
             case "oro+3":
                 jugador.setOro(jugador.getOro() + 3);
-                logger.info("Se añadió +3 de oro a " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +3 de oro a " + jugador.getJugador().getNombre());
                 break;
 
             case "oro+4":
                 jugador.setOro(jugador.getOro() + 4);
-                logger.info("Se añadió +4 de oro a " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +4 de oro a " + jugador.getJugador().getNombre());
                 break;
 
             default:
-                logger.warning("Efecto no reconocido: " + carta.getEfecto());
+                LOGGER.warning("Efecto no reconocido: " + carta.getEfecto());
                 break;
         }
     }
 
-    public void aplicarEfectoCartaFase3(Carta carta, JugadorPartida jugador) {
+    public void aplicarEfectoCartaFase3(final Carta carta, final JugadorPartida jugador) {
         if (carta == null || jugador == null) {
-            logger.info("Carta o jugador no válidos");
+            LOGGER.info("Carta o jugador no válidos");
             return;
         }
 
@@ -583,110 +583,110 @@ public class Tablero {
             // Recursos avanzados
             case "fuerza+3":
                 jugador.setFuerza(jugador.getFuerza() + 3);
-                logger.info("Se añadió +3 a la fuerza de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +3 a la fuerza de " + jugador.getJugador().getNombre());
                 break;
 
             case "valor+3":
                 jugador.setValor(jugador.getValor() + 3);
-                logger.info("Se añadió +3 al valor de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +3 al valor de " + jugador.getJugador().getNombre());
                 break;
 
             case "astucia+3":
                 jugador.setAstucia(jugador.getAstucia() + 3);
-                logger.info("Se añadió +3 a la astucia de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +3 a la astucia de " + jugador.getJugador().getNombre());
                 break;
 
             case "corona+2":
                 jugador.setCorona(jugador.getCorona() + 2);
-                logger.info("Se añadió +2 a la corona de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +2 a la corona de " + jugador.getJugador().getNombre());
                 break;
 
             case "sabiduria+2":
                 jugador.setSabiduria(jugador.getSabiduria() + 2);
-                logger.info("Se añadió +2 a la sabiduría de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +2 a la sabiduría de " + jugador.getJugador().getNombre());
                 break;
 
             // Razas
             case "magos+1":
                 jugador.setMagos(jugador.getMagos() + 1);
-                logger.info("Se añadió +1 al contador de magos de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +1 al contador de magos de " + jugador.getJugador().getNombre());
                 break;
 
             case "ents+1":
                 jugador.setEnts(jugador.getEnts() + 1);
-                logger.info("Se añadió +1 al contador de ents de " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +1 al contador de ents de " + jugador.getJugador().getNombre());
                 break;
 
             // Batallas
             case "Gondor+3 || Arnor+3":
-                logger.info("Selecciona entre Gondor+3 o Arnor+3.");
+                LOGGER.info("Selecciona entre Gondor+3 o Arnor+3.");
                 break;
 
             case "Enedwaith+3 || Rohan+3":
-                logger.info("Selecciona entre Enedwaith+3 o Rohan+3.");
+                LOGGER.info("Selecciona entre Enedwaith+3 o Rohan+3.");
                 break;
 
             case "Lindon+3 || Mordor+3":
-                logger.info("Selecciona entre Lindon+3 o Mordor+3.");
+                LOGGER.info("Selecciona entre Lindon+3 o Mordor+3.");
                 break;
 
             case "Rhovanion+3 || Gondor+3":
-                logger.info("Selecciona entre Rhovanion+3 o Gondor+3.");
+                LOGGER.info("Selecciona entre Rhovanion+3 o Gondor+3.");
                 break;
 
             case "Enedwaith+3 || Arnor+3":
-                logger.info("Selecciona entre Enedwaith+3 o Arnor+3.");
+                LOGGER.info("Selecciona entre Enedwaith+3 o Arnor+3.");
                 break;
 
             case "Rhovanion+3 || Mordor+3":
-                logger.info("Selecciona entre Rhovanion+3 o Mordor+3.");
+                LOGGER.info("Selecciona entre Rhovanion+3 o Mordor+3.");
                 break;
 
             // Misiones
             case "avance+2":
-                logger.info("Avance +2 en la misión.");
+                LOGGER.info("Avance +2 en la misión.");
                 break;
 
             case "avance+3":
-                logger.info("Avance +3 en la misión.");
+                LOGGER.info("Avance +3 en la misión.");
                 break;
 
             // Oro avanzado
             case "oro+5":
                 jugador.setOro(jugador.getOro() + 5);
-                logger.info("Se añadió +5 de oro a " + jugador.getJugador().getNombre());
+                LOGGER.info("Se añadió +5 de oro a " + jugador.getJugador().getNombre());
                 break;
 
             // Otros efectos
             case "movimiento+1":
-                logger.info("Se añadió +1 movimiento.");
+                LOGGER.info("Se añadió +1 movimiento.");
                 break;
 
             case "soldado-1 && oro-2":
-                logger.info("Se eliminó un soldado y se descontaron 2 de oro.");
+                LOGGER.info("Se eliminó un soldado y se descontaron 2 de oro.");
                 break;
 
             case "movimiento3":
-                logger.info("Se añadió +3 movimientos.");
+                LOGGER.info("Se añadió +3 movimientos.");
                 break;
 
             case "oro-1 && movimiento2":
-                logger.info("Se descontó 1 de oro y se añadieron 2 movimientos.");
+                LOGGER.info("Se descontó 1 de oro y se añadieron 2 movimientos.");
                 break;
             case "soldado-1 && oro-2 && movimiento1":
-                logger.info("Se descontó 1 de oro y se añadieron 2 movimientos.");
+                LOGGER.info("Se descontó 1 de oro y se añadieron 2 movimientos.");
                 break;
               
 
             default:
-                logger.warning("Efecto no reconocido: " + carta.getEfecto());
+                LOGGER.warning("Efecto no reconocido: " + carta.getEfecto());
                 break;
         }
     }  
     
-    public boolean comprobarRecursosFase1(Carta carta, JugadorPartida jugador) {
+    public boolean comprobarRecursosFase1(final Carta carta, final JugadorPartida jugador) {
         if (carta == null || jugador == null) {
-            logger.info("Carta o jugador no válidos");
+            LOGGER.info("Carta o jugador no válidos");
             return false;
         }
 
@@ -699,7 +699,7 @@ public class Tablero {
                 if (jugador.getSabiduria() >= 1) {
                     return true;
                 } else {
-                    logger.info("No tienes suficiente sabiduría. Requiere: 1 sabiduría.");
+                    LOGGER.info("No tienes suficiente sabiduría. Requiere: 1 sabiduría.");
                     return false;
                 }
 
@@ -707,7 +707,7 @@ public class Tablero {
                 if (jugador.getCorona() >= 1) {
                     return true;
                 } else {
-                    logger.info("No tienes suficientes coronas. Requiere: 1 corona.");
+                    LOGGER.info("No tienes suficientes coronas. Requiere: 1 corona.");
                     return false;
                 }
 
@@ -715,7 +715,7 @@ public class Tablero {
                 if (jugador.getAstucia() >= 1) {
                     return true;
                 } else {
-                    logger.info("No tienes suficiente astucia. Requiere: 1 astucia.");
+                    LOGGER.info("No tienes suficiente astucia. Requiere: 1 astucia.");
                     return false;
                 }
 
@@ -723,7 +723,7 @@ public class Tablero {
                 if (jugador.getFuerza() >= 1) {
                     return true;
                 } else {
-                    logger.info("No tienes suficiente fuerza. Requiere: 1 fuerza.");
+                    LOGGER.info("No tienes suficiente fuerza. Requiere: 1 fuerza.");
                     return false;
                 }
 
@@ -731,7 +731,7 @@ public class Tablero {
                 if (jugador.getValor() >= 1) {
                     return true;
                 } else {
-                    logger.info("No tienes suficiente valor. Requiere: 1 valor.");
+                    LOGGER.info("No tienes suficiente valor. Requiere: 1 valor.");
                     return false;
                 }
 
@@ -739,20 +739,20 @@ public class Tablero {
                 if (jugador.getOro() >= 1) {
                     return true;
                 } else {
-                    logger.info("No tienes suficiente oro. Requiere: 1 oro.");
+                    LOGGER.info("No tienes suficiente oro. Requiere: 1 oro.");
                     return false;
                 }
 
             default:
-                logger.warning("Recurso requerido no reconocido: " + carta.getRecursosQueRequiere());
+                LOGGER.warning("Recurso requerido no reconocido: " + carta.getRecursosQueRequiere());
                 return false;
         }
     }
 
     
-    public boolean comprobarRecursosFase2(Carta carta, JugadorPartida jugador) {
+    public boolean comprobarRecursosFase2(final Carta carta, final JugadorPartida jugador) {
         if (carta == null || jugador == null) {
-            logger.info("Carta o jugador no válidos");
+            LOGGER.info("Carta o jugador no válidos");
             return false;
         }
 
@@ -765,7 +765,7 @@ public class Tablero {
                 if (jugador.getOro() >= 1) {
                     return true;
                 } else {
-                    logger.info("No tienes suficiente oro. Requiere: 1 oro.");
+                    LOGGER.info("No tienes suficiente oro. Requiere: 1 oro.");
                     return false;
                 }
            
@@ -775,7 +775,7 @@ public class Tablero {
                 if (jugador.getOro() >= 1 && jugador.getAstucia() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 1 oro y 1 astucia.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 1 oro y 1 astucia.");
                     return false;
                 }
                 
@@ -784,14 +784,14 @@ public class Tablero {
                 if (jugador.getAstucia() >= 1 && jugador.getFuerza() >= 1 && jugador.getValor() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 1 astucia, 1 fuerza y 1 valor.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 1 astucia, 1 fuerza y 1 valor.");
                     return false;
                 }
             case "2 fuerza && 1 sabiduria":
                 if (jugador.getFuerza() >= 2 && jugador.getSabiduria() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 2 fuerza y 1 sabiduría.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 2 fuerza y 1 sabiduría.");
                     return false;
                 }
 
@@ -799,28 +799,28 @@ public class Tablero {
                 if (jugador.getAstucia() >= 3) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 3 astucia.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 3 astucia.");
                     return false;
                 }
             case "1 fuerza && 2 valor":
                 if (jugador.getFuerza() >= 1 && jugador.getValor() >= 2) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 1 fuerza y 2 valor.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 1 fuerza y 2 valor.");
                     return false;
                 }
             case "corona+1 || sabiduria+1":
                 if (jugador.getCorona() >= 1 || jugador.getSabiduria() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 1 corona o 1 sabiduría.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 1 corona o 1 sabiduría.");
                     return false;
                 }
             case "astucia+1 || fuerza+1 || valor+1":
                 if (jugador.getAstucia() >= 1 || jugador.getFuerza() >= 1 || jugador.getValor() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 1 astucia, 1 fuerza o 1 valor.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 1 astucia, 1 fuerza o 1 valor.");
                     return false;
                 }
 
@@ -829,7 +829,7 @@ public class Tablero {
                 if (jugador.getOro() >= 1 && jugador.getCorona() >= 1 && jugador.getSabiduria() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 1 oro, 1 corona y 1 sabiduría.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 1 oro, 1 corona y 1 sabiduría.");
                     return false;
                 }
 
@@ -837,7 +837,7 @@ public class Tablero {
                 if (jugador.getValor() >= 1 && jugador.getCorona() >= 1 && jugador.getSabiduria() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 1 valor, 1 corona y 1 sabiduría.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 1 valor, 1 corona y 1 sabiduría.");
                     return false;
                 }
 
@@ -845,7 +845,7 @@ public class Tablero {
                 if (jugador.getFuerza() >= 2 && jugador.getValor() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 2 fuerza y 1 valor.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 2 fuerza y 1 valor.");
                     return false;
                 }
 
@@ -853,7 +853,7 @@ public class Tablero {
                 if (jugador.getAstucia() >= 2 && jugador.getCorona() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 2 astucia y 1 corona.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 2 astucia y 1 corona.");
                     return false;
                 }
 
@@ -861,45 +861,45 @@ public class Tablero {
                 if (jugador.getValor() >= 2 && jugador.getSabiduria() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 2 valor y 1 sabiduría.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 2 valor y 1 sabiduría.");
                     return false;
                 }
             case "2 valor && 1 corona":
                 if (jugador.getValor() >= 2 && jugador.getCorona() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 2 valor y 1 corona.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 2 valor y 1 corona.");
                     return false;
                 }
             case "2 astucia && 1 sabiduria":
                 if (jugador.getAstucia() >= 2 && jugador.getSabiduria() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 2 astucia y 1 sabiduría.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 2 astucia y 1 sabiduría.");
                     return false;
                 }
             case "1 astucia && 1 fuerza":
                 if (jugador.getAstucia() >= 1 && jugador.getSabiduria() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 1 astucia y 1 sabiduría.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 1 astucia y 1 sabiduría.");
                     return false;
                 }
             case "1 valor && 1 fuerza":
                 if (jugador.getAstucia() >= 1 && jugador.getSabiduria() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 1 valor y 1 fuerza.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 1 valor y 1 fuerza.");
                     return false;
                 }
             default:
-                logger.warning("Recurso requerido no reconocido: " + carta.getRecursosQueRequiere());
+                LOGGER.warning("Recurso requerido no reconocido: " + carta.getRecursosQueRequiere());
                 return false;
         }
     }
-    public boolean comprobarRecursosFase3(Carta carta, JugadorPartida jugador) {
+    public boolean comprobarRecursosFase3(final Carta carta, final JugadorPartida jugador) {
         if (carta == null || jugador == null) {
-            logger.info("Carta o jugador no válidos");
+            LOGGER.info("Carta o jugador no válidos");
             return false;
         }
 
@@ -912,7 +912,7 @@ public class Tablero {
                 if (jugador.getAstucia() >= 2 && jugador.getCorona() >= 2) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 2 astucia y 2 corona.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 2 astucia y 2 corona.");
                     return false;
                 }
 
@@ -920,7 +920,7 @@ public class Tablero {
                 if (jugador.getFuerza() >= 2 && jugador.getCorona() >= 1 && jugador.getSabiduria() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 2 fuerza, 1 corona y 1 sabiduría.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 2 fuerza, 1 corona y 1 sabiduría.");
                     return false;
                 }
 
@@ -928,7 +928,7 @@ public class Tablero {
                 if (jugador.getFuerza() >= 2 && jugador.getSabiduria() >= 2) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 2 fuerza y 2 sabiduría.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 2 fuerza y 2 sabiduría.");
                     return false;
                 }
 
@@ -936,7 +936,7 @@ public class Tablero {
                 if (jugador.getValor() >= 2 && jugador.getCorona() >= 1 && jugador.getSabiduria() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 2 valor, 1 corona y 1 sabiduría.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 2 valor, 1 corona y 1 sabiduría.");
                     return false;
                 }
 
@@ -944,7 +944,7 @@ public class Tablero {
                 if (jugador.getAstucia() >= 1 && jugador.getFuerza() >= 1 && jugador.getCorona() >= 2 && jugador.getSabiduria() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 1 astucia, 1 fuerza, 2 corona y 1 sabiduría.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 1 astucia, 1 fuerza, 2 corona y 1 sabiduría.");
                     return false;
                 }
 
@@ -952,7 +952,7 @@ public class Tablero {
                 if (jugador.getOro() >= 3) {
                     return true;
                 } else {
-                    logger.info("No tienes suficiente oro. Requiere: 3 oro.");
+                    LOGGER.info("No tienes suficiente oro. Requiere: 3 oro.");
                     return false;
                 }
                 //Añadido por Samuel por si esta mal
@@ -960,77 +960,77 @@ public class Tablero {
                 if (jugador.getFuerza() >= 2 && jugador.getValor() >= 2) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 2 fuerza y 2 valor.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 2 fuerza y 2 valor.");
                     return false;
                 }
             case "2 astucia && 1 valor && 2 sabiduria":
                 if (jugador.getAstucia() >= 2 && jugador.getValor() >= 1 && jugador.getSabiduria() >= 2) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 2 astucia, 1 valor y 2 sabiduría.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 2 astucia, 1 valor y 2 sabiduría.");
                     return false;
                 }
             case "3 astucia && 2 corona":
                 if (jugador.getAstucia() >= 3 && jugador.getCorona() >= 2) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 3 astucia y 2 corona.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 3 astucia y 2 corona.");
                     return false;
                 }
             case "2 astucia && 2 valor":
                 if (jugador.getAstucia() >= 2 && jugador.getValor() >= 2) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 2 astucia y 2 valor.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 2 astucia y 2 valor.");
                     return false;
                 }
             case "1 astucia && 2 fuerza && 2 valor":
                 if (jugador.getAstucia() >= 1 && jugador.getFuerza() >= 2 && jugador.getValor() >= 2) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 1 astucia, 2 fuerza y 2 valor.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 1 astucia, 2 fuerza y 2 valor.");
                     return false;
                 }
             case "3 astucia && 1 valor":
                 if (jugador.getAstucia() >= 3 && jugador.getValor() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 3 astucia y 1 valor.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 3 astucia y 1 valor.");
                     return false;
                 }
             case "2 fuerza && 1 corona":
                 if (jugador.getFuerza() >= 2 && jugador.getCorona() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 2 fuerza y 1 corona.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 2 fuerza y 1 corona.");
                     return false;
                 }
             case "1 astucia && 3 fuerza":
                 if (jugador.getAstucia() >= 1 && jugador.getFuerza() >= 3) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 1 astucia y 3 fuerza.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 1 astucia y 3 fuerza.");
                     return false;
                 }
             case "1 astucia && 1 corona && 1 sabiduria":
                 if (jugador.getAstucia() >= 1 && jugador.getCorona() >= 1 && jugador.getSabiduria() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 1 astucia, 1 corona y 1 sabiduría.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 1 astucia, 1 corona y 1 sabiduría.");
                     return false;
                 }
             case "2 astucia && 1 valor":
                 if (jugador.getAstucia() >= 2 && jugador.getValor() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 2 astucia y 1 valor.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 2 astucia y 1 valor.");
                     return false;
                 }
             case "3 valor && 1 corona":
                 if (jugador.getValor() >= 3 && jugador.getCorona() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 3 valor y 1 corona.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 3 valor y 1 corona.");
                     return false;
                 }
           
@@ -1038,7 +1038,7 @@ public class Tablero {
                 if (jugador.getAstucia() >= 1 && jugador.getFuerza() >= 1 && jugador.getValor() >= 1 && jugador.getSabiduria() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 1 astucia, 1 fuerza, 1 valor y 1 sabiduría.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 1 astucia, 1 fuerza, 1 valor y 1 sabiduría.");
                     return false;
                 }
 
@@ -1046,28 +1046,28 @@ public class Tablero {
                 if (jugador.getFuerza() >= 3 && jugador.getSabiduria() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 3 fuerza y 1 sabiduría.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 3 fuerza y 1 sabiduría.");
                     return false;
                 }
             case "1 fuerza && 1 valor && 1 sabiduria":
                 if (jugador.getFuerza() >= 1 && jugador.getValor() >= 1 && jugador.getSabiduria() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos. Requiere: 1 fuerza, 1 valor y 1 sabiduría.");
+                    LOGGER.info("No cumples los requisitos. Requiere: 1 fuerza, 1 valor y 1 sabiduría.");
                     return false;
                 }
 
             default:
-                logger.warning("Recurso requerido no reconocido: " + carta.getRecursosQueRequiere());
+                LOGGER.warning("Recurso requerido no reconocido: " + carta.getRecursosQueRequiere());
                 return false;
         }
     }
 
     
     
-    public boolean comprobarRecursosLugarClave(LugarClave lugar, JugadorPartida jugador) {
+    public boolean comprobarRecursosLugarClave(final LugarClave lugar, final JugadorPartida jugador) {
         if (lugar == null || jugador == null) {
-            logger.info("Lugar clave o jugador no válidos");
+            LOGGER.info("Lugar clave o jugador no válidos");
             return false;
         }
 
@@ -1076,7 +1076,7 @@ public class Tablero {
                 if (jugador.getFuerza() >= 3 && jugador.getValor() >= 2 && jugador.getCorona() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos para " + lugar.getNombre() + 
+                    LOGGER.info("No cumples los requisitos para " + lugar.getNombre() + 
                                        ". Requiere: 3 fuerza, 2 valor y 1 corona.");
                     return false;
                 }
@@ -1085,7 +1085,7 @@ public class Tablero {
                 if (jugador.getAstucia() >= 2 && jugador.getValor() >= 3 && jugador.getSabiduria() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos para " + lugar.getNombre() + 
+                    LOGGER.info("No cumples los requisitos para " + lugar.getNombre() + 
                                        ". Requiere: 2 astucia, 3 valor y 1 sabiduría.");
                     return false;
                 }
@@ -1094,7 +1094,7 @@ public class Tablero {
                 if (jugador.getAstucia() >= 3 && jugador.getFuerza() >= 1 && jugador.getSabiduria() >= 2) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos para " + lugar.getNombre() + 
+                    LOGGER.info("No cumples los requisitos para " + lugar.getNombre() + 
                                        ". Requiere: 3 astucia, 1 fuerza y 2 sabiduría.");
                     return false;
                 }
@@ -1103,7 +1103,7 @@ public class Tablero {
                 if (jugador.getFuerza() >= 3 && jugador.getCorona() >= 2 && jugador.getSabiduria() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos para " + lugar.getNombre() + 
+                    LOGGER.info("No cumples los requisitos para " + lugar.getNombre() + 
                                        ". Requiere: 3 fuerza, 2 corona y 1 sabiduría.");
                     return false;
                 }
@@ -1112,7 +1112,7 @@ public class Tablero {
                 if (jugador.getValor() >= 3 && jugador.getCorona() >= 2 && jugador.getSabiduria() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos para " + lugar.getNombre() + 
+                    LOGGER.info("No cumples los requisitos para " + lugar.getNombre() + 
                                        ". Requiere: 3 valor, 2 corona y 1 sabiduría.");
                     return false;
                 }
@@ -1122,7 +1122,7 @@ public class Tablero {
                     jugador.getCorona() >= 1 && jugador.getSabiduria() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos para " + lugar.getNombre() + 
+                    LOGGER.info("No cumples los requisitos para " + lugar.getNombre() + 
                                        ". Requiere: 1 astucia, 2 fuerza, 1 valor, 1 corona y 1 sabiduría.");
                     return false;
                 }
@@ -1131,73 +1131,73 @@ public class Tablero {
                 if (jugador.getAstucia() >= 3 && jugador.getCorona() >= 2 && jugador.getSabiduria() >= 1) {
                     return true;
                 } else {
-                    logger.info("No cumples los requisitos para " + lugar.getNombre() + 
+                    LOGGER.info("No cumples los requisitos para " + lugar.getNombre() + 
                                        ". Requiere: 3 astucia, 2 corona y 1 sabiduría.");
                     return false;
                 }
             default:
-                logger.warning("Recurso requerido no reconocido: " + lugar.getRecursosQueRequiere());
+                LOGGER.warning("Recurso requerido no reconocido: " + lugar.getRecursosQueRequiere());
                 return false;
         }
     }
 
-    public void aplicarEfectoLugarClave(LugarClave lugar, JugadorPartida jugador) {
+    public void aplicarEfectoLugarClave(final LugarClave lugar, final JugadorPartida jugador) {
         if (lugar == null || jugador == null) {
-            logger.info("Lugar clave o jugador no válidos");
+            LOGGER.info("Lugar clave o jugador no válidos");
             return;
         }
 
         if (!comprobarRecursosLugarClave(lugar, jugador)) {
-            logger.info("No puedes acceder al lugar clave: " + lugar.getNombre());
+            LOGGER.info("No puedes acceder al lugar clave: " + lugar.getNombre());
             return;
         }
 
         switch (lugar.getEfecto()) {
             case "TorreArnor+soldado2+2movimiento":
-                logger.info("Efecto aplicado: Torre Arnor. Se añadieron 2 soldados y 2 movimientos.");
+                LOGGER.info("Efecto aplicado: Torre Arnor. Se añadieron 2 soldados y 2 movimientos.");
                 // Lógica para añadir soldados y movimientos
                 break;
 
             case "TorreEnedwaith+avance+1":
-                logger.info("Efecto aplicado: Torre Enedwaith. Avance +1.");
+                LOGGER.info("Efecto aplicado: Torre Enedwaith. Avance +1.");
                 // Lógica para avanzar
                 break;
 
             case "TorreGondor+avance+2":
-                logger.info("Efecto aplicado: Torre Gondor. Avance +2.");
+                LOGGER.info("Efecto aplicado: Torre Gondor. Avance +2.");
                 // Lógica para avanzar
                 break;
 
             case "TorreLindon":
-                logger.info("Efecto aplicado: Torre Lindon.");
+                LOGGER.info("Efecto aplicado: Torre Lindon.");
                 // Lógica para el efecto de Torre Lindon
                 break;
 
             case "TorreMordor":
-                logger.info("Efecto aplicado: Torre Mordor.");
+                LOGGER.info("Efecto aplicado: Torre Mordor.");
                 // Lógica para el efecto de Torre Mordor
                 break;
 
             case "TorreRhovanion+5oro+1movimiento":
                 jugador.setOro(jugador.getOro() + 5);
-                logger.info("Efecto aplicado: Torre Rhovanion. Se añadieron 5 de oro y 1 movimiento.");
+                LOGGER.info("Efecto aplicado: Torre Rhovanion. Se añadieron 5 de oro y 1 movimiento.");
                 // Lógica para añadir movimientos
                 break;
 
             case "TorreRohan+soldado3":
-                logger.info("Efecto aplicado: Torre Rohan. Se añadieron 3 soldados.");
+                LOGGER.info("Efecto aplicado: Torre Rohan. Se añadieron 3 soldados.");
                 // Lógica para añadir soldados
                 break;
 
             default:
-                logger.warning("Efecto no reconocido: " + lugar.getEfecto());
+                LOGGER.warning("Efecto no reconocido: " + lugar.getEfecto());
                 break;
         }
     }
     
     public Carta buscarCartaPorId(final int idCarta) {
         Carta resultado = null;
-        for (Carta carta : obtenerCartasDelCapituloActual()) {
+        for (final Carta carta : obtenerCartasDelCapituloActual()) {
             if (carta.getId() == idCarta) {
                 resultado = carta;
                 break;

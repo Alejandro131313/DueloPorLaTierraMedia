@@ -109,7 +109,7 @@ public class VistaController {
     }
  
     @FXML
-    private void onMultijugador(javafx.event.ActionEvent event) {
+    private void onMultijugador(final javafx.event.ActionEvent event) {
         try {
         	final FXMLLoader loader = new FXMLLoader(getClass().getResource("VistaInicial.fxml"));
         	final Parent root = loader.load();

@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 
 public class Database {
 	
-    private static final Logger logger = Logger.getLogger(Database.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Database.class.getName());
 	
     private static final String DB_URL = "";
     private static final String USER = "";
@@ -18,7 +18,7 @@ public class Database {
             final String insertSql = "INSERT INTO Jugadores (NombreJugador) VALUES (?)";
             final String selectSql = "SELECT idJugador, NombreJugador FROM Jugadores";
 
-            try (final Connection conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
+            try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
 
                 // Inserción
                 try (PreparedStatement stmt = conn.prepareStatement(insertSql)) {
@@ -27,19 +27,19 @@ public class Database {
                 }
 
                 // Mostrar jugadores
-                logger.info("Lista de jugadores registrados:");
-                try (final Statement statment = conn.createStatement();
+                LOGGER.info("Lista de jugadores registrados:");
+                try (Statement statment = conn.createStatement();
                      ResultSet resultSet = statment.executeQuery(selectSql)) {
 
                     while (resultSet.next()) {
                         final int idJugdor = resultSet.getInt("idJugador");
                         final String nombreJugador = resultSet.getString("NombreJugador");
-                        logger.info("ID: " + idJugdor + " | Nombre: " + nombreJugador);
+                        LOGGER.info("ID: " + idJugdor + " | Nombre: " + nombreJugador);
                     }
                 }
 
             } catch (SQLException e) {
-                logger.log(Level.SEVERE, "Error al insertar jugador en la BBDD", e);
+                LOGGER.log(Level.SEVERE, "Error al insertar jugador en la BBDD", e);
             }
 
             return null;
@@ -52,7 +52,7 @@ public class Database {
             final String sql = "INSERT INTO Jugadores (NombreJugador, Password, EmailJugador) VALUES (?, ?, ?)";
             final String hash = Seguridad.encriptar(contrasena);
 
-            try (final Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
                  PreparedStatement stmt = conn.prepareStatement(sql)) {
 
                 stmt.setString(1, usuario);
@@ -62,7 +62,7 @@ public class Database {
                 return true;
 
             } catch (SQLException e) {
-                logger.log(Level.SEVERE, "Error al insertar usuario", e);
+                LOGGER.log(Level.SEVERE, "Error al insertar usuario", e);
                 return false;
             }
         });
@@ -73,11 +73,11 @@ public class Database {
         return DBLogger.logExecution("verificarUsuario", () -> {
             final String sql = "SELECT Password FROM Jugadores WHERE NombreJugador = ?";
 
-            try (final Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
                  PreparedStatement stmt = conn.prepareStatement(sql)) {
 
                 stmt.setString(1, usuario);
-                try (final ResultSet resultSt = stmt.executeQuery()) {
+                try (ResultSet resultSt = stmt.executeQuery()) {
                     if (resultSt.next()) {
                         final String hashGuardado = resultSt.getString("Password");
                         return Seguridad.verificar(contrasena, hashGuardado);
@@ -85,7 +85,7 @@ public class Database {
                 }
 
             } catch (SQLException e) {
-                logger.log(Level.SEVERE, "Error al verificar usuario", e);
+                LOGGER.log(Level.SEVERE, "Error al verificar usuario", e);
             }
 
             return false;

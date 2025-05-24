@@ -12,60 +12,60 @@ import java.net.URL;
 import Clases.DueloClient;
 import Clases.DueloServer;
 import javafx.event.ActionEvent;
+
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MultijugadorController {
-	 private static final Logger logger = Logger.getLogger(MultijugadorController.class.getName());
+	 private static final Logger LOGGER = Logger.getLogger(MultijugadorController.class.getName());
 
 	@FXML
-	private void onHost(ActionEvent event) {
+	private void onHost(final ActionEvent event) {
 	    new Thread(() -> {
-	        DueloServer server = new DueloServer(2396);
+	    	final DueloServer server = new DueloServer(2396);
 	        server.iniciar();  
 	    }).start();
 
 	    try {
 	        Thread.sleep(500);
-	        DueloClient client = new DueloClient("localhost", 2396);
+	        final  DueloClient client = new DueloClient("localhost", 2396);
 	        client.conectar();
 	        
-	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/fxml/SalaDeEspera.fxml"));
-            Parent root = loader.load();
+	        final FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/fxml/SalaDeEspera.fxml"));
+	        final Parent root = loader.load();
 	        
 	        /*URL fxmlURL = getClass().getResource("/application/fxml/SalaDeEspera.fxml");
 	        FXMLLoader loader = new FXMLLoader(fxmlURL);
 	        Parent root = loader.load();
 	        */
 
-	        SalaDeEsperaController controller = loader.getController();
+	        final SalaDeEsperaController controller = loader.getController();
 	        controller.setRedController(client.getRedController());
 
-	        Scene scene = new Scene(root);
-	        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+	        final Scene scene = new Scene(root);
+	        final Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 	        stage.setScene(scene);
 	        stage.setTitle("Sala de Espera - Esperando jugador...");
 
 	    } catch (Exception e) {
-	        logger.info("Error al cargar SalaDeEspera:");
-	        e.printStackTrace();
+	        LOGGER.log(Level.SEVERE, "Error al cargar SalaDeEspera:", e);
 	        mostrarAlerta("Error", "No se pudo iniciar la partida.");
 	    }
 	}
-
     @FXML
-    private void onUnirse(ActionEvent event) {
+    private void onUnirse(final ActionEvent event) {
         try {
-            DueloClient client = new DueloClient("localhost", 2396);
+        	final DueloClient client = new DueloClient("localhost", 2396);
             client.conectar();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/fxml/SalaDeEspera.fxml"));
-            Parent root = loader.load();
+            final FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/fxml/SalaDeEspera.fxml"));
+            final Parent root = loader.load();
 
-            SalaDeEsperaController controller = loader.getController();
+            final SalaDeEsperaController controller = loader.getController();
             controller.setRedController(client.getRedController()); // Correcto
 
-            Scene scene = new Scene(root);
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            final Scene scene = new Scene(root);
+            final Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Sala de Espera - Conectando...");
         } catch (Exception e) {
@@ -74,21 +74,21 @@ public class MultijugadorController {
         }
     }
     @FXML
-    private void onEstadisticas(ActionEvent event) {
+    private void onEstadisticas(final ActionEvent event) {
         mostrarAlerta("Estadísticas", "Estadísticas aún no disponibles.");
     }
 
     @FXML
-    private void onVolver(ActionEvent event) {
+    private void onVolver(final ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("VistaInicial.fxml"));
-            Parent root = loader.load();
+        	final FXMLLoader loader = new FXMLLoader(getClass().getResource("VistaInicial.fxml"));
+        	final Parent root = loader.load();
 
             // Aplicar CSS
-            Scene scene = new Scene(root);
+        	final Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            final Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Duelo por la Tierra Media - Menú Inicial");
         } catch (Exception e) {
@@ -97,8 +97,8 @@ public class MultijugadorController {
         }
     }
 
-    private void mostrarAlerta(String titulo, String mensaje) {
-        Alert alert = new Alert(AlertType.INFORMATION);
+    private void mostrarAlerta(final String titulo, final String mensaje) {
+    	final Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(mensaje);

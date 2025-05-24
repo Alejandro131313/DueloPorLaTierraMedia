@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 public class JugadorPartida {
 
-    private static final Logger logger = Logger.getLogger(JugadorPartida.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(JugadorPartida.class.getName());
     
     private Jugador jugador;
     private Partida partida;
@@ -95,10 +95,10 @@ public class JugadorPartida {
             unidades.add(new Unidad(i + 8, "Soldado", "Sin colocar"));
         }
     }
-    public List<Unidad> obtenerUnidadesDisponibles(String tipo) {
-        List<Unidad> disponibles = new ArrayList<>();
-        for (Unidad unidad : unidades) {
-            if (unidad.getTipo().equals(tipo) && unidad.getPosicionTerritorio().equals("Sin colocar")) {
+    public List<Unidad> obtenerUnidadesDisponibles(final String tipo) {
+        final List<Unidad> disponibles = new ArrayList<>();
+        for (final Unidad unidad : unidades) {
+            if (unidad.getPosicionTerritorio().equals("Sin colocar") && unidad.getTipo().equals(tipo) ) {
                 disponibles.add(unidad);
             }
         }
@@ -106,9 +106,9 @@ public class JugadorPartida {
     }
 
     // Métodos para contar unidades disponibles
-    public int contarUnidadesDisponibles(String tipo) {
+    public int contarUnidadesDisponibles(final String tipo) {
         return (int) unidades.stream()
-                .filter(u -> u.getTipo().equals(tipo) && u.getPosicionTerritorio().equals("Sin colocar"))
+                .filter(u ->  u.getPosicionTerritorio().equals("Sin colocar") && u.getTipo().equals(tipo))
                 .count();
     }
 	
@@ -134,7 +134,7 @@ public class JugadorPartida {
         return oro;
     }
 
-    public void setOro(int oro) {
+    public void setOro(final int oro) {
         this.oro = oro;
     }
 
@@ -262,10 +262,10 @@ public class JugadorPartida {
 		this.ents = ents;
 	}
 
-	public void añadirCarta(Carta carta) {
+	public void anadirCarta(final Carta carta) {
         if (carta != null) {
             cartas.add(carta);
-            logger.info(jugador.getNombre() + " ha robado la carta: " + carta.getNombre());
+            LOGGER.info(jugador.getNombre() + " ha robado la carta: " + carta.getNombre());
         }
     }
 
