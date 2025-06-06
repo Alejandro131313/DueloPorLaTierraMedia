@@ -2,67 +2,78 @@ package Clases;
 
 import java.io.Serializable;
 
+/**
+ * Representa un mensaje intercambiado entre cliente y servidor durante la
+ * partida. Cada mensaje puede tener un tipo, un identificador, un jugador
+ * asociado y un contenido dinámico.
+ * 
+ * Esta clase es serializable para poder ser enviada por red mediante streams de
+ * objetos.
+ * 
+ * @author Alejandro
+ * @version 1.0
+ */
+
 public class Mensajes implements Serializable {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public enum Tipo {
-        INICIAR_PARTIDA,
-        TURNO_JUGADOR,
-        ROBAR_CARTA,
-        RESPUESTA_CARTA,
-        CARTA_INVALIDA,
-        FIN_PARTIDA
-    }
+/**
+* Tipos posibles de mensajes que se pueden intercambiar.
+*/
 
-    private Tipo tipo;
-    private int idMensaje;
-    private String jugador;
-    private Object contenido; // Puede ser una Carta o estado del juego
+	public enum Tipo {
+		INICIAR_PARTIDA, TURNO_JUGADOR, ROBAR_CARTA, RESPUESTA_CARTA, CARTA_INVALIDA, FIN_PARTIDA
+	}
 
-    public Mensajes(final Tipo tipo) {
-        this.tipo = tipo;
-    }
+	private Tipo tipo;
+	private int idMensaje;
+	private String jugador;
+	private Object contenido; // Puede ser una Carta o estado del juego
 
-    public Mensajes(final Tipo tipo, final int idMensaje, final String jugador) {
-        this.tipo = tipo;
-        this.idMensaje = idMensaje;
-        this.jugador = jugador;
-    }
+	public Mensajes(final Tipo tipo) {
+		this.tipo = tipo;
+	}
 
-    public Mensajes(final Tipo tipo, final Object contenido) {
-        this.tipo = tipo;
-        this.contenido = contenido;
-    }
+	public Mensajes(final Tipo tipo, final int idMensaje, final String jugador) {
+		this.tipo = tipo;
+		this.idMensaje = idMensaje;
+		this.jugador = jugador;
+	}
 
-    public Tipo getTipo() {
-        return tipo;
-    }
+	public Mensajes(final Tipo tipo, final Object contenido) {
+		this.tipo = tipo;
+		this.contenido = contenido;
+	}
 
-    public void setTipo(final Tipo tipo) {
-        this.tipo = tipo;
-    }
+	public Tipo getTipo() {
+		return tipo;
+	}
 
-    public int getIdCarta() {
-        return idMensaje;
-    }
+	public void setTipo(final Tipo tipo) {
+		this.tipo = tipo;
+	}
 
-    public void setIdCarta(final int idCarta) {
-        this.idMensaje = idCarta;
-    }
+	public int getIdCarta() {
+		return idMensaje;
+	}
 
-    public String getJugador() {
-        return jugador;
-    }
+	public void setIdCarta(final int idCarta) {
+		this.idMensaje = idCarta;
+	}
 
-    public void setJugador(final String jugador) {
-        this.jugador = jugador;
-    }
+	public String getJugador() {
+		return jugador;
+	}
 
-    public Object getContenido() {
-        return contenido;
-    }
+	public void setJugador(final String jugador) {
+		this.jugador = jugador;
+	}
 
-    public void setContenido(final Object contenido) {
-        this.contenido = contenido;
-    }
-}  
+	public Object getContenido() {
+		return contenido;
+	}
+
+	public void setContenido(final Object contenido) {
+		this.contenido = contenido;
+	}
+}

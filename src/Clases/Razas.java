@@ -1,5 +1,15 @@
 package Clases;
 
+
+/**
+ * Representa una raza.
+ * Cada raza tiene un identificador, un nombre y una ruta de imagen asociada.
+ * 
+ * @author Alejandro
+ * @version 1.0
+ */
+
+
 public class Razas {
     private int idRaza;
     private String nombre;

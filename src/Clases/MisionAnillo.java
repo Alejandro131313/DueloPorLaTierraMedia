@@ -1,6 +1,20 @@
 package Clases;
 
 
+/**
+ * Representa la carrera entre la comunidad y Sauron.
+ * Incluye el identificador de la carrera, la posición de la Comunidad, 
+ * la posición de Sauron y una posición textual asociada.
+ * 
+ * Esta clase puede utilizarse para controlar el avance de la carrera
+ * entre ambos.
+ * 
+ * @author Alejandro
+ * @version 1.0
+ */
+
+
+
 public class MisionAnillo {
     private int idMision;
     private int comunidad;

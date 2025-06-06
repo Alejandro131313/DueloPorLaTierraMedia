@@ -5,6 +5,16 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Representa a un jugador dentro de una partida específica del juego.
+ * Contiene sus recursos, atributos, unidades, cartas y territorios durante la sesión.
+ * 
+ * Además permite gestionar el estado de sus unidades, contar recursos y registrar cartas robadas.
+ * 
+ * @author Alejandro
+ * @version 1.0
+ */
+
 public class JugadorPartida {
 
     private static final Logger LOGGER = Logger.getLogger(JugadorPartida.class.getName());
@@ -35,6 +45,19 @@ public class JugadorPartida {
     private List<Unidad> unidades;        //Array Torres 7 y 15 Soladados /Atributo posicionTerritorio SinColocar De Priemras
    
 
+    /**
+     * Constructor completo del jugador en una partida.
+     * 
+     * @param jugador     Instancia base del jugador.
+     * @param partida     Partida en la que está jugando.
+     * @param oro         Oro inicial.
+     * @param faccion     Facción elegida.
+     * @param cartas      Lista de cartas.
+     * @param territorios Lista de territorios.
+     * @param unidades    Lista de unidades.
+     */
+
+    
     public JugadorPartida(final Jugador jugador, final Partida partida, final int oro, final String faccion, final List<Carta> cartas, final List<LugarClave> territorios, final List<Unidad> unidades) {
         this.jugador = jugador;
         this.partida = partida;

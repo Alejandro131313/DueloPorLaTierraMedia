@@ -1,5 +1,16 @@
 package Clases;
 
+
+/**
+ * Representa un lugar clave.
+ * Cada lugar tiene un identificador, nombre,recursos que encesita,
+ * efecto especial y una imagen asociada.
+ * 
+ * @author Alejandro
+ * @version 1.0
+ */
+
+
 public class LugarClave {
 	private int idLugar;
 	private String nombre;
@@ -7,6 +18,16 @@ public class LugarClave {
     private String efecto;
     private String imagenRuta;
 
+    /**
+     * Constructor que inicializa todos los atributos del lugar clave.
+     * 
+     * @param idLugar     Identificador único del lugar.
+     * @param nombre      Nombre del lugar.
+     * @param recursos    Recursos necesarios para ser robada.
+     * @param efecto      Efecto que produce en la partida.
+     * @param imagenRuta  Ruta de la imagen asociada.
+     */
+    
     public LugarClave(final int idLugar, final String nombre, final String recursos, final String efecto, final String imagenRuta) {
         this.idLugar = idLugar;
         this.nombre = nombre;

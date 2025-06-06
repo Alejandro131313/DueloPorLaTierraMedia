@@ -1,6 +1,18 @@
 package Clases;
 import java.util.logging.Logger;
 
+
+/**
+ * Clase para registrar operaciones de base de datos y medir su tiempo de ejecución.
+ * 
+ * Permite envolver cualquier operación en una función, mostrando en consola 
+ * cuánto tarda y si fue exitosa o no.
+ * 
+ * @author Alejandro
+ * @version 1.0
+ */
+
+
 public class DBLogger {
     private static final Logger LOGGER = Logger.getLogger(DBLogger.class.getName());
 

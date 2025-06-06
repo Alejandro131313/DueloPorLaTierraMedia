@@ -65,17 +65,42 @@ public class LoginController {
     // Acción cuando se pulsa el botón de confirmar login o registro
     @FXML
     private void onAccionFormulario() {
-    	final String usuario = campoUsuario.getText().trim();
-    	final String contrasena = campoContrasena.getText().trim();
-    	final String email = campoEmail.getText().trim();
+        // Limpiar estilos anteriores
+        campoUsuario.setStyle(null);
+        campoContrasena.setStyle(null);
+        campoEmail.setStyle(null);
 
-        if (usuario.isEmpty()|| contrasena.isEmpty() || esRegistro && email.isEmpty())
-        		{
+        String usuario = campoUsuario.getText().trim();
+        String contrasena = campoContrasena.getText().trim();
+        String email = campoEmail.getText().trim();
+
+        if (usuario.isEmpty() || contrasena.isEmpty() || (esRegistro && email.isEmpty())) {
             mostrarAlerta("Error", "Completa todos los campos.");
+            if (usuario.isEmpty()) campoUsuario.setStyle("-fx-border-color: red;");
+            if (contrasena.isEmpty()) campoContrasena.setStyle("-fx-border-color: red;");
+            if (esRegistro && email.isEmpty()) campoEmail.setStyle("-fx-border-color: red;");
             return;
         }
 
         if (esRegistro) {
+            if (!usuario.matches("^[a-zA-Z0-9]{4,16}$")) {
+                campoUsuario.setStyle("-fx-border-color: red;");
+                mostrarAlerta("Error", "El nombre de usuario debe tener entre 4 y 16 caracteres alfanuméricos sin símbolos especiales.");
+                return;
+            }
+
+            if (!email.matches("^[\\w.-]+@[\\w.-]+\\.\\w{2,}$")) {
+                campoEmail.setStyle("-fx-border-color: red;");
+                mostrarAlerta("Error", "Introduce un correo electrónico válido.");
+                return;
+            }
+
+            if (!contrasena.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{6,}$")) {
+                campoContrasena.setStyle("-fx-border-color: red;");
+                mostrarAlerta("Error", "La contraseña debe contener: mayúscula, minúscula, números y un símbolo especial.");
+                return;
+            }
+
             if (Database.insertarUsuario(usuario, contrasena, email)) {
                 mostrarAlerta("Éxito", "Usuario creado correctamente.");
                 ocultarFormulario();
@@ -87,10 +112,13 @@ public class LoginController {
                 mostrarAlerta("Bienvenido", "Inicio de sesión correcto.");
                 cargarPantallaMultijugador();
             } else {
+                campoUsuario.setStyle("-fx-border-color: red;");
+                campoContrasena.setStyle("-fx-border-color: red;");
                 mostrarAlerta("Error", "Usuario o contraseña incorrectos.");
             }
         }
     }
+
 
     // Cargar vista Multijugador
     private void cargarPantallaMultijugador() {

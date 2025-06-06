@@ -4,6 +4,15 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Clase para realizar operaciones sobre la base de datos del juego.
+ * Permite insertar jugadores, registrar usuarios con contraseña cifrada y verificar credenciales.
+ * 
+ * 
+ * @author Alejandro
+ * @version 1.0
+ */
+
 public class Database {
 	
     private static final Logger LOGGER = Logger.getLogger(Database.class.getName());
@@ -12,6 +21,18 @@ public class Database {
     private static final String USER = "";
     private static final String PASS = "";
 
+    
+    /**
+     * Inserta un nuevo jugador en la base de datos.
+     * Solo se almacena el nombre del jugdor, sin contraseña ni email.
+     * 
+     * Tambien imprime en consola la lista de jugadores existentes tras la insercion.
+     * 
+     * @param nombre Nombre del jugador a insertar.
+     * @throws SQLException si ocurre un error al conectarse o ejecutar la consulta.
+     */
+    
+    
     // Inserta un nuevo jugador (nombre sin contraseña)
     public static void insertarJugador(final String nombre) throws SQLException {
         DBLogger.logExecution("insertarJugador", () -> {
@@ -46,6 +67,18 @@ public class Database {
         });
     }
 
+    
+    /**
+     * Inserta un nuevo usuario en la base de datos.
+     * Almacena el nombre de usuario, el email y el hash de la contraseña usando {@link Seguridad.encriptar}.
+     * 
+     * @param usuario    Nombre del usuario.
+     * @param contrasena Contraseña en texto plano que será cifrada.
+     * @param email      Correo electrónico del usuario.
+     * @return {@code true} si la inserción fue exitosa, {@code false} en caso de error.
+     */
+    
+    
     // Registro: Guarda el hash de la contraseña
     public static boolean insertarUsuario(final String usuario, final String contrasena, final String email) {
         return DBLogger.logExecution("insertarUsuario", () -> {
@@ -68,6 +101,16 @@ public class Database {
         });
     }
 
+    
+    
+    /**
+     * Verifica si un usuario existe y si su contraseña coincide con la almacenada.
+     * Se compara la contraseña ingresada con el hash guardado mediante {@link Seguridad.verificar}.
+     * 
+     * @param usuario    Nombre del usuario.
+     * @param contrasena Contraseña en texto plano a verificar.
+     * @return {@code true} si las credenciales son correctas, {@code false} en caso contrario.
+     */
     // Login: Verifica que el hash de la contraseña coincida
     public static boolean verificarUsuario(final String usuario, final String contrasena) {
         return DBLogger.logExecution("verificarUsuario", () -> {

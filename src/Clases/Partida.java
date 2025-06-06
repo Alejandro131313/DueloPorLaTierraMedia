@@ -3,6 +3,18 @@ package Clases;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Representa una partida.
+ * Almacena información sobre los jugadores, la fecha y hora de la partida,
+ * el tablero y el control de turnos.
+ * 
+ * Una partida solo puede tener un máximo de 2 jugadores.
+ * 
+ * @author Alejandro
+ * @version 1.0
+ */
+
 public class Partida {
     private int idPartida;
     private String horaDeLaPartida;
@@ -11,6 +23,16 @@ public class Partida {
     private Tablero tablero;
     private int turnoActual;
 
+    
+    /**
+     * Crea una nueva instancia de partida con la información básica.
+     * 
+     * @param idPartida       Identificador único de la partida.
+     * @param horaDeLaPartida Hora en la que se inició la partida.
+     * @param diaDeLaPartida  Día en que se juega la partida.
+     * @param tablero         Tablero utilizado en esta partida.
+     */
+    
     public Partida(final int idPartida, final String horaDeLaPartida, final String diaDeLaPartida, final Tablero tablero) {
         this.idPartida = idPartida;
         this.horaDeLaPartida = horaDeLaPartida;

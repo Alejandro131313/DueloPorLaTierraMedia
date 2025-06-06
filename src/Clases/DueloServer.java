@@ -7,16 +7,40 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
+/**
+ * Servidor principal del juego Duelo por la Tierra Media.
+ * Acepta conexiones de dos clientes, gestiona la sincronización de turnos
+ * y distribuye cartas desde el tablero según las acciones de los jugadores.
+ * 
+ * Cada cliente se maneja en un hilo independiente a través de {@code ClienteHandler}.
+ * 
+ * @author Alejandro
+ * @version 1.0
+ */
+
+
 public class DueloServer {
     private static final Logger LOGGER = Logger.getLogger(DueloServer.class.getName());
     private final int puerto;
     private final List<ObjectOutputStream> clientes = new CopyOnWriteArrayList<>();
     private Tablero tablero;
 
+    /**
+     * Crea un servidor en el puerto especificado.
+     * 
+     * @param puerto Puerto en el que escuchará el servidor.
+     */
+    
     public DueloServer(final int puerto) {
         this.puerto = puerto;
     }
 
+    /**
+     * Inicia el servidor y espera la conexión de dos clientes.
+     * Cada cliente es manejado en un hilo separado.
+     */
+    
     public void iniciar() {
         try (ServerSocket serverSocket = new ServerSocket(puerto)) {
             for (int i = 0; i < 2; i++) {
@@ -29,6 +53,12 @@ public class DueloServer {
         }
     }
 
+    
+    /**
+     * Manejador interno que gestiona cada cliente conectado.
+     * Procesa los mensajes entrantes y envía las respuestas correspondientes.
+     */
+    
     private class ClienteHandler implements Runnable {
         private final Socket socket;
         private ObjectOutputStream salida;
@@ -40,6 +70,15 @@ public class DueloServer {
             this.indiceJugador = indiceJugador;
         }
 
+        
+        /**
+         * Lógica principal del cliente:
+         * - Recibe objetos del cliente.
+         * - Procesa peticiones de robo de carta.
+         * - Envía la carta o mensaje de error.
+         * - Finaliza la partida si no quedan cartas.
+         */
+        
         public void run() {
             try (ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
                  ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
