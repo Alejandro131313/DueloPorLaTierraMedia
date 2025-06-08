@@ -28,7 +28,7 @@ public class Mensajes implements Serializable {
 	private Tipo tipo;
 	private int idMensaje;
 	private String jugador;
-	private Object contenido; // Puede ser una Carta o estado del juego
+	private Object contenido; 
 
 	public Mensajes(final Tipo tipo) {
 		this.tipo = tipo;

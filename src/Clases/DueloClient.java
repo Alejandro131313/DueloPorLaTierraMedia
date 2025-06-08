@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.*;
 
 import Controladores.TableroNetworkController;
+import javafx.scene.control.Alert;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,24 +39,43 @@ public class DueloClient {
     	this.host = host;
     	this.puerto = puerto;
     }
+    
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alerta = new Alert(Alert.AlertType.ERROR);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
 
     /**
      * Establece la conexión con el servidor y prepara los streams de entrada y salida.
      */
     
     public void conectar() {
-        try {
-        	socket = new Socket(host, puerto);
+        int reintentos = 5;
+        while (reintentos > 0) {
+            try {
+                socket = new Socket(host, puerto);
+                salida = new ObjectOutputStream(socket.getOutputStream());
+                salida.flush();
+                entrada = new ObjectInputStream(socket.getInputStream());
 
-        	salida = new ObjectOutputStream(socket.getOutputStream());
-        	salida.flush();
-        	entrada = new ObjectInputStream(socket.getInputStream());
-
-        	redController = new TableroNetworkController();
-        	redController.inicializarConStreams(socket, entrada, salida);
-        } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Error al conectar con el servidor", e);
+                redController = new TableroNetworkController();
+                redController.inicializarConStreams(socket, entrada, salida);
+                LOGGER.info("Conexión establecida con el servidor.");
+                return;
+            } catch (IOException e) {
+                reintentos--;
+                LOGGER.warning("Fallo al conectar. Reintentando... (" + reintentos + " restantes)");
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException ignored) {}
+            }
         }
+
+        LOGGER.severe("No se pudo establecer conexión tras varios intentos.");
+        mostrarAlerta("Error de conexión", "No se pudo conectar con el servidor. Inténtalo más tarde.");
     }
     
     /**

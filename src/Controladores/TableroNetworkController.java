@@ -4,6 +4,7 @@ import Clases.Carta;
 import Clases.Mensajes;
 import Clases.Tablero;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -33,14 +34,31 @@ public class TableroNetworkController {
     }
 
     public void conectarConServidor(final String host, final int puerto) {
-        try {
-            socket = new Socket(host, puerto);
-            salida = new ObjectOutputStream(socket.getOutputStream());
-            salida.flush();
-            entrada = new ObjectInputStream(socket.getInputStream());
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error al conectar con el servidor", e);
+        int intentos = 0;
+        final int maxIntentos = 5;
+
+        while (intentos < maxIntentos) {
+            try {
+                socket = new Socket(host, puerto);
+                salida = new ObjectOutputStream(socket.getOutputStream());
+                salida.flush();
+                entrada = new ObjectInputStream(socket.getInputStream());
+                LOGGER.info("Conectado al servidor en intento " + (intentos + 1));
+                return;
+            } catch (IOException e) {
+                intentos++;
+                LOGGER.warning("Intento " + intentos + " de conexión fallido: " + e.getMessage());
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                    LOGGER.warning("Reintento interrumpido.");
+                    break;
+                }
+            }
         }
+
+        LOGGER.severe("No se pudo establecer conexión con el servidor tras " + maxIntentos + " intentos.");
     }
 
     public void inicializarConStreams(final Socket socket, final ObjectInputStream entrada, final ObjectOutputStream salida) {
